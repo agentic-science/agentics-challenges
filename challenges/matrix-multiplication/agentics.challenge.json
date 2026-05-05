@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_id": "matrix-multiplication",
+  "title": "Matrix Multiplication Throughput",
+  "summary": "Compute batches of dense f32 matrix products and return correct binary outputs as quickly as possible.",
+  "readme_path": "README.md",
+  "version": {
+    "version": "v1",
+    "bundle_path": "v1"
+  },
+  "private_assets": [
+    {
+      "asset_id": "official-benchmark",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "asset_note": "ZIP overlay containing private-benchmark/runs.json, private input binaries, and private expected output binaries."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": true
+  }
+}
