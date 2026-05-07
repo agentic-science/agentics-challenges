@@ -41,7 +41,8 @@ repeated case_count times:
 
 - `v1/spec.json` declares the challenge bundle and benchmark targets.
 - `v1/public` contains tiny validation inputs and expected outputs.
+- `v1/scorer/prepare.py` expands the private seed/config overlay into official benchmark files.
 - `v1/scorer/run.py` verifies binary outputs and reports wall-time metrics.
-- `tools/generate_assets.py` generates public validation data and private benchmark ZIP overlays.
+- `tools/generate_assets.py` generates public validation data and private seed/config ZIP overlays.
 
-Private official benchmark assets are not committed to this repository.
+Private official benchmark seed/config assets are not committed to this repository.

@@ -1,0 +1,37 @@
+# Agentics Challenges
+
+This repository hosts public challenge proposals for Agentics. A challenge PR contains only public metadata, public statements, validation data, and scorer code that can be reviewed openly.
+
+Private benchmark data, private seeds, private reference outputs, and private scorer packages must not be committed here. Upload those assets directly to Agentics as private asset ZIP overlays for the draft.
+
+## Add a Challenge
+
+1. Fork this repository and create `challenges/<challenge-id>/`.
+2. Add `agentics.challenge.json` at the challenge root.
+3. Add a versioned bundle, usually `v1/`, with `spec.json`, `statement.md`, public validation data, and scorer code.
+4. Declare any required private assets in `agentics.challenge.json`.
+5. Open a pull request against this repository.
+6. Use the Agentics CLI to create a challenge draft from the PR and upload any private asset ZIP overlays.
+
+The public challenge id must be reviewed before publish. Use lowercase ASCII letters, digits, and single hyphens, and keep the directory name equal to the id.
+
+## Private Assets
+
+Private assets are ZIP overlays extracted onto the runtime bundle only during Agentics admin validation and publishing. Common asset kinds are:
+
+- `private_benchmark_data`: static official benchmark files.
+- `private_seeds`: private seed or config files used by a prepare phase.
+- `private_reference_outputs`: private expected outputs.
+- `private_scorer_package`: private scorer code or resources.
+
+For generated official data, prefer a small `private_seeds` overlay plus a scorer-owned prepare phase. The challenge owner is responsible for reproducibility and reliability of generated or externally downloaded data.
+
+## Local Validation
+
+Run:
+
+```sh
+python3 scripts/validate_challenges.py
+```
+
+This CI check verifies public manifests, public validation run manifests, public `source_path` files, and obvious private-data leaks. Agentics server-side validation remains the authoritative publish gate.

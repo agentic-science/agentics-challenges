@@ -62,7 +62,12 @@
   ],
   "execution": {
     "validation_runs": "public/runs.json",
-    "official_runs": "private-benchmark/runs.json"
+    "official_prepare": {
+      "command": ["python", "scorer/prepare.py"],
+      "result_runs_file": "generated/runs.json",
+      "network_access": "enabled",
+      "reproducibility_notes": "Official benchmark files are generated from a private seed/config overlay. Full-size generation uses a pinned NumPy install when the scorer image does not already provide NumPy."
+    }
   },
   "datasets": {
     "public_dir": "public",

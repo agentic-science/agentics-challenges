@@ -110,7 +110,7 @@ def score_run(
     run_dir = solution_runs_dir / run_id
     metadata = load_run_metadata(run_dir / "agentics-run.json")
     output_path = run_dir / "output" / "output.bin"
-    expected_path = challenge_dir / run["expected_output_source_path"]
+    expected_path = resolve_expected_path(challenge_dir, run["expected_output_source_path"])
     tolerance_abs = float(run.get("tolerance_abs", 0.001))
     tolerance_rel = float(run.get("tolerance_rel", 0.0001))
 
@@ -147,6 +147,13 @@ def score_run(
     else:
         result["message"] = f"{comparison['failed_values']} values outside tolerance"
     return result
+
+
+def resolve_expected_path(challenge_dir: Path, source_path: str) -> Path:
+    path = Path(source_path)
+    if path.is_absolute():
+        return path
+    return challenge_dir / path
 
 
 def load_run_metadata(path: Path) -> dict[str, Any]:

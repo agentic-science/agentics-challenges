@@ -11,10 +11,10 @@
   },
   "private_assets": [
     {
-      "asset_id": "official-benchmark",
-      "kind": "private_benchmark_data",
+      "asset_id": "official-seed-config",
+      "kind": "private_seeds",
       "required": true,
-      "asset_note": "ZIP overlay containing private-benchmark/runs.json, private input binaries, and private expected output binaries."
+      "asset_note": "ZIP overlay containing private-benchmark/config.json. The scorer prepare phase expands this private config into official inputs and expected outputs."
     }
   ],
   "ci": {

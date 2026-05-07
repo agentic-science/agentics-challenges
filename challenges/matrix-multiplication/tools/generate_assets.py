@@ -26,9 +26,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--preset",
-        choices=["public", "official"],
+        choices=["public", "official-config"],
         required=True,
-        help="public writes committed validation data; official writes private-benchmark data",
+        help="public writes committed validation data; official-config writes the private seed/config overlay",
     )
     parser.add_argument(
         "--square-cases",
@@ -57,7 +57,7 @@ def main() -> int:
     if args.preset == "public":
         generate_public(challenge_root)
     else:
-        generate_official(
+        generate_official_config(
             challenge_root,
             square_cases=args.square_cases or 5000,
             rect_cases=args.rect_cases or 5000,
@@ -89,61 +89,35 @@ def generate_public(challenge_root: Path) -> None:
     )
 
 
-def generate_official(challenge_root: Path, square_cases: int, rect_cases: int) -> None:
+def generate_official_config(challenge_root: Path, square_cases: int, rect_cases: int) -> None:
     version_root = challenge_root / "v1"
     private_root = version_root / "private-benchmark"
-    runs = {
+    config = {
         "runs": [
             {
                 "run_id": "square_100x100",
-                "interface": "file_system",
-                "input_files": [
-                    {
-                        "path": "input.bin",
-                        "source_path": "private-benchmark/inputs/square_100x100.bin",
-                    }
-                ],
-                "output_files": ["output.bin"],
-                "expected_output_source_path": "private-benchmark/expected/square_100x100.bin",
+                "cases": square_cases,
+                "m": 100,
+                "k": 100,
+                "n": 100,
+                "seed": 1001,
                 "tolerance_abs": 0.001,
                 "tolerance_rel": 0.0001,
             },
             {
                 "run_id": "rect_50x10_10x500",
-                "interface": "file_system",
-                "input_files": [
-                    {
-                        "path": "input.bin",
-                        "source_path": "private-benchmark/inputs/rect_50x10_10x500.bin",
-                    }
-                ],
-                "output_files": ["output.bin"],
-                "expected_output_source_path": "private-benchmark/expected/rect_50x10_10x500.bin",
+                "cases": rect_cases,
+                "m": 50,
+                "k": 10,
+                "n": 500,
+                "seed": 2002,
                 "tolerance_abs": 0.001,
                 "tolerance_rel": 0.0001,
             },
         ]
     }
     (private_root).mkdir(parents=True, exist_ok=True)
-    (private_root / "runs.json").write_text(json.dumps(runs, indent=2), encoding="utf-8")
-    generate_dataset(
-        private_root / "inputs" / "square_100x100.bin",
-        private_root / "expected" / "square_100x100.bin",
-        cases=square_cases,
-        m=100,
-        k=100,
-        n=100,
-        seed=1001,
-    )
-    generate_dataset(
-        private_root / "inputs" / "rect_50x10_10x500.bin",
-        private_root / "expected" / "rect_50x10_10x500.bin",
-        cases=rect_cases,
-        m=50,
-        k=10,
-        n=500,
-        seed=2002,
-    )
+    (private_root / "config.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
 
 
 def generate_dataset(
