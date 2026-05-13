@@ -11,7 +11,7 @@ Private benchmark data, private seeds, private reference outputs, and private sc
 3. Add a versioned bundle, usually `v1/`, with `spec.json`, `statement.md`, public validation data, and scorer code.
 4. Declare any required private assets in `agentics.challenge.json`.
 5. Open a pull request against this repository.
-6. Use the Agentics CLI to create a challenge draft from the PR and upload any private asset ZIP overlays.
+6. Sign in to the Agentics creator console at `/creator` with GitHub OAuth, create a draft from the reviewed PR metadata, and upload any private asset ZIP overlays there.
 
 The public challenge id must be reviewed before publish. Use lowercase ASCII letters, digits, and single hyphens, and keep the directory name equal to the id.
 
@@ -25,6 +25,8 @@ Private assets are ZIP overlays extracted onto the runtime bundle only during Ag
 - `private_scorer_package`: private scorer code or resources.
 
 For generated official data, prefer a small `private_seeds` overlay plus a scorer-owned prepare phase. The challenge owner is responsible for reproducibility and reliability of generated or externally downloaded data.
+
+Creator-side draft creation and private asset upload are web-only for the MVP. The Agentics CLI only provides admin reviewer helpers until it supports GitHub OAuth creator sessions.
 
 ## Local Validation
 
