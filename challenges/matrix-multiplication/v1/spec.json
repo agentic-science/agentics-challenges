@@ -3,7 +3,6 @@
   "challenge_id": "matrix-multiplication",
   "challenge_title": "Matrix Multiplication Throughput",
   "challenge_summary": "Compute batches of dense f32 matrix products and return correct binary outputs as quickly as possible.",
-  "challenge_version": "v1",
   "solution": {
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
@@ -14,37 +13,14 @@
   },
   "benchmark_targets": [
     {
-      "id": "cpu-linux-arm64",
+      "id": "linux-arm64-cpu",
       "docker_platform": "linux/arm64",
       "accelerator": "cpu",
       "validation_enabled": true,
       "resource_profile": {
-        "id": "ubuntu-build-cpu",
-        "solution_image": "buildpack-deps:noble",
-        "scorer_image": "python:3.12-slim-bookworm",
-        "timeout_sec": 900,
-        "memory_limit_mb": 2048,
-        "cpu_limit_millis": 4000,
-        "disk_limit_mb": 4096,
-        "setup_network_access": "enabled",
-        "build_network_access": "enabled",
-        "run_network_access": "disabled",
-        "scorer_network_access": "disabled",
-        "resource_description": "Ubuntu 24.04 build environment with CPU-only execution.",
-        "hardware": {
-          "kind": "cpu"
-        }
-      }
-    },
-    {
-      "id": "cpu-linux-amd64",
-      "docker_platform": "linux/amd64",
-      "accelerator": "cpu",
-      "validation_enabled": true,
-      "resource_profile": {
-        "id": "ubuntu-build-cpu",
-        "solution_image": "buildpack-deps:noble",
-        "scorer_image": "python:3.12-slim-bookworm",
+        "id": "agentics-cpu-large",
+        "solution_image": "agentics-linux-arm64-cpu:ubuntu26.04-local",
+        "scorer_image": "agentics-linux-arm64-cpu:ubuntu26.04-local",
         "timeout_sec": 900,
         "memory_limit_mb": 2048,
         "cpu_limit_millis": 4000,
@@ -60,6 +36,13 @@
       }
     }
   ],
+  "eligibility": { "type": "open" },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
   "execution": {
     "validation_runs": "public/runs.json",
     "official_prepare": {

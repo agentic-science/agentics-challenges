@@ -5,10 +5,7 @@
   "title": "Matrix Multiplication Throughput",
   "summary": "Compute batches of dense f32 matrix products and return correct binary outputs as quickly as possible.",
   "readme_path": "README.md",
-  "version": {
-    "version": "v1",
-    "bundle_path": "v1"
-  },
+  "bundle_path": "v1",
   "private_assets": [
     {
       "asset_id": "official-seed-config",
