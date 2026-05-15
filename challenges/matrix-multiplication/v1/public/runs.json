@@ -1,7 +1,7 @@
 {
   "runs": [
     {
-      "run_id": "public_square",
+      "run_name": "public_square",
       "interface": "file_system",
       "input_files": [
         {
@@ -15,7 +15,7 @@
       "tolerance_rel": 0.0001
     },
     {
-      "run_id": "public_rectangular",
+      "run_name": "public_rectangular",
       "interface": "file_system",
       "input_files": [
         {

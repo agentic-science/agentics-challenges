@@ -51,22 +51,22 @@ def main() -> int:
         if result["status"] == "passed":
             passed += 1
         else:
-            logs.append(f"{result['run_id']}: {result['message']}")
+            logs.append(f"{result['run_name']}: {result['message']}")
 
         run_metric_rows.append(
             {
-                "run_id": result["run_id"],
+                "run_name": result["run_name"],
                 "metrics": [
-                    {"metric_id": "correctness", "value": result["score"]},
-                    {"metric_id": "wall_time_ms", "value": result["wall_time_ms"]},
-                    {"metric_id": "max_abs_error", "value": result["max_abs_error"]},
-                    {"metric_id": "failed_values", "value": result["failed_values"]},
+                    {"metric_name": "correctness", "value": result["score"]},
+                    {"metric_name": "wall_time_ms", "value": result["wall_time_ms"]},
+                    {"metric_name": "max_abs_error", "value": result["max_abs_error"]},
+                    {"metric_name": "failed_values", "value": result["failed_values"]},
                 ],
             }
         )
         public_results.append(
             {
-                "case_id": result["run_id"],
+                "case_id": result["run_name"],
                 "status": result["status"],
                 "score": result["score"],
                 "message": result["message"],
@@ -83,10 +83,10 @@ def main() -> int:
         "primary_score": correctness,
         "rank_score": rank_score,
         "aggregate_metrics": [
-            {"metric_id": "correctness", "value": correctness},
-            {"metric_id": "total_wall_time_ms", "value": total_wall_time_ms},
-            {"metric_id": "max_abs_error", "value": max_abs_error},
-            {"metric_id": "failed_values", "value": float(failed_values)},
+            {"metric_name": "correctness", "value": correctness},
+            {"metric_name": "total_wall_time_ms", "value": total_wall_time_ms},
+            {"metric_name": "max_abs_error", "value": max_abs_error},
+            {"metric_name": "failed_values", "value": float(failed_values)},
         ],
         "run_metrics": run_metric_rows,
         "public_results": public_results if args.mode == "validation" else [],
@@ -106,8 +106,8 @@ def main() -> int:
 def score_run(
     challenge_dir: Path, solution_runs_dir: Path, run: dict[str, Any]
 ) -> dict[str, Any]:
-    run_id = run["run_id"]
-    run_dir = solution_runs_dir / run_id
+    run_name = run["run_name"]
+    run_dir = solution_runs_dir / run_name
     metadata = load_run_metadata(run_dir / "agentics-run.json")
     output_path = run_dir / "output" / "output.bin"
     expected_path = resolve_expected_path(challenge_dir, run["expected_output_source_path"])
@@ -115,7 +115,7 @@ def score_run(
     tolerance_rel = float(run.get("tolerance_rel", 0.0001))
 
     result = {
-        "run_id": run_id,
+        "run_name": run_name,
         "status": "failed",
         "score": 0.0,
         "wall_time_ms": float(metadata.get("wall_time_ms", 0)),

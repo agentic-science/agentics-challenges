@@ -95,7 +95,7 @@ def generate_official_config(challenge_root: Path, square_cases: int, rect_cases
     config = {
         "runs": [
             {
-                "run_id": "square_100x100",
+                "run_name": "square_100x100",
                 "cases": square_cases,
                 "m": 100,
                 "k": 100,
@@ -105,7 +105,7 @@ def generate_official_config(challenge_root: Path, square_cases: int, rect_cases
                 "tolerance_rel": 0.0001,
             },
             {
-                "run_id": "rect_50x10_10x500",
+                "run_name": "rect_50x10_10x500",
                 "cases": rect_cases,
                 "m": 50,
                 "k": 10,

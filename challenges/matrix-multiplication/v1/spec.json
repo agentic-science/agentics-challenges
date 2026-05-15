@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "challenge_id": "matrix-multiplication",
+  "challenge_name": "matrix-multiplication",
   "challenge_title": "Matrix Multiplication Throughput",
   "challenge_summary": "Compute batches of dense f32 matrix products and return correct binary outputs as quickly as possible.",
   "solution": {
@@ -18,7 +18,7 @@
       "accelerator": "cpu",
       "validation_enabled": true,
       "resource_profile": {
-        "id": "agentics-cpu-large",
+        "name": "agentics-cpu-large",
         "solution_image": "agentics-linux-arm64-cpu:ubuntu26.04-local",
         "scorer_image": "agentics-linux-arm64-cpu:ubuntu26.04-local",
         "timeout_sec": 900,
@@ -66,14 +66,14 @@
   "metric_schema": {
     "metrics": [
       {
-        "id": "correctness",
+        "name": "correctness",
         "label": "Correctness",
         "direction": "maximize",
         "visibility": "public",
         "metric_description": "Fraction of invocations whose binary outputs passed tolerance checks."
       },
       {
-        "id": "total_wall_time_ms",
+        "name": "total_wall_time_ms",
         "label": "Total Wall Time",
         "unit": "ms",
         "direction": "minimize",
@@ -81,7 +81,7 @@
         "metric_description": "Sum of worker-measured wall time across all solution invocations."
       },
       {
-        "id": "wall_time_ms",
+        "name": "wall_time_ms",
         "label": "Invocation Wall Time",
         "unit": "ms",
         "direction": "minimize",
@@ -89,14 +89,14 @@
         "metric_description": "Worker-measured wall time for one solution invocation."
       },
       {
-        "id": "max_abs_error",
+        "name": "max_abs_error",
         "label": "Max Absolute Error",
         "direction": "minimize",
         "visibility": "public",
         "metric_description": "Maximum absolute f32 output error observed by the scorer."
       },
       {
-        "id": "failed_values",
+        "name": "failed_values",
         "label": "Failed Values",
         "unit": "values",
         "direction": "minimize",
@@ -105,8 +105,8 @@
       }
     ],
     "ranking": {
-      "primary_metric_id": "total_wall_time_ms",
-      "tie_breaker_metric_ids": ["max_abs_error", "failed_values"]
+      "primary_metric_name": "total_wall_time_ms",
+      "tie_breaker_metric_names": ["max_abs_error", "failed_values"]
     }
   }
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
   "request": "new_challenge",
-  "challenge_id": "matrix-multiplication",
+  "challenge_name": "matrix-multiplication",
   "title": "Matrix Multiplication Throughput",
   "summary": "Compute batches of dense f32 matrix products and return correct binary outputs as quickly as possible.",
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
     {
-      "asset_id": "official-seed-config",
+      "asset_name": "official-seed-config",
       "kind": "private_seeds",
       "required": true,
       "asset_note": "ZIP overlay containing private-benchmark/config.json. The scorer prepare phase expands this private config into official inputs and expected outputs."

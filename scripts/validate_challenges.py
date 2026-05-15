@@ -46,10 +46,10 @@ def main() -> int:
 def validate_challenge(challenge_root: Path) -> None:
     reject_private_files(challenge_root)
     manifest = load_json(challenge_root / "agentics.challenge.json")
-    challenge_id = required_str(manifest, "challenge_id")
-    if challenge_id != challenge_root.name:
+    challenge_name = required_str(manifest, "challenge_name")
+    if challenge_name != challenge_root.name:
         raise ValidationError(
-            f"{challenge_root}: challenge_id must match directory name {challenge_root.name}"
+            f"{challenge_root}: challenge_name must match directory name {challenge_root.name}"
         )
     if manifest.get("schema_version") != 1:
         raise ValidationError(f"{challenge_root}: schema_version must be 1")
@@ -76,7 +76,7 @@ def validate_bundle(
     assert_file(bundle_root / "statement.md", f"{bundle_root}: statement.md")
     if spec.get("schema_version") != 1:
         raise ValidationError(f"{bundle_root}: spec schema_version must be 1")
-    match_field(spec, "challenge_id", manifest["challenge_id"], bundle_root)
+    match_field(spec, "challenge_name", manifest["challenge_name"], bundle_root)
     match_field(spec, "challenge_title", manifest["title"], bundle_root)
     match_field(spec, "challenge_summary", manifest["summary"], bundle_root)
     validate_targets(bundle_root, required_array(spec, "targets"))
@@ -141,10 +141,10 @@ def validate_run_manifest(bundle_root: Path, runs_path: Path) -> None:
     for run in runs:
         if not isinstance(run, dict):
             raise ValidationError(f"{runs_path}: run entries must be objects")
-        run_id = required_str(run, "run_id")
-        if run_id in seen:
-            raise ValidationError(f"{runs_path}: duplicate run_id {run_id}")
-        seen.add(run_id)
+        run_name = required_str(run, "run_name")
+        if run_name in seen:
+            raise ValidationError(f"{runs_path}: duplicate run_name {run_name}")
+        seen.add(run_name)
         for input_file in run.get("input_files", []):
             if not isinstance(input_file, dict):
                 raise ValidationError(f"{runs_path}: input_files entries must be objects")
@@ -185,10 +185,10 @@ def validate_private_assets(challenge_root: Path, assets: Any) -> None:
     for asset in assets:
         if not isinstance(asset, dict):
             raise ValidationError(f"{challenge_root}: private asset entries must be objects")
-        asset_id = required_str(asset, "asset_id")
-        if asset_id in seen:
-            raise ValidationError(f"{challenge_root}: duplicate private asset {asset_id}")
-        seen.add(asset_id)
+        asset_name = required_str(asset, "asset_name")
+        if asset_name in seen:
+            raise ValidationError(f"{challenge_root}: duplicate private asset {asset_name}")
+        seen.add(asset_name)
         if asset.get("kind") not in PRIVATE_ASSET_KINDS:
             raise ValidationError(f"{challenge_root}: unsupported private asset kind {asset.get('kind')}")
 

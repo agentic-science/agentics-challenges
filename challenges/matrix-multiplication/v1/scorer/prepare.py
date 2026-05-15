@@ -19,7 +19,7 @@ PYTHON_GENERATOR_WORK_LIMIT = 5_000_000
 DEFAULT_CONFIG = {
     "runs": [
         {
-            "run_id": "square_100x100",
+            "run_name": "square_100x100",
             "cases": 5000,
             "m": 100,
             "k": 100,
@@ -29,7 +29,7 @@ DEFAULT_CONFIG = {
             "tolerance_rel": 0.0001,
         },
         {
-            "run_id": "rect_50x10_10x500",
+            "run_name": "rect_50x10_10x500",
             "cases": 5000,
             "m": 50,
             "k": 10,
@@ -63,9 +63,9 @@ def main() -> int:
     config = load_config(challenge_dir)
     generated_runs = []
     for run in config["runs"]:
-        run_id = run["run_id"]
-        input_path = prepared_dir / "inputs" / f"{run_id}.bin"
-        expected_path = prepared_dir / "expected" / f"{run_id}.bin"
+        run_name = run["run_name"]
+        input_path = prepared_dir / "inputs" / f"{run_name}.bin"
+        expected_path = prepared_dir / "expected" / f"{run_name}.bin"
         generate_dataset(
             input_path,
             expected_path,
@@ -77,13 +77,13 @@ def main() -> int:
         )
         generated_runs.append(
             {
-                "run_id": run_id,
+                "run_name": run_name,
                 "interface": "file_system",
                 "input_files": [
-                    {"path": "input.bin", "source_path": f"inputs/{run_id}.bin"}
+                    {"path": "input.bin", "source_path": f"inputs/{run_name}.bin"}
                 ],
                 "output_files": ["output.bin"],
-                "expected_output_source_path": f"/prepared/expected/{run_id}.bin",
+                "expected_output_source_path": f"/prepared/expected/{run_name}.bin",
                 "tolerance_abs": float(run.get("tolerance_abs", 0.001)),
                 "tolerance_rel": float(run.get("tolerance_rel", 0.0001)),
             }

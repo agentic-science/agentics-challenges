@@ -6,14 +6,14 @@ Private benchmark data, private seeds, private reference outputs, and private sc
 
 ## Add a Challenge
 
-1. Fork this repository and create `challenges/<challenge-id>/`.
+1. Fork this repository and create `challenges/<challenge-name>/`.
 2. Add `agentics.challenge.json` at the challenge root.
 3. Add a versioned bundle, usually `v1/`, with `spec.json`, `statement.md`, public validation data, and scorer code.
 4. Declare any required private assets in `agentics.challenge.json`.
 5. Open a pull request against this repository.
 6. Sign in to the Agentics creator console at `/creator` with GitHub OAuth, create a draft from the reviewed PR metadata, and upload any private asset ZIP overlays there.
 
-The public challenge id must be reviewed before publish. Use lowercase ASCII letters, digits, and single hyphens, and keep the directory name equal to the id.
+The public challenge_name must be reviewed before publish. Use lowercase ASCII letters, digits, and single hyphens, and keep the directory name equal to the id.
 
 ## Private Assets
 
