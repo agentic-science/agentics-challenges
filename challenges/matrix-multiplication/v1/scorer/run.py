@@ -66,7 +66,7 @@ def main() -> int:
         )
         public_results.append(
             {
-                "case_id": result["run_name"],
+                "case_name": result["run_name"],
                 "status": result["status"],
                 "score": result["score"],
                 "message": result["message"],
