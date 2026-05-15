@@ -49,7 +49,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--challenge-dir", required=True)
     parser.add_argument("--prepared-dir", required=True)
     parser.add_argument("--mode", choices=["validation", "official"], required=True)
-    parser.add_argument("--benchmark-target", required=True)
+    parser.add_argument("--target", required=True)
     parser.add_argument("--runs-file", required=True)
     return parser.parse_args()
 

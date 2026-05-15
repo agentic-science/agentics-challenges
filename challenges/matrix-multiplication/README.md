@@ -39,7 +39,7 @@ repeated case_count times:
 
 ## Files
 
-- `v1/spec.json` declares the challenge bundle and MVP benchmark target.
+- `v1/spec.json` declares the challenge bundle and MVP target.
 - `v1/public` contains tiny validation inputs and expected outputs.
 - `v1/scorer/prepare.py` expands the private seed/config overlay into official benchmark files.
 - `v1/scorer/run.py` verifies binary outputs and reports wall-time metrics.

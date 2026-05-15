@@ -29,12 +29,6 @@ PRIVATE_ASSET_KINDS = {
     "private_seeds",
     "private_reference_outputs",
 }
-TARGET_PLATFORMS = {
-    "cpu-linux-arm64": "linux/arm64",
-    "cpu-linux-amd64": "linux/amd64",
-}
-
-
 class ValidationError(Exception):
     pass
 
@@ -67,12 +61,10 @@ def validate_challenge(challenge_root: Path) -> None:
     assert_file(challenge_root / readme_path, f"{challenge_root}: readme_path")
     validate_private_assets(challenge_root, manifest.get("private_assets", []))
 
-    version = required_object(manifest, "version")
-    version_name = required_str(version, "version")
-    bundle_path = required_safe_path(version, "bundle_path")
+    bundle_path = required_safe_path(manifest, "bundle_path")
     bundle_root = challenge_root / bundle_path
     spec = load_json(bundle_root / "spec.json")
-    validate_bundle(challenge_root, bundle_root, manifest, spec, version_name)
+    validate_bundle(challenge_root, bundle_root, manifest, spec)
 
 
 def validate_bundle(
@@ -80,7 +72,6 @@ def validate_bundle(
     bundle_root: Path,
     manifest: dict[str, Any],
     spec: dict[str, Any],
-    version_name: str,
 ) -> None:
     assert_file(bundle_root / "statement.md", f"{bundle_root}: statement.md")
     if spec.get("schema_version") != 1:
@@ -88,15 +79,14 @@ def validate_bundle(
     match_field(spec, "challenge_id", manifest["challenge_id"], bundle_root)
     match_field(spec, "challenge_title", manifest["title"], bundle_root)
     match_field(spec, "challenge_summary", manifest["summary"], bundle_root)
-    match_field(spec, "challenge_version", version_name, bundle_root)
-    validate_targets(bundle_root, required_array(spec, "benchmark_targets"))
+    validate_targets(bundle_root, required_array(spec, "targets"))
 
     datasets = required_object(spec, "datasets")
     public_dir = required_safe_path(datasets, "public_dir")
     assert_dir(bundle_root / public_dir, f"{bundle_root}: datasets.public_dir")
 
     execution = required_object(spec, "execution")
-    if any(target.get("validation_enabled") for target in spec["benchmark_targets"]):
+    if any(target.get("validation_enabled") for target in spec["targets"]):
         if "validation_runs" in execution:
             runs_path = required_safe_path(execution, "validation_runs")
             validate_run_manifest(bundle_root, bundle_root / runs_path)
@@ -125,20 +115,20 @@ def validate_bundle(
 
 def validate_targets(bundle_root: Path, targets: list[Any]) -> None:
     if not targets:
-        raise ValidationError(f"{bundle_root}: benchmark_targets must not be empty")
+        raise ValidationError(f"{bundle_root}: targets must not be empty")
     seen = set()
     for target in targets:
         if not isinstance(target, dict):
-            raise ValidationError(f"{bundle_root}: benchmark target must be an object")
-        target_id = required_str(target, "id")
-        if target_id in seen:
-            raise ValidationError(f"{bundle_root}: duplicate target id {target_id}")
-        seen.add(target_id)
+            raise ValidationError(f"{bundle_root}: target must be an object")
+        name = required_str(target, "name")
+        if name in seen:
+            raise ValidationError(f"{bundle_root}: duplicate target {name}")
+        seen.add(name)
         if target.get("accelerator") != "cpu":
             raise ValidationError(f"{bundle_root}: only cpu targets are currently supported")
-        if target.get("docker_platform") != TARGET_PLATFORMS.get(target_id):
+        if target.get("docker_platform") != "linux/arm64":
             raise ValidationError(
-                f"{bundle_root}: target {target_id} must use docker_platform {TARGET_PLATFORMS.get(target_id)}"
+                f"{bundle_root}: target {name} must use docker_platform linux/arm64"
             )
 
 
