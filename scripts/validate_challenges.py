@@ -56,7 +56,7 @@ def validate_challenge(challenge_root: Path) -> None:
     if manifest.get("request") != "new_challenge":
         raise ValidationError(f"{challenge_root}: CI currently validates new_challenge proposals")
     required_str(manifest, "title")
-    required_str(manifest, "summary")
+    required_localized_text(manifest, "summary")
     readme_path = required_safe_path(manifest, "readme_path")
     assert_file(challenge_root / readme_path, f"{challenge_root}: readme_path")
     validate_private_assets(challenge_root, manifest.get("private_assets", []))
@@ -78,7 +78,7 @@ def validate_bundle(
         raise ValidationError(f"{bundle_root}: spec schema_version must be 1")
     match_field(spec, "challenge_name", manifest["challenge_name"], bundle_root)
     match_field(spec, "challenge_title", manifest["title"], bundle_root)
-    match_field(spec, "challenge_summary", manifest["summary"], bundle_root)
+    match_localized_text(spec, "summary", manifest["summary"], bundle_root)
     required_str(spec, "starts_at")
     validate_targets(bundle_root, required_array(spec, "targets"))
 
@@ -234,6 +234,14 @@ def match_field(value: dict[str, Any], field: str, expected: str, location: Path
         raise ValidationError(f"{location}: {field} must be {expected}, got {actual}")
 
 
+def match_localized_text(
+    value: dict[str, Any], field: str, expected: dict[str, str], location: Path
+) -> None:
+    actual = required_localized_text(value, field)
+    if actual != expected:
+        raise ValidationError(f"{location}: {field} must match the challenge manifest")
+
+
 def required_object(value: dict[str, Any], field: str) -> dict[str, Any]:
     item = value.get(field)
     if not isinstance(item, dict):
@@ -252,6 +260,17 @@ def required_str(value: dict[str, Any], field: str) -> str:
     item = value.get(field)
     if not isinstance(item, str) or not item.strip():
         raise ValidationError(f"{field} must be a non-empty string")
+    return item
+
+
+def required_localized_text(value: dict[str, Any], field: str) -> dict[str, str]:
+    item = value.get(field)
+    if not isinstance(item, dict):
+        raise ValidationError(f"{field} must be an object with en and zh strings")
+    for locale in ("en", "zh"):
+        text = item.get(locale)
+        if not isinstance(text, str) or not text.strip():
+            raise ValidationError(f"{field}.{locale} must be a non-empty string")
     return item
 
 

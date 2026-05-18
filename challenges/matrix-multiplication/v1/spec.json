@@ -2,7 +2,10 @@
   "schema_version": 1,
   "challenge_name": "matrix-multiplication",
   "challenge_title": "Matrix Multiplication Throughput",
-  "challenge_summary": "Compute batches of dense f32 matrix products and return correct binary outputs as quickly as possible.",
+  "summary": {
+    "en": "Compute batches of dense f32 matrix products and return correct binary outputs as quickly as possible.",
+    "zh": "批量计算稠密 f32 矩阵乘积，并尽快返回正确的二进制输出。"
+  },
   "solution": {
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
