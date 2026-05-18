@@ -79,6 +79,7 @@ def validate_bundle(
     match_field(spec, "challenge_name", manifest["challenge_name"], bundle_root)
     match_field(spec, "challenge_title", manifest["title"], bundle_root)
     match_field(spec, "challenge_summary", manifest["summary"], bundle_root)
+    required_str(spec, "starts_at")
     validate_targets(bundle_root, required_array(spec, "targets"))
 
     datasets = required_object(spec, "datasets")
@@ -124,8 +125,13 @@ def validate_targets(bundle_root: Path, targets: list[Any]) -> None:
         if name in seen:
             raise ValidationError(f"{bundle_root}: duplicate target {name}")
         seen.add(name)
-        if target.get("accelerator") != "cpu":
-            raise ValidationError(f"{bundle_root}: only cpu targets are currently supported")
+        if "accelerator" not in target:
+            raise ValidationError(f"{bundle_root}: target {name} must declare accelerator")
+        accelerator = target["accelerator"]
+        if accelerator not in {None, "gpu"}:
+            raise ValidationError(
+                f"{bundle_root}: target {name} accelerator must be null or gpu"
+            )
         if target.get("docker_platform") != "linux/arm64":
             raise ValidationError(
                 f"{bundle_root}: target {name} must use docker_platform linux/arm64"
@@ -176,6 +182,9 @@ def validate_prepare(bundle_root: Path, prepare: Any, field: str) -> None:
         raise ValidationError(
             f"{bundle_root}: execution.{field}.network_access must be disabled, loopback, or enabled"
         )
+    for removed in ("external_data", "cache_key_hint"):
+        if removed in prepare:
+            raise ValidationError(f"{bundle_root}: execution.{field}.{removed} is not supported")
 
 
 def validate_private_assets(challenge_root: Path, assets: Any) -> None:
@@ -191,6 +200,10 @@ def validate_private_assets(challenge_root: Path, assets: Any) -> None:
         seen.add(asset_name)
         if asset.get("kind") not in PRIVATE_ASSET_KINDS:
             raise ValidationError(f"{challenge_root}: unsupported private asset kind {asset.get('kind')}")
+        if not isinstance(asset.get("required"), bool):
+            raise ValidationError(
+                f"{challenge_root}: private asset {asset_name} required must be true or false"
+            )
 
 
 def reject_private_files(root: Path) -> None:
