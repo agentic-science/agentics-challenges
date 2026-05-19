@@ -57,6 +57,7 @@ def validate_challenge(challenge_root: Path) -> None:
         raise ValidationError(f"{challenge_root}: CI currently validates new_challenge proposals")
     required_str(manifest, "title")
     required_localized_text(manifest, "summary")
+    manifest_keywords = required_keywords(manifest, "keywords")
     readme_path = required_safe_path(manifest, "readme_path")
     assert_file(challenge_root / readme_path, f"{challenge_root}: readme_path")
     validate_private_assets(challenge_root, manifest.get("private_assets", []))
@@ -64,13 +65,14 @@ def validate_challenge(challenge_root: Path) -> None:
     bundle_path = required_safe_path(manifest, "bundle_path")
     bundle_root = challenge_root / bundle_path
     spec = load_json(bundle_root / "spec.json")
-    validate_bundle(challenge_root, bundle_root, manifest, spec)
+    validate_bundle(challenge_root, bundle_root, manifest, manifest_keywords, spec)
 
 
 def validate_bundle(
     challenge_root: Path,
     bundle_root: Path,
     manifest: dict[str, Any],
+    manifest_keywords: list[str],
     spec: dict[str, Any],
 ) -> None:
     assert_file(bundle_root / "statement.md", f"{bundle_root}: statement.md")
@@ -79,6 +81,7 @@ def validate_bundle(
     match_field(spec, "challenge_name", manifest["challenge_name"], bundle_root)
     match_field(spec, "challenge_title", manifest["title"], bundle_root)
     match_localized_text(spec, "summary", manifest["summary"], bundle_root)
+    match_keywords(spec, "keywords", manifest_keywords, bundle_root)
     required_str(spec, "starts_at")
     validate_targets(bundle_root, required_array(spec, "targets"))
 
@@ -242,6 +245,14 @@ def match_localized_text(
         raise ValidationError(f"{location}: {field} must match the challenge manifest")
 
 
+def match_keywords(
+    value: dict[str, Any], field: str, expected: list[str], location: Path
+) -> None:
+    actual = required_keywords(value, field)
+    if actual != expected:
+        raise ValidationError(f"{location}: {field} must match the challenge manifest")
+
+
 def required_object(value: dict[str, Any], field: str) -> dict[str, Any]:
     item = value.get(field)
     if not isinstance(item, dict):
@@ -272,6 +283,32 @@ def required_localized_text(value: dict[str, Any], field: str) -> dict[str, str]
         if not isinstance(text, str) or not text.strip():
             raise ValidationError(f"{field}.{locale} must be a non-empty string")
     return item
+
+
+def required_keywords(value: dict[str, Any], field: str) -> list[str]:
+    item = value.get(field)
+    if not isinstance(item, list):
+        raise ValidationError(f"{field} must be an array")
+    if not 1 <= len(item) <= 6:
+        raise ValidationError(f"{field} must contain between 1 and 6 entries")
+    keywords: list[str] = []
+    seen: set[str] = set()
+    for index, keyword in enumerate(item):
+        if not isinstance(keyword, str):
+            raise ValidationError(f"{field}[{index}] must be a string")
+        normalized = keyword.strip()
+        if not normalized:
+            raise ValidationError(f"{field}[{index}] must be non-empty after trimming")
+        if len(normalized.encode("utf-8")) > 30:
+            raise ValidationError(f"{field}[{index}] must be at most 30 UTF-8 bytes")
+        if any(ord(char) < 32 or ord(char) == 127 for char in normalized):
+            raise ValidationError(f"{field}[{index}] must not contain control characters")
+        case_key = normalized.casefold()
+        if case_key in seen:
+            raise ValidationError(f"{field} contains duplicate keyword {normalized!r}")
+        seen.add(case_key)
+        keywords.append(normalized)
+    return keywords
 
 
 def required_safe_path(value: dict[str, Any], field: str) -> str:
