@@ -80,7 +80,6 @@ def main() -> int:
     payload: dict[str, Any] = {
         "status": "passed" if passed == total else "failed",
         "mode": args.mode,
-        "primary_score": correctness,
         "rank_score": rank_score,
         "aggregate_metrics": [
             {"metric_name": "correctness", "value": correctness},
