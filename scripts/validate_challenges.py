@@ -84,19 +84,20 @@ def validate_bundle(
     match_localized_text(spec, "summary", manifest["summary"], bundle_root)
     match_keywords(spec, "keywords", manifest_keywords, bundle_root)
     required_str(spec, "starts_at")
-    validate_targets(bundle_root, required_array(spec, "targets"))
+    execution = required_object(spec, "execution")
+    mode = execution.get("mode")
+    if mode not in {"separated_evaluator", "piped_stdio", "coexecuted_benchmark"}:
+        raise ValidationError(
+            f"{bundle_root}: execution.mode must be separated_evaluator, piped_stdio, or coexecuted_benchmark"
+        )
+    validate_targets(bundle_root, required_array(spec, "targets"), mode)
 
     datasets = required_object(spec, "datasets")
     public_dir = required_safe_path(datasets, "public_dir")
     assert_dir(bundle_root / public_dir, f"{bundle_root}: datasets.public_dir")
 
-    execution = required_object(spec, "execution")
-    if execution.get("mode") != "separated_evaluator":
-        raise ValidationError(
-            f"{bundle_root}: execution.mode must be separated_evaluator"
-        )
     if any(target.get("validation_enabled") for target in spec["targets"]):
-        if "validation_runs" in execution:
+        if mode == "separated_evaluator" and "validation_runs" in execution:
             runs_path = required_safe_path(execution, "validation_runs")
             ci = manifest.get("ci", {})
             if not isinstance(ci, dict):
@@ -108,28 +109,58 @@ def validate_bundle(
             )
         elif "validation_prepare" not in execution:
             raise ValidationError(
-                f"{bundle_root}: validation enabled targets require validation_runs or validation_prepare"
+                f"{bundle_root}: validation enabled targets require the mode-specific validation source"
             )
 
     if datasets.get("private_benchmark_enabled"):
-        if "official_runs" not in execution and "official_prepare" not in execution:
+        if mode == "separated_evaluator" and "official_runs" not in execution and "official_prepare" not in execution:
             raise ValidationError(
                 f"{bundle_root}: private benchmarks require official_runs or official_prepare"
             )
+        if mode == "piped_stdio" and "official_session" not in execution and "official_prepare" not in execution:
+            raise ValidationError(
+                f"{bundle_root}: private benchmarks require official_session or official_prepare"
+            )
 
-    evaluator = required_object(execution, "evaluator")
-    evaluator_command = required_array(evaluator, "command")
-    for part in evaluator_command:
+    if mode == "coexecuted_benchmark":
+        if execution.get("acknowledge_danger") is not True:
+            raise ValidationError(
+                f"{bundle_root}: coexecuted_benchmark requires acknowledge_danger true"
+            )
+        for forbidden in ("validation_runs", "official_runs", "validation_session", "official_session"):
+            if forbidden in execution:
+                raise ValidationError(
+                    f"{bundle_root}: coexecuted_benchmark must not declare execution.{forbidden}"
+                )
+        executor = required_object(execution, "benchmark")
+        executor_label = "execution.benchmark.command script"
+    elif mode == "piped_stdio":
+        executor = required_object(execution, "interactor")
+        executor_label = "execution.interactor.command script"
+    else:
+        executor = required_object(execution, "evaluator")
+        executor_label = "execution.evaluator.command script"
+
+    executor_command = required_array(executor, "command")
+    for part in executor_command:
         if isinstance(part, str) and part.endswith(".py") and is_safe_relative_path(part):
-            assert_file(bundle_root / part, f"{bundle_root}: execution.evaluator.command script")
+            assert_file(bundle_root / part, f"{bundle_root}: {executor_label}")
             break
 
-    validate_prepare(bundle_root, execution.get("validation_prepare"), "validation_prepare")
-    validate_prepare(bundle_root, execution.get("official_prepare"), "official_prepare")
+    if mode == "coexecuted_benchmark":
+        validate_coexecuted_prepare(
+            bundle_root, execution.get("validation_prepare"), "validation_prepare"
+        )
+        validate_coexecuted_prepare(
+            bundle_root, execution.get("official_prepare"), "official_prepare"
+        )
+    else:
+        validate_prepare(bundle_root, execution.get("validation_prepare"), "validation_prepare")
+        validate_prepare(bundle_root, execution.get("official_prepare"), "official_prepare")
     _ = challenge_root
 
 
-def validate_targets(bundle_root: Path, targets: list[Any]) -> None:
+def validate_targets(bundle_root: Path, targets: list[Any], mode: str) -> None:
     if not targets:
         raise ValidationError(f"{bundle_root}: targets must not be empty")
     seen = set()
@@ -152,11 +183,13 @@ def validate_targets(bundle_root: Path, targets: list[Any]) -> None:
                 f"{bundle_root}: target {name} must use docker_platform linux/arm64"
             )
         validate_resource_profile(
-            bundle_root, name, required_object(target, "resource_profile")
+            bundle_root, name, required_object(target, "resource_profile"), mode
         )
 
 
-def validate_resource_profile(bundle_root: Path, target_name: str, profile: dict[str, Any]) -> None:
+def validate_resource_profile(
+    bundle_root: Path, target_name: str, profile: dict[str, Any], mode: str
+) -> None:
     for old_field in (
         "timeout_sec",
         "memory_limit_mb",
@@ -173,12 +206,24 @@ def validate_resource_profile(bundle_root: Path, target_name: str, profile: dict
             )
     solution = required_object(profile, "solution")
     evaluator = required_object(profile, "evaluator")
-    for stage in ("setup", "build", "run"):
+    for stage in ("setup", "build"):
         validate_stage_profile(
             bundle_root,
             target_name,
             f"solution.{stage}",
             required_object(solution, stage),
+        )
+    if mode == "coexecuted_benchmark":
+        if "run" in solution:
+            raise ValidationError(
+                f"{bundle_root}: target {target_name} resource_profile.solution.run is forbidden for coexecuted_benchmark"
+            )
+    else:
+        validate_stage_profile(
+            bundle_root,
+            target_name,
+            "solution.run",
+            required_object(solution, "run"),
         )
     for stage in ("setup", "run"):
         validate_stage_profile(
@@ -265,6 +310,32 @@ def validate_prepare(bundle_root: Path, prepare: Any, field: str) -> None:
     if result_runs_file.endswith("/"):
         raise ValidationError(f"{bundle_root}: execution.{field}.result_runs_file must be a file")
     for removed in ("external_data", "cache_key_hint", "network_access"):
+        if removed in prepare:
+            raise ValidationError(f"{bundle_root}: execution.{field}.{removed} is not supported")
+
+
+def validate_coexecuted_prepare(bundle_root: Path, prepare: Any, field: str) -> None:
+    if prepare is None:
+        return
+    if not isinstance(prepare, dict):
+        raise ValidationError(f"{bundle_root}: execution.{field} must be an object")
+    command = required_array(prepare, "command")
+    if not command:
+        raise ValidationError(f"{bundle_root}: execution.{field}.command must not be empty")
+    for part in command:
+        if not isinstance(part, str) or not part:
+            raise ValidationError(
+                f"{bundle_root}: execution.{field}.command entries must be strings"
+            )
+        if part.endswith(".py") and is_safe_relative_path(part):
+            assert_file(bundle_root / part, f"{bundle_root}: execution.{field}.command script")
+    for removed in (
+        "external_data",
+        "cache_key_hint",
+        "network_access",
+        "result_runs_file",
+        "result_session_file",
+    ):
         if removed in prepare:
             raise ValidationError(f"{bundle_root}: execution.{field}.{removed} is not supported")
 
