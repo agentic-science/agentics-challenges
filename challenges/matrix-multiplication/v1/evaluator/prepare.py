@@ -16,31 +16,6 @@ OUTPUT_HEADER = struct.Struct("<8sIII")
 NUMPY_VERSION = "2.2.6"
 PYTHON_GENERATOR_WORK_LIMIT = 5_000_000
 
-DEFAULT_CONFIG = {
-    "runs": [
-        {
-            "run_name": "square_100x100",
-            "cases": 5000,
-            "m": 100,
-            "k": 100,
-            "n": 100,
-            "seed": 1001,
-            "tolerance_abs": 0.001,
-            "tolerance_rel": 0.0001,
-        },
-        {
-            "run_name": "rect_50x10_10x500",
-            "cases": 5000,
-            "m": 50,
-            "k": 10,
-            "n": 500,
-            "seed": 2002,
-            "tolerance_abs": 0.001,
-            "tolerance_rel": 0.0001,
-        },
-    ]
-}
-
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -97,7 +72,9 @@ def main() -> int:
 def load_config(challenge_dir: Path) -> dict[str, object]:
     config_path = challenge_dir / "private-benchmark" / "config.json"
     if not config_path.is_file():
-        return DEFAULT_CONFIG
+        raise FileNotFoundError(
+            "official preparation requires private-benchmark/config.json from the private seed overlay"
+        )
     loaded = json.loads(config_path.read_text(encoding="utf-8"))
     if not isinstance(loaded, dict) or not isinstance(loaded.get("runs"), list):
         raise ValueError("private-benchmark/config.json must contain a runs array")

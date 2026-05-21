@@ -15,6 +15,7 @@
       "asset_name": "official-seed-config",
       "kind": "private_seeds",
       "required": true,
+      "required_paths": ["private-benchmark/config.json"],
       "asset_note": "ZIP overlay containing private-benchmark/config.json. The evaluator prepare phase expands this private config into official inputs and expected outputs."
     }
   ],

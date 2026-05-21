@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import secrets
 import struct
 import zipfile
 from pathlib import Path
@@ -48,6 +49,12 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="optional path for a private benchmark ZIP overlay",
     )
+    parser.add_argument(
+        "--private-seed",
+        type=int,
+        default=None,
+        help="private seed for official-config generation; defaults to fresh OS randomness",
+    )
     return parser.parse_args()
 
 
@@ -61,6 +68,7 @@ def main() -> int:
             challenge_root,
             square_cases=args.square_cases or 5000,
             rect_cases=args.rect_cases or 5000,
+            private_seed=args.private_seed,
         )
         if args.zip is not None:
             write_private_zip(challenge_root, args.zip)
@@ -89,10 +97,18 @@ def generate_public(challenge_root: Path) -> None:
     )
 
 
-def generate_official_config(challenge_root: Path, square_cases: int, rect_cases: int) -> None:
+def generate_official_config(
+    challenge_root: Path,
+    square_cases: int,
+    rect_cases: int,
+    private_seed: int | None,
+) -> None:
     version_root = challenge_root / "v1"
     private_root = version_root / "private-benchmark"
+    seed_source = private_seed if private_seed is not None else secrets.randbits(63)
+    rng = random.Random(seed_source)
     config = {
+        "seed_source": seed_source,
         "runs": [
             {
                 "run_name": "square_100x100",
@@ -100,7 +116,7 @@ def generate_official_config(challenge_root: Path, square_cases: int, rect_cases
                 "m": 100,
                 "k": 100,
                 "n": 100,
-                "seed": 1001,
+                "seed": rng.randrange(1, 2**63),
                 "tolerance_abs": 0.001,
                 "tolerance_rel": 0.0001,
             },
@@ -110,7 +126,7 @@ def generate_official_config(challenge_root: Path, square_cases: int, rect_cases
                 "m": 50,
                 "k": 10,
                 "n": 500,
-                "seed": 2002,
+                "seed": rng.randrange(1, 2**63),
                 "tolerance_abs": 0.001,
                 "tolerance_rel": 0.0001,
             },

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -97,7 +98,14 @@ def validate_bundle(
     if any(target.get("validation_enabled") for target in spec["targets"]):
         if "validation_runs" in execution:
             runs_path = required_safe_path(execution, "validation_runs")
-            validate_run_manifest(bundle_root, bundle_root / runs_path)
+            ci = manifest.get("ci", {})
+            if not isinstance(ci, dict):
+                ci = {}
+            validate_run_manifest(
+                bundle_root,
+                bundle_root / runs_path,
+                require_expected_outputs=bool(ci.get("smoke_test_public_validation")),
+            )
         elif "validation_prepare" not in execution:
             raise ValidationError(
                 f"{bundle_root}: validation enabled targets require validation_runs or validation_prepare"
@@ -145,7 +153,9 @@ def validate_targets(bundle_root: Path, targets: list[Any]) -> None:
             )
 
 
-def validate_run_manifest(bundle_root: Path, runs_path: Path) -> None:
+def validate_run_manifest(
+    bundle_root: Path, runs_path: Path, *, require_expected_outputs: bool = False
+) -> None:
     manifest = load_json(runs_path)
     runs = required_array(manifest, "runs")
     if not runs:
@@ -167,6 +177,24 @@ def validate_run_manifest(bundle_root: Path, runs_path: Path) -> None:
                 if not isinstance(source_path, str) or not is_safe_relative_path(source_path):
                     raise ValidationError(f"{runs_path}: unsafe input source_path {source_path}")
                 assert_file(bundle_root / source_path, f"{runs_path}: input source_path")
+        for output_file in run.get("output_files", []):
+            if not isinstance(output_file, str) or not is_safe_relative_path(output_file):
+                raise ValidationError(f"{runs_path}: unsafe output_files path {output_file}")
+        expected_output = run.get("expected_output_source_path")
+        if expected_output is None:
+            if require_expected_outputs:
+                raise ValidationError(
+                    f"{runs_path}: smoke_test_public_validation requires expected_output_source_path for {run_name}"
+                )
+        elif not isinstance(expected_output, str) or not is_safe_relative_path(expected_output):
+            raise ValidationError(
+                f"{runs_path}: unsafe expected_output_source_path {expected_output}"
+            )
+        else:
+            assert_file(
+                bundle_root / expected_output,
+                f"{runs_path}: expected_output_source_path",
+            )
 
 
 def validate_prepare(bundle_root: Path, prepare: Any, field: str) -> None:
@@ -211,15 +239,50 @@ def validate_private_assets(challenge_root: Path, assets: Any) -> None:
             raise ValidationError(
                 f"{challenge_root}: private asset {asset_name} required must be true or false"
             )
+        required_paths = asset.get("required_paths", [])
+        if not isinstance(required_paths, list):
+            raise ValidationError(
+                f"{challenge_root}: private asset {asset_name} required_paths must be an array"
+            )
+        seen_paths: set[str] = set()
+        for index, required_path in enumerate(required_paths):
+            if not isinstance(required_path, str) or not is_safe_relative_path(required_path):
+                raise ValidationError(
+                    f"{challenge_root}: private asset {asset_name} required_paths[{index}] must be a safe relative path"
+                )
+            if required_path in seen_paths:
+                raise ValidationError(
+                    f"{challenge_root}: private asset {asset_name} contains duplicate required path {required_path}"
+                )
+            seen_paths.add(required_path)
 
 
 def reject_private_files(root: Path) -> None:
     for path in root.rglob("*"):
+        if is_git_ignored(path):
+            continue
         name = path.name.lower()
         if name in PRIVATE_NAMES or name.endswith((".pem", ".key", ".p12")):
             raise ValidationError(f"private or secret material must not be committed: {path}")
         if path.is_symlink():
             raise ValidationError(f"symlinks are not allowed in challenge proposals: {path}")
+
+
+def is_git_ignored(path: Path) -> bool:
+    try:
+        checked_path = path.relative_to(ROOT)
+    except ValueError:
+        checked_path = path
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(ROOT), "check-ignore", "-q", str(checked_path)],
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+    except OSError:
+        return False
+    return result.returncode == 0
 
 
 def load_json(path: Path) -> dict[str, Any]:
