@@ -151,6 +151,57 @@ def validate_targets(bundle_root: Path, targets: list[Any]) -> None:
             raise ValidationError(
                 f"{bundle_root}: target {name} must use docker_platform linux/arm64"
             )
+        validate_resource_profile(
+            bundle_root, name, required_object(target, "resource_profile")
+        )
+
+
+def validate_resource_profile(bundle_root: Path, target_name: str, profile: dict[str, Any]) -> None:
+    for old_field in (
+        "timeout_sec",
+        "memory_limit_mb",
+        "cpu_limit_millis",
+        "disk_limit_mb",
+        "setup_network_access",
+        "build_network_access",
+        "run_network_access",
+        "evaluator_network_access",
+    ):
+        if old_field in profile:
+            raise ValidationError(
+                f"{bundle_root}: target {target_name} resource_profile.{old_field} is not supported"
+            )
+    solution = required_object(profile, "solution")
+    evaluator = required_object(profile, "evaluator")
+    for stage in ("setup", "build", "run"):
+        validate_stage_profile(
+            bundle_root,
+            target_name,
+            f"solution.{stage}",
+            required_object(solution, stage),
+        )
+    for stage in ("setup", "run"):
+        validate_stage_profile(
+            bundle_root,
+            target_name,
+            f"evaluator.{stage}",
+            required_object(evaluator, stage),
+        )
+
+
+def validate_stage_profile(
+    bundle_root: Path, target_name: str, field: str, stage: dict[str, Any]
+) -> None:
+    for key in ("timeout_sec", "memory_limit_mb", "cpu_limit_millis", "disk_limit_mb"):
+        value = stage.get(key)
+        if not isinstance(value, int) or value <= 0:
+            raise ValidationError(
+                f"{bundle_root}: target {target_name} resource_profile.{field}.{key} must be a positive integer"
+            )
+    if stage.get("network_access") not in {"disabled", "loopback", "enabled"}:
+        raise ValidationError(
+            f"{bundle_root}: target {target_name} resource_profile.{field}.network_access must be disabled, loopback, or enabled"
+        )
 
 
 def validate_run_manifest(
@@ -213,11 +264,7 @@ def validate_prepare(bundle_root: Path, prepare: Any, field: str) -> None:
     result_runs_file = required_safe_path(prepare, "result_runs_file")
     if result_runs_file.endswith("/"):
         raise ValidationError(f"{bundle_root}: execution.{field}.result_runs_file must be a file")
-    if prepare.get("network_access") not in {"disabled", "loopback", "enabled"}:
-        raise ValidationError(
-            f"{bundle_root}: execution.{field}.network_access must be disabled, loopback, or enabled"
-        )
-    for removed in ("external_data", "cache_key_hint"):
+    for removed in ("external_data", "cache_key_hint", "network_access"):
         if removed in prepare:
             raise ValidationError(f"{bundle_root}: execution.{field}.{removed} is not supported")
 

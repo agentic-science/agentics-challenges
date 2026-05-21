@@ -27,14 +27,45 @@
           "source": "registry",
           "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
         },
-        "timeout_sec": 900,
-        "memory_limit_mb": 2048,
-        "cpu_limit_millis": 4000,
-        "disk_limit_mb": 4096,
-        "setup_network_access": "enabled",
-        "build_network_access": "enabled",
-        "run_network_access": "disabled",
-        "evaluator_network_access": "disabled",
+        "solution": {
+          "setup": {
+            "timeout_sec": 900,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 4096,
+            "network_access": "enabled"
+          },
+          "build": {
+            "timeout_sec": 900,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 4096,
+            "network_access": "enabled"
+          },
+          "run": {
+            "timeout_sec": 900,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 4096,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 900,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 4096,
+            "network_access": "enabled"
+          },
+          "run": {
+            "timeout_sec": 900,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 4096,
+            "network_access": "disabled"
+          }
+        },
         "resource_description": "Ubuntu 26.04 build environment with CPU-only execution.",
         "hardware_metadata": {
           "kind": "cpu"
@@ -60,7 +91,6 @@
     "official_prepare": {
       "command": ["python", "evaluator/prepare.py"],
       "result_runs_file": "generated/runs.json",
-      "network_access": "enabled",
       "reproducibility_notes": "Official benchmark files are generated from a private seed/config overlay. Full-size generation uses a pinned NumPy install when the evaluator image does not already provide NumPy."
     }
   },
