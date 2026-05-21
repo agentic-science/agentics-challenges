@@ -25,7 +25,7 @@ PRIVATE_NAMES = {
 }
 PRIVATE_ASSET_KINDS = {
     "private_benchmark_data",
-    "private_scorer_package",
+    "private_evaluator_package",
     "private_seeds",
     "private_reference_outputs",
 }
@@ -90,6 +90,10 @@ def validate_bundle(
     assert_dir(bundle_root / public_dir, f"{bundle_root}: datasets.public_dir")
 
     execution = required_object(spec, "execution")
+    if execution.get("mode") != "separated_evaluator":
+        raise ValidationError(
+            f"{bundle_root}: execution.mode must be separated_evaluator"
+        )
     if any(target.get("validation_enabled") for target in spec["targets"]):
         if "validation_runs" in execution:
             runs_path = required_safe_path(execution, "validation_runs")
@@ -105,11 +109,11 @@ def validate_bundle(
                 f"{bundle_root}: private benchmarks require official_runs or official_prepare"
             )
 
-    scorer = required_object(spec, "scorer")
-    scorer_command = required_array(scorer, "command")
-    for part in scorer_command:
+    evaluator = required_object(execution, "evaluator")
+    evaluator_command = required_array(evaluator, "command")
+    for part in evaluator_command:
         if isinstance(part, str) and part.endswith(".py") and is_safe_relative_path(part):
-            assert_file(bundle_root / part, f"{bundle_root}: scorer.command script")
+            assert_file(bundle_root / part, f"{bundle_root}: execution.evaluator.command script")
             break
 
     validate_prepare(bundle_root, execution.get("validation_prepare"), "validation_prepare")

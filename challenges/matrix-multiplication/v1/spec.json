@@ -11,10 +11,6 @@
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
   },
-  "scorer": {
-    "command": ["python", "scorer/run.py"],
-    "result_file": "result.json"
-  },
   "targets": [
     {
       "name": "linux-arm64-cpu",
@@ -27,7 +23,7 @@
           "source": "local",
           "reference": "agentics-linux-arm64-cpu:ubuntu26.04-local"
         },
-        "scorer_image": {
+        "evaluator_image": {
           "source": "local",
           "reference": "agentics-linux-arm64-cpu:ubuntu26.04-local"
         },
@@ -38,7 +34,7 @@
         "setup_network_access": "enabled",
         "build_network_access": "enabled",
         "run_network_access": "disabled",
-        "scorer_network_access": "disabled",
+        "evaluator_network_access": "disabled",
         "resource_description": "Ubuntu 24.04 build environment with CPU-only execution.",
         "hardware_metadata": {
           "kind": "cpu"
@@ -55,12 +51,17 @@
   },
   "solution_publication": "public",
   "execution": {
+    "mode": "separated_evaluator",
+    "evaluator": {
+      "command": ["python", "evaluator/run.py"],
+      "result_file": "result.json"
+    },
     "validation_runs": "public/runs.json",
     "official_prepare": {
-      "command": ["python", "scorer/prepare.py"],
+      "command": ["python", "evaluator/prepare.py"],
       "result_runs_file": "generated/runs.json",
       "network_access": "enabled",
-      "reproducibility_notes": "Official benchmark files are generated from a private seed/config overlay. Full-size generation uses a pinned NumPy install when the scorer image does not already provide NumPy."
+      "reproducibility_notes": "Official benchmark files are generated from a private seed/config overlay. Full-size generation uses a pinned NumPy install when the evaluator image does not already provide NumPy."
     }
   },
   "datasets": {
@@ -100,7 +101,7 @@
         "label": "Max Absolute Error",
         "direction": "minimize",
         "visibility": "public",
-        "metric_description": "Maximum absolute f32 output error observed by the scorer."
+        "metric_description": "Maximum absolute f32 output error observed by the evaluator."
       },
       {
         "name": "failed_values",
