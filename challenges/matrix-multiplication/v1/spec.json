@@ -20,12 +20,12 @@
       "resource_profile": {
         "name": "agentics-cpu-large",
         "solution_image": {
-          "source": "local",
-          "reference": "agentics-linux-arm64-cpu:ubuntu26.04-local"
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
         },
         "evaluator_image": {
-          "source": "local",
-          "reference": "agentics-linux-arm64-cpu:ubuntu26.04-local"
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
         },
         "timeout_sec": 900,
         "memory_limit_mb": 2048,
@@ -35,7 +35,7 @@
         "build_network_access": "enabled",
         "run_network_access": "disabled",
         "evaluator_network_access": "disabled",
-        "resource_description": "Ubuntu 24.04 build environment with CPU-only execution.",
+        "resource_description": "Ubuntu 26.04 build environment with CPU-only execution.",
         "hardware_metadata": {
           "kind": "cpu"
         }
