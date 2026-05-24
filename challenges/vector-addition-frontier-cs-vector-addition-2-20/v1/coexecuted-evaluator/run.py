@@ -1,185 +1,28 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import math
-import subprocess
+import os
+import sys
+import time
 from pathlib import Path
-from typing import Any
+from types import ModuleType
+from typing import Any, Callable
 
 
 DEFAULT_CONFIG = {
     "n": 1_048_576,
     "validation_samples": 3,
     "official_samples": 5,
-    "warmups": 2,
+    "warmups": 5,
+    "gpu_warmups": 5,
+    "seed": 1337,
 }
 
-
-HARNESS_SOURCE = r'''
-#include <algorithm>
-#include <cmath>
-#include <cuda_runtime.h>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
-
-#include "/workspace/solution.cu"
-
-__global__ void agentics_reference_vector_add_kernel(
-    const float* x,
-    const float* y,
-    float* out,
-    int n
-) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < n) {
-        out[idx] = x[idx] + y[idx];
-    }
-}
-
-int fail(const std::string& message) {
-    std::cerr << message << std::endl;
-    return 2;
-}
-
-#define CUDA_CHECK(call) \
-    do { \
-        cudaError_t err = (call); \
-        if (err != cudaSuccess) { \
-            std::ostringstream oss; \
-            oss << "CUDA failure at " << __FILE__ << ":" << __LINE__ << ": " \
-                << cudaGetErrorString(err); \
-            return fail(oss.str()); \
-        } \
-    } while (0)
-
-template <typename Kernel>
-float median_time_ms(Kernel kernel, int samples, int warmups) {
-    for (int i = 0; i < warmups; ++i) {
-        kernel();
-    }
-    CUDA_CHECK(cudaDeviceSynchronize());
-
-    std::vector<float> timings;
-    timings.reserve(samples);
-    cudaEvent_t start;
-    cudaEvent_t stop;
-    CUDA_CHECK(cudaEventCreate(&start));
-    CUDA_CHECK(cudaEventCreate(&stop));
-
-    for (int i = 0; i < samples; ++i) {
-        CUDA_CHECK(cudaEventRecord(start));
-        kernel();
-        CUDA_CHECK(cudaEventRecord(stop));
-        CUDA_CHECK(cudaEventSynchronize(stop));
-        float elapsed_ms = 0.0f;
-        CUDA_CHECK(cudaEventElapsedTime(&elapsed_ms, start, stop));
-        timings.push_back(elapsed_ms);
-    }
-
-    CUDA_CHECK(cudaEventDestroy(start));
-    CUDA_CHECK(cudaEventDestroy(stop));
-    std::sort(timings.begin(), timings.end());
-    return timings[timings.size() / 2];
-}
-
-int main(int argc, char** argv) {
-    if (argc != 4) {
-        return fail("usage: vector_bench <n> <samples> <warmups>");
-    }
-
-    const int n = std::stoi(argv[1]);
-    const int samples = std::stoi(argv[2]);
-    const int warmups = std::stoi(argv[3]);
-    if (n <= 0 || samples <= 0 || warmups < 0) {
-        return fail("n and samples must be positive; warmups must be non-negative");
-    }
-
-    std::vector<float> h_x(n);
-    std::vector<float> h_y(n);
-    std::vector<float> h_out(n, 0.0f);
-    for (int i = 0; i < n; ++i) {
-        h_x[i] = static_cast<float>((i % 1009) - 503) * 0.001f;
-        h_y[i] = static_cast<float>(((i * 17) % 997) - 491) * 0.002f;
-    }
-
-    float* d_x = nullptr;
-    float* d_y = nullptr;
-    float* d_out = nullptr;
-    const size_t bytes = static_cast<size_t>(n) * sizeof(float);
-    CUDA_CHECK(cudaMalloc(&d_x, bytes));
-    CUDA_CHECK(cudaMalloc(&d_y, bytes));
-    CUDA_CHECK(cudaMalloc(&d_out, bytes));
-    CUDA_CHECK(cudaMemcpy(d_x, h_x.data(), bytes, cudaMemcpyHostToDevice));
-    CUDA_CHECK(cudaMemcpy(d_y, h_y.data(), bytes, cudaMemcpyHostToDevice));
-    CUDA_CHECK(cudaMemset(d_out, 0, bytes));
-
-    const int threads = 256;
-    const int blocks = (n + threads - 1) / threads;
-
-    auto custom_kernel = [&]() {
-        vector_add_kernel<<<blocks, threads>>>(d_x, d_y, d_out, n);
-    };
-    auto reference_kernel = [&]() {
-        agentics_reference_vector_add_kernel<<<blocks, threads>>>(d_x, d_y, d_out, n);
-    };
-
-    custom_kernel();
-    CUDA_CHECK(cudaGetLastError());
-    CUDA_CHECK(cudaDeviceSynchronize());
-    CUDA_CHECK(cudaMemcpy(h_out.data(), d_out, bytes, cudaMemcpyDeviceToHost));
-
-    double max_abs_error = 0.0;
-    for (int i = 0; i < n; ++i) {
-        const double expected = static_cast<double>(h_x[i] + h_y[i]);
-        const double actual = static_cast<double>(h_out[i]);
-        max_abs_error = std::max(max_abs_error, std::abs(actual - expected));
-    }
-    const bool correct = max_abs_error <= 1.0e-5;
-
-    float custom_ms = 0.0f;
-    float reference_ms = 0.0f;
-    if (correct) {
-        custom_ms = median_time_ms(custom_kernel, samples, warmups);
-        CUDA_CHECK(cudaGetLastError());
-        reference_ms = median_time_ms(reference_kernel, samples, warmups);
-        CUDA_CHECK(cudaGetLastError());
-    }
-
-    CUDA_CHECK(cudaFree(d_x));
-    CUDA_CHECK(cudaFree(d_y));
-    CUDA_CHECK(cudaFree(d_out));
-
-    const double moved_bytes = static_cast<double>(n) * 3.0 * sizeof(float);
-    const double custom_bandwidth = custom_ms > 0.0f
-        ? moved_bytes / (static_cast<double>(custom_ms) / 1000.0) / 1.0e9
-        : 0.0;
-    const double reference_bandwidth = reference_ms > 0.0f
-        ? moved_bytes / (static_cast<double>(reference_ms) / 1000.0) / 1.0e9
-        : 0.0;
-    const double speedup = reference_bandwidth > 0.0
-        ? custom_bandwidth / reference_bandwidth
-        : 0.0;
-
-    std::cout << std::fixed << std::setprecision(8)
-              << "{"
-              << "\"correct\":" << (correct ? "true" : "false") << ","
-              << "\"n\":" << n << ","
-              << "\"samples\":" << samples << ","
-              << "\"warmups\":" << warmups << ","
-              << "\"custom_ms\":" << custom_ms << ","
-              << "\"reference_ms\":" << reference_ms << ","
-              << "\"custom_bandwidth_gbps\":" << custom_bandwidth << ","
-              << "\"reference_bandwidth_gbps\":" << reference_bandwidth << ","
-              << "\"speedup_vs_reference\":" << speedup << ","
-              << "\"max_abs_error\":" << max_abs_error
-              << "}" << std::endl;
-    return 0;
-}
-'''
+ENV_PROJECT_DIR = "pytorch-triton-env"
+ENV_ACTIVE = "AGENTICS_VECTOR_ADDITION_ENV_ACTIVE"
 
 
 def main() -> int:
@@ -194,126 +37,76 @@ def main() -> int:
 
     output_path = Path(args.output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    configure_runtime_cache(output_path.parent)
+    reexec_with_setup_python(args)
 
     try:
         run_benchmark(args, output_path)
-    except Exception as exc:  # noqa: BLE001 - result.json should explain harness failures.
+    except Exception as exc:  # noqa: BLE001 - result.json should explain evaluator failures.
         write_result(
             output_path,
             mode=args.mode,
             score=0.0,
             correct=False,
-            metrics={
-                "custom_bandwidth_gbps": 0.0,
-                "reference_bandwidth_gbps": 0.0,
-                "speedup_vs_reference": 0.0,
-                "max_abs_error": 0.0,
-            },
+            metrics=zero_metrics(),
             message=f"benchmark error: {exc}",
         )
     return 0
+
+
+def configure_runtime_cache(output_root: Path) -> None:
+    tmp_root = output_root / "tmp"
+    tmp_root.mkdir(parents=True, exist_ok=True)
+    os.environ.setdefault("HOME", str(output_root))
+    os.environ.setdefault("TMPDIR", str(tmp_root))
+    os.environ.setdefault("XDG_CACHE_HOME", str(tmp_root / "cache"))
+    os.environ.setdefault("TRITON_CACHE_DIR", str(tmp_root / "triton-cache"))
+    os.environ.setdefault("PYTHONDONTWRITEBYTECODE", "1")
+
+
+def reexec_with_setup_python(args: argparse.Namespace) -> None:
+    if os.environ.get(ENV_ACTIVE) == "1":
+        return
+    if not args.setup_dir:
+        raise RuntimeError("coexecuted-evaluator requires --setup-dir with the PyTorch/Triton environment")
+    venv_python = Path(args.setup_dir) / ENV_PROJECT_DIR / ".venv" / "bin" / "python"
+    if not venv_python.is_file():
+        raise RuntimeError(f"setup environment is missing Python at {venv_python}")
+    env = os.environ.copy()
+    env[ENV_ACTIVE] = "1"
+    os.execve(str(venv_python), [str(venv_python), *sys.argv], env)
 
 
 def run_benchmark(args: argparse.Namespace, output_path: Path) -> None:
     challenge_dir = Path(args.challenge_dir)
     workspace_dir = Path(args.workspace_dir)
     config = load_config(challenge_dir, args.mode)
-    n = positive_int(config.get("n", DEFAULT_CONFIG["n"]), "n")
-    warmups = non_negative_int(config.get("warmups", DEFAULT_CONFIG["warmups"]), "warmups")
-    sample_key = "validation_samples" if args.mode == "validation" else "official_samples"
-    samples = positive_int(config.get(sample_key, DEFAULT_CONFIG[sample_key]), sample_key)
 
-    solution_path = workspace_dir / "solution.cu"
+    solution_path = workspace_dir / "solution.py"
     if not solution_path.is_file():
         write_result(
             output_path,
             mode=args.mode,
             score=0.0,
             correct=False,
-            metrics={
-                "custom_bandwidth_gbps": 0.0,
-                "reference_bandwidth_gbps": 0.0,
-                "speedup_vs_reference": 0.0,
-                "max_abs_error": 0.0,
-            },
-            message="missing solution.cu at the submitted project root",
+            metrics=zero_metrics(),
+            message="missing solution.py at the submitted project root",
         )
         return
 
-    tmp_dir = output_path.parent / "tmp"
-    tmp_dir.mkdir(parents=True, exist_ok=True)
-    harness_path = tmp_dir / "vector_bench.cu"
-    binary_path = tmp_dir / "vector_bench"
-    harness_path.write_text(HARNESS_SOURCE)
-
-    compile_cmd = [
-        "nvcc",
-        "-O3",
-        "--std=c++17",
-        "-arch=native",
-        "-lineinfo",
-        "-o",
-        str(binary_path),
-        str(harness_path),
-    ]
-    compile_result = subprocess.run(
-        compile_cmd,
-        check=False,
-        capture_output=True,
-        text=True,
-        timeout=90,
-    )
-    if compile_result.returncode != 0:
-        write_result(
-            output_path,
-            mode=args.mode,
-            score=0.0,
-            correct=False,
-            metrics={
-                "custom_bandwidth_gbps": 0.0,
-                "reference_bandwidth_gbps": 0.0,
-                "speedup_vs_reference": 0.0,
-                "max_abs_error": 0.0,
-            },
-            message="nvcc compilation failed",
-            logs=[trim_log(compile_result.stderr or compile_result.stdout)],
-        )
-        return
-
-    bench_result = subprocess.run(
-        [str(binary_path), str(n), str(samples), str(warmups)],
-        check=False,
-        capture_output=True,
-        text=True,
-        timeout=90,
-    )
-    if bench_result.returncode != 0:
-        write_result(
-            output_path,
-            mode=args.mode,
-            score=0.0,
-            correct=False,
-            metrics={
-                "custom_bandwidth_gbps": 0.0,
-                "reference_bandwidth_gbps": 0.0,
-                "speedup_vs_reference": 0.0,
-                "max_abs_error": 0.0,
-            },
-            message="benchmark binary failed",
-            logs=[trim_log(bench_result.stderr or bench_result.stdout)],
-        )
-        return
-
-    raw = parse_json_from_stdout(bench_result.stdout)
-    correct = bool(raw.get("correct"))
+    add_func = load_add_function(solution_path, output_path.parent / "tmp")
+    raw = evaluate_vector_addition(add_func, config, args.mode)
+    correct = bool(raw["correct"])
+    score = finite_float(raw["score"]) if correct else 0.0
     metrics = {
-        "custom_bandwidth_gbps": finite_float(raw.get("custom_bandwidth_gbps", 0.0)),
-        "reference_bandwidth_gbps": finite_float(raw.get("reference_bandwidth_gbps", 0.0)),
-        "speedup_vs_reference": finite_float(raw.get("speedup_vs_reference", 0.0)),
-        "max_abs_error": finite_float(raw.get("max_abs_error", 0.0)),
+        "custom_bandwidth_gbps": finite_float(raw["custom_bandwidth_gbps"]),
+        "pytorch_bandwidth_gbps": finite_float(raw["pytorch_bandwidth_gbps"]),
+        "cpu_bandwidth_gbps": finite_float(raw["cpu_bandwidth_gbps"]),
+        "speedup_vs_pytorch": finite_float(raw["speedup_vs_pytorch"]),
+        "custom_vs_cpu": finite_float(raw["custom_vs_cpu"]),
+        "pytorch_vs_cpu": finite_float(raw["pytorch_vs_cpu"]),
+        "max_abs_error": finite_float(raw["max_abs_error"]),
     }
-    speedup = metrics["speedup_vs_reference"] if correct else 0.0
-    score = max(0.0, min(100.0, 50.0 * speedup))
     write_result(
         output_path,
         mode=args.mode,
@@ -322,6 +115,175 @@ def run_benchmark(args: argparse.Namespace, output_path: Path) -> None:
         metrics=metrics,
         message="ok" if correct else "incorrect output",
     )
+
+
+def load_add_function(solution_path: Path, tmp_dir: Path) -> Callable[[Any, Any], Any]:
+    module = import_module_from_path(solution_path, "agentics_submitted_solution")
+    if hasattr(module, "add"):
+        return module.add
+
+    if not hasattr(module, "Solution"):
+        raise ValueError("solution.py must define add(x, y) or a Frontier-compatible Solution class")
+    solution = module.Solution()
+    if not hasattr(solution, "solve"):
+        raise ValueError("Solution class must define solve()")
+    artifact = solution.solve(None)
+    artifact_path = materialize_artifact(artifact, solution_path.parent, tmp_dir)
+    return load_add_from_artifact(artifact_path, solution_path.parent, tmp_dir)
+
+
+def materialize_artifact(artifact: Any, solution_dir: Path, tmp_dir: Path) -> Path:
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+    if isinstance(artifact, dict):
+        artifact_path = tmp_dir / "solution-artifact.json"
+        artifact_path.write_text(json.dumps(artifact))
+        return artifact_path
+    if isinstance(artifact, str):
+        candidate = solution_dir / artifact
+        if len(artifact) < 4096 and "\n" not in artifact and candidate.is_file():
+            artifact_path = tmp_dir / "solution-artifact.json"
+            artifact_path.write_text(json.dumps({"program_path": str(candidate)}))
+            return artifact_path
+        code_path = tmp_dir / "submitted_add.py"
+        code_path.write_text(artifact)
+        artifact_path = tmp_dir / "solution-artifact.json"
+        artifact_path.write_text(json.dumps({"program_path": str(code_path)}))
+        return artifact_path
+    raise TypeError(f"Solution.solve() returned unsupported artifact type {type(artifact)!r}")
+
+
+def load_add_from_artifact(artifact_path: Path, solution_dir: Path, tmp_dir: Path) -> Callable[[Any, Any], Any]:
+    artifact = json.loads(artifact_path.read_text())
+    if not isinstance(artifact, dict):
+        raise ValueError("solution artifact must be a JSON object")
+    if "code" in artifact:
+        code_path = tmp_dir / "submitted_add.py"
+        code_path.write_text(str(artifact["code"]))
+        module = import_module_from_path(code_path, "agentics_submitted_add")
+    elif "program_path" in artifact:
+        program_path = Path(str(artifact["program_path"]))
+        if not program_path.is_absolute():
+            program_path = solution_dir / program_path
+        module = import_module_from_path(program_path, "agentics_submitted_add")
+    else:
+        raise ValueError("solution artifact must contain code or program_path")
+    if not hasattr(module, "add"):
+        raise ValueError("submitted program must define add(x, y)")
+    return module.add
+
+
+def import_module_from_path(path: Path, module_name: str) -> ModuleType:
+    if not path.is_file():
+        raise FileNotFoundError(f"Python module not found: {path}")
+    spec = importlib.util.spec_from_file_location(module_name, path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"failed to load Python module spec for {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def evaluate_vector_addition(
+    add_func: Callable[[Any, Any], Any],
+    config: dict[str, Any],
+    mode: str,
+) -> dict[str, float | bool]:
+    import torch
+
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA is not available")
+    device = torch.device("cuda:0")
+    torch.cuda.set_device(device)
+
+    n = positive_int(config.get("n", DEFAULT_CONFIG["n"]), "n")
+    warmups = non_negative_int(config.get("warmups", DEFAULT_CONFIG["warmups"]), "warmups")
+    gpu_warmups = non_negative_int(config.get("gpu_warmups", DEFAULT_CONFIG["gpu_warmups"]), "gpu_warmups")
+    seed = positive_int(config.get("seed", DEFAULT_CONFIG["seed"]), "seed")
+    sample_key = "validation_samples" if mode == "validation" else "official_samples"
+    samples = positive_int(config.get(sample_key, DEFAULT_CONFIG[sample_key]), sample_key)
+
+    warmup_gpu(torch, device, gpu_warmups)
+
+    pytorch_ms = []
+    cpu_ms = []
+    custom_ms = []
+    correctness = []
+    max_abs_error = 0.0
+    for sample_idx in range(samples):
+        torch.manual_seed(seed + sample_idx)
+        torch.cuda.manual_seed_all(seed + sample_idx)
+        x = torch.rand(n, device=device, dtype=torch.float32)
+        y = torch.rand(n, device=device, dtype=torch.float32)
+        x_cpu = x.detach().cpu()
+        y_cpu = y.detach().cpu()
+
+        expected = x + y
+        actual = add_func(x, y)
+        if not torch.is_tensor(actual):
+            raise TypeError("add(x, y) must return a torch.Tensor")
+        torch.cuda.synchronize()
+        sample_error = float(torch.max(torch.abs(expected - actual)).detach().cpu())
+        max_abs_error = max(max_abs_error, sample_error)
+        correctness.append(bool(torch.allclose(expected, actual, rtol=1e-5, atol=1e-8)))
+
+        pytorch_ms.append(time_cuda_ms(torch, lambda: x + y, warmups))
+        cpu_ms.append(time_cpu_ms(lambda: x_cpu + y_cpu, warmups))
+        custom_ms.append(time_cuda_ms(torch, lambda: add_func(x, y), warmups))
+
+    pytorch_bandwidth = bandwidth_gbps(n, median(pytorch_ms))
+    cpu_bandwidth = bandwidth_gbps(n, median(cpu_ms))
+    custom_bandwidth = bandwidth_gbps(n, median(custom_ms))
+    speedup_vs_pytorch = safe_ratio(custom_bandwidth, pytorch_bandwidth)
+    custom_vs_cpu = safe_ratio(custom_bandwidth, cpu_bandwidth)
+    pytorch_vs_cpu = safe_ratio(pytorch_bandwidth, cpu_bandwidth)
+    target = max(2.0 * pytorch_vs_cpu, 1.0 + 1e-12)
+    score = max(0.0, min(100.0, ((custom_vs_cpu - 1.0) / (target - 1.0)) * 100.0))
+    correct = all(correctness)
+
+    return {
+        "correct": correct,
+        "score": score if correct else 0.0,
+        "custom_bandwidth_gbps": custom_bandwidth if correct else 0.0,
+        "pytorch_bandwidth_gbps": pytorch_bandwidth,
+        "cpu_bandwidth_gbps": cpu_bandwidth,
+        "speedup_vs_pytorch": speedup_vs_pytorch if correct else 0.0,
+        "custom_vs_cpu": custom_vs_cpu if correct else 0.0,
+        "pytorch_vs_cpu": pytorch_vs_cpu,
+        "max_abs_error": max_abs_error,
+    }
+
+
+def warmup_gpu(torch: Any, device: Any, iters: int) -> None:
+    if iters <= 0:
+        return
+    n = 1 << 20
+    x = torch.rand(n, device=device, dtype=torch.float32)
+    y = torch.rand(n, device=device, dtype=torch.float32)
+    for _ in range(iters):
+        _ = x + y
+    torch.cuda.synchronize()
+
+
+def time_cuda_ms(torch: Any, fn: Callable[[], Any], warmups: int) -> float:
+    for _ in range(warmups):
+        _ = fn()
+    torch.cuda.synchronize()
+    start = torch.cuda.Event(enable_timing=True)
+    end = torch.cuda.Event(enable_timing=True)
+    start.record()
+    _ = fn()
+    end.record()
+    end.synchronize()
+    return finite_float(start.elapsed_time(end))
+
+
+def time_cpu_ms(fn: Callable[[], Any], warmups: int) -> float:
+    for _ in range(warmups):
+        _ = fn()
+    start = time.perf_counter()
+    _ = fn()
+    return finite_float((time.perf_counter() - start) * 1000.0)
 
 
 def load_config(challenge_dir: Path, mode: str) -> dict[str, Any]:
@@ -348,7 +310,6 @@ def write_result(
     correct: bool,
     metrics: dict[str, float],
     message: str,
-    logs: list[str] | None = None,
 ) -> None:
     score = finite_float(score)
     passed = bool(correct) and score > 0.0
@@ -360,18 +321,12 @@ def write_result(
         "aggregate_metrics": [
             {"metric_name": "score", "value": score},
             {"metric_name": "correctness", "value": 1.0 if correct else 0.0},
-            {
-                "metric_name": "custom_bandwidth_gbps",
-                "value": finite_float(metrics["custom_bandwidth_gbps"]),
-            },
-            {
-                "metric_name": "reference_bandwidth_gbps",
-                "value": finite_float(metrics["reference_bandwidth_gbps"]),
-            },
-            {
-                "metric_name": "speedup_vs_reference",
-                "value": finite_float(metrics["speedup_vs_reference"]),
-            },
+            {"metric_name": "custom_bandwidth_gbps", "value": finite_float(metrics["custom_bandwidth_gbps"])},
+            {"metric_name": "pytorch_bandwidth_gbps", "value": finite_float(metrics["pytorch_bandwidth_gbps"])},
+            {"metric_name": "cpu_bandwidth_gbps", "value": finite_float(metrics["cpu_bandwidth_gbps"])},
+            {"metric_name": "speedup_vs_pytorch", "value": finite_float(metrics["speedup_vs_pytorch"])},
+            {"metric_name": "custom_vs_cpu", "value": finite_float(metrics["custom_vs_cpu"])},
+            {"metric_name": "pytorch_vs_cpu", "value": finite_float(metrics["pytorch_vs_cpu"])},
             {"metric_name": "max_abs_error", "value": finite_float(metrics["max_abs_error"])},
         ],
         summary_key: {
@@ -379,7 +334,7 @@ def write_result(
             "passed": 1 if passed else 0,
             "total": 1,
         },
-        "logs": logs or [],
+        "logs": [],
     }
     if mode == "validation":
         payload["public_results"] = [
@@ -393,15 +348,38 @@ def write_result(
     output_path.write_text(json.dumps(payload, indent=2, sort_keys=True))
 
 
-def parse_json_from_stdout(stdout: str) -> dict[str, Any]:
-    start = stdout.rfind("{")
-    end = stdout.rfind("}")
-    if start < 0 or end <= start:
-        raise RuntimeError("benchmark did not print JSON")
-    payload = json.loads(stdout[start : end + 1])
-    if not isinstance(payload, dict):
-        raise RuntimeError("benchmark JSON must be an object")
-    return payload
+def zero_metrics() -> dict[str, float]:
+    return {
+        "custom_bandwidth_gbps": 0.0,
+        "pytorch_bandwidth_gbps": 0.0,
+        "cpu_bandwidth_gbps": 0.0,
+        "speedup_vs_pytorch": 0.0,
+        "custom_vs_cpu": 0.0,
+        "pytorch_vs_cpu": 0.0,
+        "max_abs_error": 0.0,
+    }
+
+
+def median(values: list[float]) -> float:
+    ordered = sorted(finite_float(value) for value in values)
+    if not ordered:
+        return 0.0
+    mid = len(ordered) // 2
+    if len(ordered) % 2:
+        return ordered[mid]
+    return (ordered[mid - 1] + ordered[mid]) / 2.0
+
+
+def bandwidth_gbps(n: int, elapsed_ms: float) -> float:
+    if elapsed_ms <= 0.0:
+        return 0.0
+    return finite_float((3.0 * float(n) * 4.0 * 1.0e-9) / (elapsed_ms * 1.0e-3))
+
+
+def safe_ratio(numerator: float, denominator: float) -> float:
+    if denominator <= 0.0:
+        return 0.0
+    return finite_float(numerator / denominator)
 
 
 def positive_int(value: Any, field: str) -> int:
@@ -421,13 +399,6 @@ def finite_float(value: Any) -> float:
     if not math.isfinite(number):
         return 0.0
     return number
-
-
-def trim_log(value: str, limit: int = 4000) -> str:
-    value = value.strip()
-    if len(value) <= limit:
-        return value
-    return value[:limit] + "\n[truncated]"
 
 
 if __name__ == "__main__":

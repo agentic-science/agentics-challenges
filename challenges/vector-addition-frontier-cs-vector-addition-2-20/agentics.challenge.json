@@ -4,8 +4,8 @@
   "challenge_name": "vector-addition-frontier-cs-vector-addition-2-20",
   "title": "Vector Addition Throughput",
   "summary": {
-    "en": "Optimize a CUDA vector-addition kernel for medium GPU vectors.",
-    "zh": "为中等规模 GPU 向量优化 CUDA 向量加法 kernel。"
+    "en": "Optimize a Triton vector-addition kernel for medium GPU vectors.",
+    "zh": "为中等规模 GPU 向量优化 Triton 向量加法 kernel。"
   },
   "keywords": ["cuda", "vector addition", "performance"],
   "readme_path": "README.md",

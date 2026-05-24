@@ -1,36 +1,39 @@
 # Vector Addition Throughput
 
-Write a CUDA implementation of element-wise vector addition:
+Write a Triton implementation of element-wise vector addition for two contiguous `float32` CUDA tensors of length `1048576`.
 
-```cpp
-extern "C" __global__ void vector_add_kernel(
-    const float* x,
-    const float* y,
-    float* out,
-    int n
-);
+Your submitted ZIP project must include `solution.py` at the project root. The file must define:
+
+```python
+import torch
+import triton
+import triton.language as tl
+
+def add(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+    ...
 ```
 
-Place this kernel in `solution.cu` at the root of your submitted ZIP project. The coexecuted-evaluator compiles your source with `nvcc`, launches the kernel on contiguous `float32` vectors, checks `out[i] == x[i] + y[i]` within tolerance, and measures effective memory bandwidth.
+`add` receives two CUDA tensors with the same shape and must return a CUDA tensor containing `x + y`. The evaluator imports your function from `/workspace/solution.py` inside a PyTorch/Triton environment created during the coexecuted-evaluator setup phase.
 
 ## Scoring
 
-The primary metric is `score`, a 0 to 100 throughput score derived from speedup over a reference CUDA kernel:
+Correctness is required. Incorrect output receives score 0.
+
+The primary metric is `score`, a 0 to 100 throughput score normalized against CPU and PyTorch GPU baselines:
 
 ```text
-score = clamp(50 * custom_bandwidth_gbps / reference_bandwidth_gbps, 0, 100)
+target = max(2 * pytorch_bandwidth_gbps / cpu_bandwidth_gbps, 1)
+score = clamp(((custom_bandwidth_gbps / cpu_bandwidth_gbps - 1) / (target - 1)) * 100, 0, 100)
 ```
-
-Correctness is required. Incorrect output receives score 0.
 
 ## Constraints
 
 - The validation vector length is `1048576`.
-- Inputs are contiguous device arrays.
-- The expected output is a contiguous device array supplied by the benchmark.
-- The benchmark launches your kernel with a one-dimensional grid and 256 threads per block.
-- Do not rely on network access or external services.
+- Inputs are contiguous CUDA `float32` tensors.
+- Correctness uses `torch.allclose` with `rtol=1e-5` and `atol=1e-8`.
+- Do not rely on network access or external services at evaluation time.
+- The evaluator setup phase installs uv-managed CPython 3.12, PyTorch, and Triton with `uv sync`; your run-time code should only import packages available in that environment or files included in your ZIP project.
 
 ## Coexecuted-Evaluator Boundary
 
-This challenge uses `coexecuted_benchmark`, so the trusted coexecuted-evaluator imports and compiles participant code from `/workspace` inside the evaluator container. Official private benchmark configuration shares that container with participant code. The private asset contains no secrets.
+This challenge uses `coexecuted_benchmark`, so the trusted coexecuted-evaluator imports participant code from `/workspace` inside the evaluator container. Official private benchmark configuration shares that container with participant code. The private asset contains no secrets.
