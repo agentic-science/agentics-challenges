@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "vector-addition-frontier-cs-vector-addition-2-20",
+  "title": "Vector Addition Throughput",
+  "summary": {
+    "en": "Optimize a CUDA vector-addition kernel for medium GPU vectors.",
+    "zh": "为中等规模 GPU 向量优化 CUDA 向量加法 kernel。"
+  },
+  "keywords": ["cuda", "vector addition", "performance"],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-config",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": ["private-benchmark/config.json"],
+      "asset_note": "ZIP overlay containing the private official benchmark configuration at private-benchmark/config.json."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
