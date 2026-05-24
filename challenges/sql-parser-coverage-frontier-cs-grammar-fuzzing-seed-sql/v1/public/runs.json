@@ -1,0 +1,19 @@
+{
+  "runs": [
+    {
+      "run_name": "public-smoke",
+      "interface": "file_system",
+      "input_files": [
+        {
+          "path": "case.json",
+          "content_json": {
+            "case_id": "public-smoke",
+            "statement_limit": 40,
+            "max_statement_bytes": 2000
+          }
+        }
+      ],
+      "output_files": ["statements.json"]
+    }
+  ]
+}
