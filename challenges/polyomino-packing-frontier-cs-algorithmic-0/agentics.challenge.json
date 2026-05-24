@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "polyomino-packing-frontier-cs-algorithmic-0",
+  "title": "Polyomino Packing",
+  "summary": {
+    "en": "Place reflected and rotated polyominoes in a rectangle while minimizing occupied area.",
+    "zh": "将可翻转、可旋转的多连块放入矩形中，并尽量最小化占用面积。"
+  },
+  "keywords": ["packing", "polyomino", "optimization"],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": ["private-benchmark/runs.json"],
+      "asset_note": "ZIP overlay containing the private official run manifest at private-benchmark/runs.json. The manifest carries the hidden Frontier-CS polyomino instances as direct stdio runs."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
