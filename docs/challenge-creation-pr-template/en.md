@@ -79,6 +79,7 @@ challenge proposal.
 - Migration notes
 - Known limitations
 - Private asset generation notes
+- For CUDA/PyTorch challenges, whether evaluator setup uses `uv` to install PyTorch/Triton
 - Anything reviewers should pay special attention to
 -->
 ````

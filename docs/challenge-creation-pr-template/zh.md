@@ -78,6 +78,7 @@
 - Migration notes
 - Known limitations
 - Private asset generation notes
+- 对 CUDA/PyTorch challenges，说明 evaluator setup 是否使用 `uv` 安装 PyTorch/Triton
 - Anything reviewers should pay special attention to
 -->
 ````
