@@ -81,8 +81,8 @@
   "solution_publication": "public",
   "execution": {
     "mode": "coexecuted_benchmark",
-    "benchmark": {
-      "command": ["python", "benchmark/run.py"],
+    "coexecuted_evaluator": {
+      "command": ["python", "coexecuted-evaluator/run.py"],
       "result_file": "result.json"
     },
     "acknowledge_danger": true

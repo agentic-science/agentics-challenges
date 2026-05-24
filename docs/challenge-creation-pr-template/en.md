@@ -27,8 +27,8 @@ challenge proposal.
 ## Evaluation Contract
 
 - [ ] `solution.protocol` is `zip_project`
-- [ ] Evaluator, interactor, or benchmark command is declared
-- [ ] Evaluator, interactor, or benchmark `result_file` is declared
+- [ ] Separated-evaluator, interactive-evaluator, or coexecuted-evaluator command is declared
+- [ ] Separated-evaluator, interactive-evaluator, or coexecuted-evaluator `result_file` is declared
 - [ ] Validation source is declared when any target has `validation_enabled: true`
 - [ ] Official source is declared when `private_benchmark_enabled: true`
 - [ ] Metric schema declares the primary metric, direction, visibility, and tie-breakers
@@ -50,7 +50,7 @@ challenge proposal.
 - [ ] This challenge is not an exploit, vulnerability, PoC generation, sandbox escape, or other security workload
 - [ ] If using `coexecuted_benchmark`, `acknowledge_danger: true` is set
 - [ ] If using `coexecuted_benchmark`, `resource_profile.solution.run` is omitted
-- [ ] If using `coexecuted_benchmark`, no secrets are present because participant code and private official data share the evaluator container
+- [ ] If using `coexecuted_benchmark`, no secrets are present because participant code and private official data share the coexecuted-evaluator container
 
 ## Validation Evidence
 

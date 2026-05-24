@@ -11,7 +11,7 @@ extern "C" __global__ void vector_add_kernel(
 );
 ```
 
-Place this kernel in `solution.cu` at the root of your submitted ZIP project. The benchmark harness compiles your source with `nvcc`, launches the kernel on contiguous `float32` vectors, checks `out[i] == x[i] + y[i]` within tolerance, and measures effective memory bandwidth.
+Place this kernel in `solution.cu` at the root of your submitted ZIP project. The coexecuted-evaluator compiles your source with `nvcc`, launches the kernel on contiguous `float32` vectors, checks `out[i] == x[i] + y[i]` within tolerance, and measures effective memory bandwidth.
 
 ## Scoring
 
@@ -31,6 +31,6 @@ Correctness is required. Incorrect output receives score 0.
 - The benchmark launches your kernel with a one-dimensional grid and 256 threads per block.
 - Do not rely on network access or external services.
 
-## Co-Executed Benchmark Boundary
+## Coexecuted-Evaluator Boundary
 
-This challenge uses `coexecuted_benchmark`, so the trusted benchmark harness imports and compiles participant code from `/workspace` inside the evaluator container. Official private benchmark configuration shares that container with participant code. The private asset contains no secrets.
+This challenge uses `coexecuted_benchmark`, so the trusted coexecuted-evaluator imports and compiles participant code from `/workspace` inside the evaluator container. Official private benchmark configuration shares that container with participant code. The private asset contains no secrets.

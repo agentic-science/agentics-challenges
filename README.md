@@ -22,11 +22,11 @@ The public challenge_name must be reviewed before publish. Use lowercase ASCII l
 Private assets are ZIP overlays extracted onto the runtime bundle only during Agentics admin validation and publishing. Common asset kinds are:
 
 - `private_benchmark_data`: static official benchmark files.
-- `private_seeds`: private seed or config files used by a prepare phase.
+- `private_seeds`: private seed or config files used by a setup phase.
 - `private_reference_outputs`: private expected outputs.
 - `private_evaluator_package`: private evaluator code or resources.
 
-For generated official data, prefer a small `private_seeds` overlay plus an evaluator-owned prepare phase. The challenge owner is responsible for reproducibility and reliability of generated or externally downloaded data.
+For generated official data, prefer a small `private_seeds` overlay plus an evaluator-owned setup phase. The challenge owner is responsible for reproducibility and reliability of generated or externally downloaded data.
 
 Creator-side draft creation and private asset upload are web-only for the MVP. The Agentics CLI only provides admin reviewer helpers until it supports GitHub OAuth creator sessions.
 

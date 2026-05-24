@@ -83,13 +83,13 @@
   "solution_publication": "public",
   "execution": {
     "mode": "separated_evaluator",
-    "evaluator": {
-      "command": ["python", "evaluator/run.py"],
+    "separated_evaluator": {
+      "command": ["python", "separated-evaluator/run.py"],
       "result_file": "result.json"
     },
     "validation_runs": "public/runs.json",
-    "official_prepare": {
-      "command": ["python", "evaluator/prepare.py"],
+    "official_evaluation_setup": {
+      "command": ["python", "separated-evaluator/setup.py"],
       "result_runs_file": "generated/runs.json",
       "reproducibility_notes": "Official benchmark files are generated from a private seed/config overlay. Full-size generation uses a pinned NumPy install when the evaluator image does not already provide NumPy."
     }

@@ -138,7 +138,7 @@ def validate_bundle(
         elif mode == "piped_stdio" and "validation_session" in execution:
             session_path = required_safe_path(execution, "validation_session")
             validate_session_manifest(bundle_root, bundle_root / session_path)
-        elif mode in {"separated_evaluator", "piped_stdio"} and "validation_prepare" in execution:
+        elif mode in {"separated_evaluator", "piped_stdio"} and "validation_setup" in execution:
             pass
         elif mode == "coexecuted_benchmark":
             pass
@@ -156,13 +156,13 @@ def validate_bundle(
             raise ValidationError(
                 f"{bundle_root}: datasets.private_benchmark_dir is required for static official run or session manifests"
             )
-        if mode == "separated_evaluator" and "official_runs" not in execution and "official_prepare" not in execution:
+        if mode == "separated_evaluator" and "official_runs" not in execution and "official_evaluation_setup" not in execution:
             raise ValidationError(
-                f"{bundle_root}: private benchmarks require official_runs or official_prepare"
+                f"{bundle_root}: private benchmarks require official_runs or official_evaluation_setup"
             )
-        if mode == "piped_stdio" and "official_session" not in execution and "official_prepare" not in execution:
+        if mode == "piped_stdio" and "official_session" not in execution and "official_evaluation_setup" not in execution:
             raise ValidationError(
-                f"{bundle_root}: private benchmarks require official_session or official_prepare"
+                f"{bundle_root}: private benchmarks require official_session or official_evaluation_setup"
             )
 
     if mode == "coexecuted_benchmark":
@@ -175,18 +175,18 @@ def validate_bundle(
                 raise ValidationError(
                     f"{bundle_root}: coexecuted_benchmark must not declare execution.{forbidden}"
                 )
-        executor = required_object(execution, "benchmark")
-        executor_label = "execution.benchmark.command script"
+        executor = required_object(execution, "coexecuted_evaluator")
+        executor_label = "execution.coexecuted_evaluator.command script"
     elif mode == "piped_stdio":
-        reject_both_execution_fields(bundle_root, execution, "validation_session", "validation_prepare")
-        reject_both_execution_fields(bundle_root, execution, "official_session", "official_prepare")
-        executor = required_object(execution, "interactor")
-        executor_label = "execution.interactor.command script"
+        reject_both_execution_fields(bundle_root, execution, "validation_session", "validation_setup")
+        reject_both_execution_fields(bundle_root, execution, "official_session", "official_evaluation_setup")
+        executor = required_object(execution, "interactive_evaluator")
+        executor_label = "execution.interactive_evaluator.command script"
     else:
-        reject_both_execution_fields(bundle_root, execution, "validation_runs", "validation_prepare")
-        reject_both_execution_fields(bundle_root, execution, "official_runs", "official_prepare")
-        executor = required_object(execution, "evaluator")
-        executor_label = "execution.evaluator.command script"
+        reject_both_execution_fields(bundle_root, execution, "validation_runs", "validation_setup")
+        reject_both_execution_fields(bundle_root, execution, "official_runs", "official_evaluation_setup")
+        executor = required_object(execution, "separated_evaluator")
+        executor_label = "execution.separated_evaluator.command script"
 
     executor_command = required_array(executor, "command")
     result_file = required_safe_path(executor, "result_file")
@@ -198,15 +198,38 @@ def validate_bundle(
             break
 
     if mode == "coexecuted_benchmark":
-        validate_coexecuted_prepare(
-            bundle_root, execution.get("validation_prepare"), "validation_prepare"
+        validate_coexecuted_setup(
+            bundle_root, execution.get("validation_setup"), "validation_setup"
         )
-        validate_coexecuted_prepare(
-            bundle_root, execution.get("official_prepare"), "official_prepare"
+        validate_coexecuted_setup(
+            bundle_root, execution.get("official_evaluation_setup"), "official_evaluation_setup"
+        )
+    elif mode == "piped_stdio":
+        validate_setup(
+            bundle_root,
+            execution.get("validation_setup"),
+            "validation_setup",
+            "result_session_file",
+        )
+        validate_setup(
+            bundle_root,
+            execution.get("official_evaluation_setup"),
+            "official_evaluation_setup",
+            "result_session_file",
         )
     else:
-        validate_prepare(bundle_root, execution.get("validation_prepare"), "validation_prepare")
-        validate_prepare(bundle_root, execution.get("official_prepare"), "official_prepare")
+        validate_setup(
+            bundle_root,
+            execution.get("validation_setup"),
+            "validation_setup",
+            "result_runs_file",
+        )
+        validate_setup(
+            bundle_root,
+            execution.get("official_evaluation_setup"),
+            "official_evaluation_setup",
+            "result_runs_file",
+        )
     _ = challenge_root
 
 
@@ -658,12 +681,12 @@ def validate_input_files(bundle_root: Path, manifest_path: Path, input_files: An
             assert_file(bundle_root / source_path, f"{manifest_path}: input source_path")
 
 
-def validate_prepare(bundle_root: Path, prepare: Any, field: str) -> None:
-    if prepare is None:
+def validate_setup(bundle_root: Path, setup: Any, field: str, result_locator: str) -> None:
+    if setup is None:
         return
-    if not isinstance(prepare, dict):
+    if not isinstance(setup, dict):
         raise ValidationError(f"{bundle_root}: execution.{field} must be an object")
-    command = required_array(prepare, "command")
+    command = required_array(setup, "command")
     if not command:
         raise ValidationError(f"{bundle_root}: execution.{field}.command must not be empty")
     for part in command:
@@ -671,20 +694,20 @@ def validate_prepare(bundle_root: Path, prepare: Any, field: str) -> None:
             raise ValidationError(f"{bundle_root}: execution.{field}.command entries must be strings")
         if part.endswith(".py") and is_safe_relative_path(part):
             assert_file(bundle_root / part, f"{bundle_root}: execution.{field}.command script")
-    result_runs_file = required_safe_path(prepare, "result_runs_file")
-    if result_runs_file.endswith("/"):
-        raise ValidationError(f"{bundle_root}: execution.{field}.result_runs_file must be a file")
+    result_file = required_safe_path(setup, result_locator)
+    if result_file.endswith("/"):
+        raise ValidationError(f"{bundle_root}: execution.{field}.{result_locator} must be a file")
     for removed in ("external_data", "cache_key_hint", "network_access"):
-        if removed in prepare:
+        if removed in setup:
             raise ValidationError(f"{bundle_root}: execution.{field}.{removed} is not supported")
 
 
-def validate_coexecuted_prepare(bundle_root: Path, prepare: Any, field: str) -> None:
-    if prepare is None:
+def validate_coexecuted_setup(bundle_root: Path, setup: Any, field: str) -> None:
+    if setup is None:
         return
-    if not isinstance(prepare, dict):
+    if not isinstance(setup, dict):
         raise ValidationError(f"{bundle_root}: execution.{field} must be an object")
-    command = required_array(prepare, "command")
+    command = required_array(setup, "command")
     if not command:
         raise ValidationError(f"{bundle_root}: execution.{field}.command must not be empty")
     for part in command:
@@ -701,7 +724,7 @@ def validate_coexecuted_prepare(bundle_root: Path, prepare: Any, field: str) -> 
         "result_runs_file",
         "result_session_file",
     ):
-        if removed in prepare:
+        if removed in setup:
             raise ValidationError(f"{bundle_root}: execution.{field}.{removed} is not supported")
 
 

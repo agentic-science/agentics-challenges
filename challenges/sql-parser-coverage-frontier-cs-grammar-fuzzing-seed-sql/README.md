@@ -39,6 +39,6 @@ The Agentics version uses `separated_evaluator`: submitted solutions only produc
 - `v1/statement.md` is the submitter-facing statement.
 - `v1/public/runs.json` contains a small deterministic public validation run.
 - `v1/resources/sql_engine` and `v1/resources/sql_grammar.txt` contain the public parser target.
-- `v1/evaluator/run.py` validates outputs and writes Agentics result JSON.
+- `v1/separated-evaluator/run.py` validates outputs and writes Agentics result JSON.
 
 Official run metadata is uploaded as a private asset overlay and is not committed.

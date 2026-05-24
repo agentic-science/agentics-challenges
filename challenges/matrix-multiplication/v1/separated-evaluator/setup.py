@@ -19,10 +19,10 @@ PYTHON_GENERATOR_WORK_LIMIT = 5_000_000
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Prepare official matrix multiplication benchmark files."
+        description="Set up official matrix multiplication benchmark files."
     )
     parser.add_argument("--challenge-dir", required=True)
-    parser.add_argument("--prepared-dir", required=True)
+    parser.add_argument("--setup-dir", required=True)
     parser.add_argument("--mode", choices=["validation", "official"], required=True)
     parser.add_argument("--target", required=True)
     parser.add_argument("--runs-file", required=True)
@@ -32,15 +32,15 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     challenge_dir = Path(args.challenge_dir)
-    prepared_dir = Path(args.prepared_dir)
+    setup_dir = Path(args.setup_dir)
     runs_file = Path(args.runs_file)
 
     config = load_config(challenge_dir)
     generated_runs = []
     for run in config["runs"]:
         run_name = run["run_name"]
-        input_path = prepared_dir / "inputs" / f"{run_name}.bin"
-        expected_path = prepared_dir / "expected" / f"{run_name}.bin"
+        input_path = setup_dir / "inputs" / f"{run_name}.bin"
+        expected_path = setup_dir / "expected" / f"{run_name}.bin"
         generate_dataset(
             input_path,
             expected_path,
@@ -58,7 +58,7 @@ def main() -> int:
                     {"path": "input.bin", "source_path": f"inputs/{run_name}.bin"}
                 ],
                 "output_files": ["output.bin"],
-                "expected_output_source_path": f"/prepared/expected/{run_name}.bin",
+                "expected_output_source_path": f"/setup/expected/{run_name}.bin",
                 "tolerance_abs": float(run.get("tolerance_abs", 0.001)),
                 "tolerance_rel": float(run.get("tolerance_rel", 0.0001)),
             }

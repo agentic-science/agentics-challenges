@@ -8,7 +8,7 @@ from typing import Any
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run permutation reconstruction interactor")
+    parser = argparse.ArgumentParser(description="Run permutation reconstruction interactive-evaluator")
     parser.add_argument("--challenge-dir", required=True)
     parser.add_argument("--session-file", required=True)
     parser.add_argument("--session-input-dir", required=True)

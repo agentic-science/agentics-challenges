@@ -26,8 +26,8 @@
 ## Evaluation Contract
 
 - [ ] `solution.protocol` 为 `zip_project`
-- [ ] 已声明 evaluator、interactor 或 benchmark command
-- [ ] 已声明 evaluator、interactor 或 benchmark `result_file`
+- [ ] 已声明 separated-evaluator、interactive-evaluator 或 coexecuted-evaluator command
+- [ ] 已声明 separated-evaluator、interactive-evaluator 或 coexecuted-evaluator `result_file`
 - [ ] 任何 target 设置 `validation_enabled: true` 时，已声明 validation source
 - [ ] `private_benchmark_enabled: true` 时，已声明 official source
 - [ ] Metric schema 已声明 primary metric、direction、visibility 和 tie-breakers
@@ -49,7 +49,7 @@
 - [ ] 该 challenge 不是 exploit、vulnerability、PoC generation、sandbox escape 或其他 security workload
 - [ ] 如果使用 `coexecuted_benchmark`，已设置 `acknowledge_danger: true`
 - [ ] 如果使用 `coexecuted_benchmark`，已省略 `resource_profile.solution.run`
-- [ ] 如果使用 `coexecuted_benchmark`，不包含 secrets，因为 participant code 和 private official data 会共享 evaluator container
+- [ ] 如果使用 `coexecuted_benchmark`，不包含 secrets，因为 participant code 和 private official data 会共享 coexecuted-evaluator container
 
 ## Validation Evidence
 

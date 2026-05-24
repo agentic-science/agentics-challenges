@@ -83,8 +83,8 @@
   "solution_publication": "public",
   "execution": {
     "mode": "piped_stdio",
-    "interactor": {
-      "command": ["python", "interactor/run.py"],
+    "interactive_evaluator": {
+      "command": ["python", "interactive-evaluator/run.py"],
       "result_file": "result.json"
     },
     "validation_session": "public/session.json",

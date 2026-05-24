@@ -189,7 +189,7 @@ def main() -> int:
     parser.add_argument("--output-path", required=True)
     parser.add_argument("--mode", required=True, choices=["validation", "official"])
     parser.add_argument("--target", required=True)
-    parser.add_argument("--prepared-dir")
+    parser.add_argument("--setup-dir")
     args = parser.parse_args()
 
     output_path = Path(args.output_path)
