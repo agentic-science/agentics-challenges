@@ -1,0 +1,9 @@
+{
+  "session_name": "public-smoke",
+  "metadata": {
+    "n": 5,
+    "permutation": [3, 1, 5, 2, 4],
+    "best_queries": 20,
+    "max_queries": 10000
+  }
+}
