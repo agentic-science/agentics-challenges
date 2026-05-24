@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "rectangle-free-points-frontier-cs-algorithmic-27",
+  "title": "Rectangle-Free Points",
+  "summary": {
+    "en": "Place many grid points while avoiding the four corners of every axis-aligned rectangle.",
+    "zh": "在网格中尽量多放置点，同时避免任意轴对齐矩形的四个角都被选中。"
+  },
+  "keywords": ["grid", "construction", "optimization"],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": ["private-benchmark/runs.json"],
+      "asset_note": "ZIP overlay containing the private official run manifest at private-benchmark/runs.json. The manifest carries the hidden Frontier-CS grid sizes as direct stdio runs."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "runs": [
+    {
+      "run_name": "public-2x2",
+      "interface": "stdio",
+      "stdin_text": "2 2\n"
+    },
+    {
+      "run_name": "public-1x5",
+      "interface": "stdio",
+      "stdin_text": "1 5\n"
+    }
+  ]
+}
