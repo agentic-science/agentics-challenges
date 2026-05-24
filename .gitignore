@@ -3,3 +3,5 @@ private_benchmark/
 *.private-assets.zip
 *.private-asset.zip
 *.private.zip
+__pycache__/
+*.pyc

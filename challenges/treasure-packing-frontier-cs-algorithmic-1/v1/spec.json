@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "challenge_name": "treasure-packing-frontier-cs-algorithmic-1",
+  "challenge_title": "Treasure Packing",
+  "summary": {
+    "en": "Choose item counts for a two-constraint packing instance and maximize total treasure value.",
+    "zh": "为双约束装箱实例选择物品数量，并最大化宝物总价值。"
+  },
+  "keywords": ["optimization", "knapsack", "json"],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cpu",
+      "docker_platform": "linux/arm64",
+      "accelerator": null,
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cpu-small",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 5,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CPU profile for JSON packing instances.",
+        "hardware_metadata": {
+          "kind": "cpu"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": { "type": "open" },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "separated_evaluator",
+    "separated_evaluator": {
+      "command": ["python", "separated-evaluator/run.py"],
+      "result_file": "result.json"
+    },
+    "validation_runs": "public/runs.json",
+    "official_runs": "private-benchmark/runs.json"
+  },
+  "datasets": {
+    "public_dir": "public",
+    "private_benchmark_dir": "private-benchmark",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Average normalized value score on a 0-100 scale."
+      },
+      {
+        "name": "valid_cases",
+        "label": "Valid Cases",
+        "unit": "cases",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Number of cases whose output satisfies the JSON, count, mass, and volume constraints."
+      },
+      {
+        "name": "total_value",
+        "label": "Total Value",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Sum of participant item values across evaluated cases."
+      },
+      {
+        "name": "used_mass_mg",
+        "label": "Used Mass",
+        "unit": "mg",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Total selected item mass across evaluated cases."
+      },
+      {
+        "name": "used_volume_ul",
+        "label": "Used Volume",
+        "unit": "ul",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Total selected item volume across evaluated cases."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": ["valid_cases", "total_value"]
+    }
+  }
+}
