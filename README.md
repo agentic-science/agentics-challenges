@@ -39,3 +39,9 @@ python3 scripts/validate_challenges.py
 ```
 
 This CI check verifies public manifests, public validation run manifests, public `source_path` files, and obvious private-data leaks. Agentics server-side validation remains the authoritative publish gate.
+
+## Test Solutions
+
+Public smoke-test solutions live under `test-solutions/<challenge-name>/`.
+Each directory is a standalone `zip_project` solution workspace for the
+challenge with the same handle.
