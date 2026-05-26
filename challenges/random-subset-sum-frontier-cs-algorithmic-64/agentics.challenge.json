@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "random-subset-sum-frontier-cs-algorithmic-64",
+  "title": "Random Subset Sum",
+  "summary": {
+    "en": "Choose a subset whose sum is as close as possible to a target.",
+    "zh": "选择子集，使其总和尽量接近目标值。"
+  },
+  "keywords": [
+    "subset-sum",
+    "optimization",
+    "heuristic"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
