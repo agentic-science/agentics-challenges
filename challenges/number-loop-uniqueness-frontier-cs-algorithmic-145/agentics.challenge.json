@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "number-loop-uniqueness-frontier-cs-algorithmic-145",
+  "title": "Number Loop Uniqueness",
+  "summary": {
+    "en": "Construct a Number Loop puzzle with as few valid loop solutions as possible.",
+    "zh": "构造数字环谜题，使有效环解尽量唯一。"
+  },
+  "keywords": [
+    "puzzle",
+    "slitherlink",
+    "uniqueness"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 145 official run manifest and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
