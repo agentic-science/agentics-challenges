@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "graph-isomorphism-edge-match-frontier-cs-algorithmic-180",
+  "title": "Graph Isomorphism Edge Match",
+  "summary": {
+    "en": "Find a vertex permutation that maximizes matched edges between two graphs.",
+    "zh": "寻找顶点排列，使两个图之间匹配的边尽量多。"
+  },
+  "keywords": [
+    "graph",
+    "permutation",
+    "matching"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 180 official run manifest, inputs, reference answers, and source provenance."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
