@@ -1,0 +1,18 @@
+{
+  "runs": [
+    {
+      "run_name": "public-smoke",
+      "interface": "stdio",
+      "stdin_text": "3\n1 2\n1 3\nWBW\n",
+      "answer_text": "",
+      "input_path": "public/cases/public-smoke.in",
+      "answer_path": "public/answers/public-smoke.ans",
+      "source_problem_id": 305,
+      "checker": "chk.cc",
+      "scoring_metadata": {
+        "source": "public-smoke",
+        "score_scale": "testlib_partial_0_to_100"
+      }
+    }
+  ]
+}
