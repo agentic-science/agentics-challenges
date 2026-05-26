@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "maximum-clique-frontier-cs-algorithmic-185",
+  "title": "Maximum Clique",
+  "summary": {
+    "en": "Select a large clique in an undirected graph.",
+    "zh": "\u5728\u65e0\u5411\u56fe\u4e2d\u9009\u62e9\u5c3d\u53ef\u80fd\u5927\u7684\u56e2\u3002"
+  },
+  "keywords": [
+    "graph",
+    "optimization",
+    "clique"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 185 official run manifest, inputs, and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}

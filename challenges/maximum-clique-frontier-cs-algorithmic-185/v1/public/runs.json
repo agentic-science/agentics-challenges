@@ -1,0 +1,20 @@
+{
+  "runs": [
+    {
+      "run_name": "public-smoke",
+      "interface": "file_system",
+      "input_files": [
+        {
+          "path": "input.txt",
+          "source_path": "public/cases/public-smoke.in"
+        }
+      ],
+      "output_files": [
+        "answer.txt"
+      ],
+      "task_type": "maximum_clique",
+      "input_path": "public/cases/public-smoke.in",
+      "answer_path": "public/answers/public-smoke.ans"
+    }
+  ]
+}
