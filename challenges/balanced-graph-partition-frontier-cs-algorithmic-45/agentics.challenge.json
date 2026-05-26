@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "balanced-graph-partition-frontier-cs-algorithmic-45",
+  "title": "Balanced Graph Partitioning",
+  "summary": {
+    "en": "Partition a graph into balanced parts while minimizing edge cut and communication volume.",
+    "zh": "将图平衡划分为多个部分，并最小化割边和通信量。"
+  },
+  "keywords": [
+    "graph",
+    "partitioning",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
