@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "rectangle-knapsack-packing-frontier-cs-algorithmic-47",
+  "title": "2D Rectangular Knapsack",
+  "summary": {
+    "en": "Pack bounded axis-aligned rectangles into a bin to maximize profit.",
+    "zh": "将有限数量的轴对齐矩形装入箱中以最大化收益。"
+  },
+  "keywords": [
+    "packing",
+    "knapsack",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
