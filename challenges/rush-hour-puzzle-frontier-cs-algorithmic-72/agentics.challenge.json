@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "rush-hour-puzzle-frontier-cs-algorithmic-72",
+  "title": "Rush Hour Puzzle",
+  "summary": {
+    "en": "Transform a sliding-vehicle puzzle to maximize the minimum solution length.",
+    "zh": "变换滑动车辆谜题，使新谜题的最短解尽量长。"
+  },
+  "keywords": [
+    "puzzle",
+    "search",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
