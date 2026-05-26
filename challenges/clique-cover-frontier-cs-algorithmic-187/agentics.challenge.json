@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "clique-cover-frontier-cs-algorithmic-187",
+  "title": "Clique Cover",
+  "summary": {
+    "en": "Partition graph vertices into as few clique groups as possible.",
+    "zh": "\u5c06\u56fe\u7684\u9876\u70b9\u5212\u5206\u4e3a\u5c3d\u53ef\u80fd\u5c11\u7684\u56e2\u3002"
+  },
+  "keywords": [
+    "graph",
+    "optimization",
+    "clique"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 187 official run manifest, inputs, and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
