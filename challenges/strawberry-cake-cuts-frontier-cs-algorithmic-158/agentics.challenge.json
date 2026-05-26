@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "strawberry-cake-cuts-frontier-cs-algorithmic-158",
+  "title": "Strawberry Cake Cuts",
+  "summary": {
+    "en": "Cut a cake with straight lines to create pieces matching requested strawberry counts.",
+    "zh": "用直线切蛋糕，尽量得到符合草莓数量需求的蛋糕块。"
+  },
+  "keywords": [
+    "geometry",
+    "cuts",
+    "heuristic"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 158 official run manifest and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
