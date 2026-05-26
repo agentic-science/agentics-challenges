@@ -1,0 +1,10 @@
+{
+  "protocol": "zip_project",
+  "protocol_version": 1,
+  "note": "Simple smoke solution for delivery-route-selection-frontier-cs-algorithmic-152.",
+  "commands": {
+    "setup": "scripts/setup.sh",
+    "build": "scripts/build.sh",
+    "run": "run.sh"
+  }
+}
