@@ -12,6 +12,8 @@ from typing import Any
 
 POINTS_RE = re.compile(r"\bpoints\s+([-+0-9.eE]+)")
 RATIO_RE = re.compile(r"\bRatio:\s*([-+0-9.eE]+)")
+MESSAGE_LIMIT = 1000
+LOG_LIMIT = 300
 
 
 def parse_args() -> argparse.Namespace:
@@ -26,6 +28,13 @@ def parse_args() -> argparse.Namespace:
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def truncate_text(text: str, limit: int) -> str:
+    if len(text) <= limit:
+        return text
+    omitted = len(text) - limit
+    return f"{text[:limit]}... [truncated {omitted} chars]"
 
 
 def run_metadata(path: Path) -> dict[str, Any]:
@@ -114,11 +123,16 @@ def score_run(run: dict[str, Any], challenge_dir: Path, solution_runs_dir: Path,
         )
     checker_log = (result.stderr or result.stdout or "").strip()
     if result.returncode not in (0, 7):
-        message = checker_log or f"checker exited with code {result.returncode}"
-        return {**base, "status": "failed", "score": 0.0, "ratio": 0.0, "message": message}, [f"{run_name}: {message}"]
+        message = truncate_text(checker_log or f"checker exited with code {result.returncode}", MESSAGE_LIMIT)
+        return {**base, "status": "failed", "score": 0.0, "ratio": 0.0, "message": message}, [
+            f"{run_name}: {truncate_text(message, LOG_LIMIT)}"
+        ]
     ratio = score_from_checker(checker_log, result.returncode)
     score = round(100.0 * max(0.0, min(1.0, ratio)), 6)
-    return {**base, "status": "passed", "score": score, "ratio": round(max(0.0, min(1.0, ratio)), 8), "message": checker_log}, [f"{run_name}: score={score}; {checker_log}"]
+    message = truncate_text(checker_log, MESSAGE_LIMIT)
+    return {**base, "status": "passed", "score": score, "ratio": round(max(0.0, min(1.0, ratio)), 8), "message": message}, [
+        f"{run_name}: score={score}; {truncate_text(message, LOG_LIMIT)}"
+    ]
 
 
 def aggregate(results: list[dict[str, Any]]) -> dict[str, Any]:
