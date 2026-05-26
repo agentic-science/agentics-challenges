@@ -354,7 +354,7 @@ def aggregate(results: list[dict[str, Any]]) -> dict[str, Any]:
     total = len(results)
     valid = sum(1 for result in results if result["status"] == "passed")
     score = round(sum(float(result.get("score", 0.0)) for result in results) / total, 6) if total else 0.0
-    return {"score": score, "valid_cases": valid, "total_cases": total}
+    return {"score": score, "valid_cases": valid, "total_cases": total, "passed": valid, "total": total}
 
 
 def main() -> int:
