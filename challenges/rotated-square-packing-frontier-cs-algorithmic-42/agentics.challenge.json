@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "rotated-square-packing-frontier-cs-algorithmic-42",
+  "title": "Rotated Square Packing",
+  "summary": {
+    "en": "Pack rotatable unit squares in the smallest possible square container.",
+    "zh": "将可旋转单位正方形装入尽量小的正方形容器。"
+  },
+  "keywords": [
+    "geometry",
+    "packing",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
