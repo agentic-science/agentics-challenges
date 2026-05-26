@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "digit-grid-prefix-frontier-cs-algorithmic-110",
+  "title": "Digit Grid Prefix",
+  "summary": {
+    "en": "Print an 8 by 14 digit grid that can read a long prefix of positive integers by adjacent walks.",
+    "zh": "\u8f93\u51fa 8 x 14 \u6570\u5b57\u7f51\u683c\uff0c\u4f7f\u76f8\u90bb\u6e38\u8d70\u53ef\u8bfb\u51fa\u7684\u6b63\u6574\u6570\u524d\u7f00\u5c3d\u53ef\u80fd\u957f\u3002"
+  },
+  "keywords": [
+    "grid",
+    "optimization",
+    "digits"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 110 official run manifest, inputs, and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
