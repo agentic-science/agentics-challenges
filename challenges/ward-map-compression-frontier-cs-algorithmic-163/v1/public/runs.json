@@ -1,0 +1,11 @@
+{
+  "runs": [
+    {
+      "run_name": "public-smoke",
+      "interface": "stdio",
+      "stdin_text": "1 1\n1\n",
+      "answer_path": "public/answers/public-smoke.ans",
+      "source": "synthetic-public-smoke"
+    }
+  ]
+}
