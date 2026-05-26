@@ -147,12 +147,14 @@ def score_run(run: dict[str, Any], solution_runs_dir: Path, checker_bin: Path, w
 def aggregate(results: list[dict[str, Any]]) -> dict[str, Any]:
     total = len(results)
     if total == 0:
-        return {"score": 0.0, "accepted_cases": 0, "total_cases": 0, "average_ratio": 0.0, "unbounded_score": 0.0}
+        return {"score": 0.0, "accepted_cases": 0, "total_cases": 0, "passed": 0, "total": 0, "average_ratio": 0.0, "unbounded_score": 0.0}
     accepted = sum(1 for result in results if result["status"] == "passed")
     return {
         "score": round(sum(float(result["score"]) for result in results) / total, 6),
         "accepted_cases": accepted,
         "total_cases": total,
+        "passed": accepted,
+        "total": total,
         "average_ratio": round(sum(float(result.get("ratio", 0.0)) for result in results) / total, 8),
         "unbounded_score": round(100.0 * sum(float(result.get("unbounded_ratio", 0.0)) for result in results) / total, 6),
     }
