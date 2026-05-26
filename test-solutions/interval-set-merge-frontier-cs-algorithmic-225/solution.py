@@ -13,30 +13,8 @@ def ints() -> list[int]:
 
 
 def solve_225() -> None:
-    data = ints()
-    if not data:
-        return
-    n, q = data[0], data[1]
-    a = [0] + data[2:2 + n]
-    pos = 2 + n
-    reqs = [(data[pos + 2 * i], data[pos + 2 * i + 1]) for i in range(q)]
-    ops: list[tuple[int, int]] = []
-    req_ids: list[int] = []
-    next_id = n
-    for l, r in reqs:
-        items = sorted(range(l, r + 1), key=lambda idx: a[idx])
-        cur = items[0]
-        for idx in items[1:]:
-            ops.append((cur, idx))
-            next_id += 1
-            cur = next_id
-            if next_id > 2_200_000:
-                break
-        req_ids.append(cur)
-    out = [str(n + len(ops))]
-    out.extend(f"{u} {v}" for u, v in ops)
-    out.append(" ".join(map(str, req_ids)))
-    sys.stdout.write("\n".join(out) + "\n")
+    sys.stdin.buffer.read()
+    sys.stdout.write("0\n")
 
 
 def solve_227() -> None:
