@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "big-integer-subset-sum-frontier-cs-algorithmic-179",
+  "title": "Big Integer Subset Sum",
+  "summary": {
+    "en": "Select big integers whose sum is as close as possible to the target.",
+    "zh": "选择大整数子集，使总和尽量接近目标。"
+  },
+  "keywords": [
+    "subset-sum",
+    "bigint",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 179 official run manifest, inputs, reference answers, and source provenance."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
