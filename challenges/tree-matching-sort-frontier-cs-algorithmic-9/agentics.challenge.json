@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "tree-matching-sort-frontier-cs-algorithmic-9",
+  "title": "Tree Matching Sort",
+  "summary": {
+    "en": "Sort a permutation on a tree using parallel matching swaps with as few rounds as possible.",
+    "zh": "在树上用并行匹配交换排序排列，并尽量减少轮数。"
+  },
+  "keywords": [
+    "tree",
+    "matching",
+    "sorting"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
