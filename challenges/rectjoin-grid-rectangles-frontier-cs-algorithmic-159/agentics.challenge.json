@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "rectjoin-grid-rectangles-frontier-cs-algorithmic-159",
+  "title": "RectJoin Grid Rectangles",
+  "summary": {
+    "en": "Add grid points by drawing valid axis-aligned or diagonal rectangles.",
+    "zh": "通过绘制合法的轴对齐或 45 度矩形来添加网格点。"
+  },
+  "keywords": [
+    "geometry",
+    "grid",
+    "rectangles"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 159 official run manifest and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
