@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "ball-pillar-sorting-frontier-cs-algorithmic-62",
+  "title": "Ball Moving Game",
+  "summary": {
+    "en": "Move stacked colored balls among pillars until each color occupies one pillar.",
+    "zh": "在柱子间移动堆叠彩球，直到每种颜色集中到单个柱子。"
+  },
+  "keywords": [
+    "stacks",
+    "sorting",
+    "construction"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
