@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "ward-map-compression-frontier-cs-algorithmic-163",
+  "title": "Ward Map Compression",
+  "summary": {
+    "en": "Draw a smaller colored map preserving ward adjacency relationships.",
+    "zh": "绘制更小的彩色地图，同时保留区域邻接关系。"
+  },
+  "keywords": [
+    "map",
+    "graph",
+    "compression"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 163 official run manifest and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
