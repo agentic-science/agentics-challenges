@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "resonator-emitter-layout-frontier-cs-algorithmic-310",
+  "title": "Metallic Pink Resonator Layout",
+  "summary": {
+    "en": "Select emitter ports in a circular resonator under budget to maximize saturated pair value.",
+    "zh": "在环形谐振器中按预算选择发射端口，以最大化饱和配对价值。"
+  },
+  "keywords": [
+    "convolution",
+    "selection",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 310 official run manifest with source-derived inputs, reference outputs, and scoring metadata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
