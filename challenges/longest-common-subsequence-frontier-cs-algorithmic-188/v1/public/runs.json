@@ -1,0 +1,13 @@
+{
+  "runs": [
+    {
+      "run_name": "public-smoke",
+      "interface": "stdio",
+      "stdin_text": "ABC\nAXBC\n",
+      "answer_text": "ABC\n",
+      "input_path": "public/cases/public-smoke.in",
+      "answer_path": "public/answers/public-smoke.ans",
+      "expected_output_source_path": "public/answers/public-smoke.out"
+    }
+  ]
+}
