@@ -1,0 +1,11 @@
+{
+  "runs": [
+    {
+      "run_name": "public-smoke",
+      "interface": "stdio",
+      "stdin_text": "3 4\n1 2 3\n",
+      "answer_text": "\n",
+      "description": "Tiny deterministic public validation case for the migrated Frontier-CS checker."
+    }
+  ]
+}
