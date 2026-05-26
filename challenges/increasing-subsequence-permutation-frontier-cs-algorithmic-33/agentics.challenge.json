@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "increasing-subsequence-permutation-frontier-cs-algorithmic-33",
+  "title": "Permutation Modified Version",
+  "summary": {
+    "en": "Construct a permutation whose increasing-subsequence count matches the target value.",
+    "zh": "构造一个排列，使其递增子序列计数匹配目标值。"
+  },
+  "keywords": [
+    "permutation",
+    "combinatorics",
+    "construction"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
