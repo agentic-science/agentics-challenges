@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "variable-length-sequence-reversal-frontier-cs-algorithmic-214",
+  "title": "Variable-Length Sequence Reversal",
+  "summary": {
+    "en": "Sort a permutation using reversals of two related segment lengths.",
+    "zh": "用两种相关长度的区间反转对排列排序。"
+  },
+  "keywords": [
+    "permutation",
+    "reversal",
+    "sorting"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 214 official run manifest, inputs, reference answers, and source provenance."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
