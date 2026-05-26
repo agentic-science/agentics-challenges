@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "ranger-shift-balancing-frontier-cs-algorithmic-312",
+  "title": "Park Ranger Shift Balancing",
+  "summary": {
+    "en": "Give closed trail walks for ranger teams so every trail is inspected with balanced load.",
+    "zh": "为护林员队伍给出闭合巡线路线，使所有小径被检查并尽量均衡负载。"
+  },
+  "keywords": [
+    "graph",
+    "walk",
+    "load balancing"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 312 official run manifest with source-derived inputs, reference outputs, and scoring metadata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
