@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "sliding-tree-puzzle-frontier-cs-algorithmic-157",
+  "title": "Sliding Tree Puzzle",
+  "summary": {
+    "en": "Slide tiles so the resulting line drawing contains a large tree.",
+    "zh": "通过滑块操作，让最终线段图包含较大的树结构。"
+  },
+  "keywords": [
+    "sliding puzzle",
+    "tree",
+    "grid"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 157 official run manifest and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
