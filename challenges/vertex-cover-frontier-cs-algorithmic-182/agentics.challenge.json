@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "vertex-cover-frontier-cs-algorithmic-182",
+  "title": "Vertex Cover",
+  "summary": {
+    "en": "Select a small vertex cover for an undirected graph.",
+    "zh": "\u4e3a\u65e0\u5411\u56fe\u9009\u62e9\u5c3d\u53ef\u80fd\u5c0f\u7684\u70b9\u8986\u76d6\u3002"
+  },
+  "keywords": [
+    "graph",
+    "optimization",
+    "cover"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 182 official run manifest, inputs, and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
