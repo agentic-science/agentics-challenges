@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "black-white-components-frontier-cs-algorithmic-75",
+  "title": "Black and White Components",
+  "summary": {
+    "en": "Draw a bounded grid with the requested black and white component counts at low weighted area.",
+    "zh": "绘制有界网格，使黑白连通块数量满足要求并降低加权面积。"
+  },
+  "keywords": [
+    "grid",
+    "components",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing source-derived official Frontier-CS inputs, answer/reference files, and scoring metadata under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
