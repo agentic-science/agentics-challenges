@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "edit-transcript-lcs-frontier-cs-algorithmic-189",
+  "title": "Edit Transcript LCS",
+  "summary": {
+    "en": "Produce an edit transcript that captures a long common subsequence alignment.",
+    "zh": "输出编辑脚本，尽量获得更长的公共子序列对齐。"
+  },
+  "keywords": [
+    "strings",
+    "alignment",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 189 official run manifest, inputs, reference answers, and source provenance."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
