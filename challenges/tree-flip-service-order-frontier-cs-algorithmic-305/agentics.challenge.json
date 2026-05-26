@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "tree-flip-service-order-frontier-cs-algorithmic-305",
+  "title": "Cascading Flip Schedule on a Power Grid Tree",
+  "summary": {
+    "en": "Choose a vertex service order on a tree whose removals flip unserviced neighbors.",
+    "zh": "在树形电网中选择服务顺序，处理会翻转未服务邻居状态。"
+  },
+  "keywords": [
+    "tree",
+    "ordering",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 305 official run manifest with source-derived inputs, reference outputs, and scoring metadata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
