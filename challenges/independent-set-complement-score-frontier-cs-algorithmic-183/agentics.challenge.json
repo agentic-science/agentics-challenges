@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "independent-set-complement-score-frontier-cs-algorithmic-183",
+  "title": "Independent Set Complement Score",
+  "summary": {
+    "en": "Select an independent set under the original complement-style Frontier-CS scoring formula.",
+    "zh": "\u6309 Frontier-CS \u539f\u59cb complement-style \u8bc4\u5206\u516c\u5f0f\u9009\u62e9\u72ec\u7acb\u96c6\u3002"
+  },
+  "keywords": [
+    "graph",
+    "optimization",
+    "independent set"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 183 official run manifest, inputs, and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
