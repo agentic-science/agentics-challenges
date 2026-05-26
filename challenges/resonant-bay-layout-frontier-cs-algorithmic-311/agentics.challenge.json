@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "resonant-bay-layout-frontier-cs-algorithmic-311",
+  "title": "Resonant Bay Layout",
+  "summary": {
+    "en": "Assign oscillators to distinct rail bays to maximize coupled resonance energy.",
+    "zh": "将振荡器放入不同轨道格位，以最大化耦合共振能量。"
+  },
+  "keywords": [
+    "layout",
+    "trigonometry",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 311 official run manifest with source-derived inputs, reference outputs, and scoring metadata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
