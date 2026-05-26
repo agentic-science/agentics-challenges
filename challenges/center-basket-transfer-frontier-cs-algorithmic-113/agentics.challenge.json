@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "center-basket-transfer-frontier-cs-algorithmic-113",
+  "title": "Center Basket Transfer",
+  "summary": {
+    "en": "Move numbered balls between three baskets under center-ball transfer rules.",
+    "zh": "按照中心球转移规则，在三个篮子之间移动编号球。"
+  },
+  "keywords": [
+    "puzzle",
+    "search",
+    "moves"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 113 official run manifest and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
