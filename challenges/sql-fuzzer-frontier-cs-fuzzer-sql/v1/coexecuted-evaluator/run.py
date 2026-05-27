@@ -37,6 +37,7 @@ def main() -> int:
     challenge_dir = Path(args.challenge_dir).resolve()
     workspace_dir = Path(args.workspace_dir).resolve()
     config = load_mode_config(challenge_dir, args.mode)
+    declared_metrics = declared_metric_names(challenge_dir)
     logs: list[str] = []
     try:
         with captured_logs(logs):
@@ -44,7 +45,7 @@ def main() -> int:
     except Exception as exc:  # noqa: BLE001 - result.json must explain evaluator failures.
         error = str(exc) if args.mode == "validation" else "official evaluation failed"
         result = {"status": "error", "score": 0.0, "score_unbounded": 0.0, "runs_successfully": 0.0, "error": error}
-    write_agentics_result(output_path, args.mode, result, logs)
+    write_agentics_result(output_path, args.mode, result, logs, declared_metrics)
     return 0
 
 
@@ -77,6 +78,18 @@ def load_mode_config(challenge_dir: Path, mode: str) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise RuntimeError("mode config must be a JSON object")
     return payload
+
+
+def declared_metric_names(challenge_dir: Path) -> set[str]:
+    payload = json.loads((challenge_dir / "spec.json").read_text(encoding="utf-8"))
+    metrics = payload.get("metric_schema", {}).get("metrics", [])
+    if not isinstance(metrics, list):
+        return set()
+    names: set[str] = set()
+    for metric in metrics:
+        if isinstance(metric, dict) and isinstance(metric.get("name"), str):
+            names.add(metric["name"])
+    return names
 
 
 @contextlib.contextmanager
@@ -322,7 +335,7 @@ def run_nbody(config: dict[str, Any], challenge_dir: Path, workspace_dir: Path) 
     return common.evaluate(workspace_dir / "solution.cpp", challenge_dir / "nbody-common", cfg)
 
 
-def write_agentics_result(output_path: Path, mode: str, result: dict[str, Any], logs: list[str]) -> None:
+def write_agentics_result(output_path: Path, mode: str, result: dict[str, Any], logs: list[str], declared_metrics: set[str]) -> None:
     score = finite(result.get("score", 0.0))
     score_unbounded = finite(result.get("score_unbounded", score))
     error = result.get("error")
@@ -330,7 +343,7 @@ def write_agentics_result(output_path: Path, mode: str, result: dict[str, Any], 
     runs_successfully = finite(result.get("runs_successfully", 1.0))
     correct = bool(result.get("correct", True))
     passed = error is None and runs_successfully > 0 and correct and (pass_all is not False)
-    metrics = collect_metrics(result, score, score_unbounded, passed)
+    metrics = collect_metrics(result, score, score_unbounded, passed, declared_metrics)
     summary_key = "validation_summary" if mode == "validation" else "official_summary"
     payload: dict[str, Any] = {
         "status": "passed" if passed else "failed",
@@ -347,10 +360,20 @@ def write_agentics_result(output_path: Path, mode: str, result: dict[str, Any], 
     output_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
 
 
-def collect_metrics(result: dict[str, Any], score: float, score_unbounded: float, passed: bool) -> list[dict[str, float | str]]:
-    values: dict[str, float] = {"score": score, "score_unbounded": score_unbounded, "runs_successfully": finite(result.get("runs_successfully", 1.0)), "correctness": 1.0 if passed else 0.0}
+def collect_metrics(result: dict[str, Any], score: float, score_unbounded: float, passed: bool, declared_metrics: set[str]) -> list[dict[str, float | str]]:
+    values: dict[str, float] = {}
+
+    def set_declared(name: str, value: float) -> None:
+        if name in declared_metrics:
+            values[name] = value
+
+    set_declared("score", score)
+    set_declared("score_unbounded", score_unbounded)
+    set_declared("runs_successfully", finite(result.get("runs_successfully", 1.0)))
+    set_declared("correctness", 1.0 if passed else 0.0)
+
     def add(name: str, value: Any) -> None:
-        if name in {"score", "score_unbounded"}:
+        if name in {"score", "score_unbounded", "runs_successfully", "correctness"} or name not in declared_metrics:
             return
         if isinstance(value, bool):
             values[name] = 1.0 if value else 0.0
