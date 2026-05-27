@@ -1,0 +1,15 @@
+{
+  "problem_name": "gdpa_attention",
+  "metadata": {
+    "shapes": [
+      [
+        1,
+        2,
+        32,
+        32,
+        16,
+        16
+      ]
+    ]
+  }
+}
