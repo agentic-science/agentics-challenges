@@ -1,0 +1,8 @@
+{
+  "runner": "imagenet_pareto",
+  "sample_overrides": {
+    "TRAIN_SAMPLES_PER_CLASS": 1,
+    "VAL_SAMPLES_PER_CLASS": 1,
+    "TEST_SAMPLES_PER_CLASS": 1
+  }
+}
