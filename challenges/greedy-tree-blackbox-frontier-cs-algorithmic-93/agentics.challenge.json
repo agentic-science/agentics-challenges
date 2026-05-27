@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "greedy-tree-blackbox-frontier-cs-algorithmic-93",
+  "title": "Greedy Tree Blackbox",
+  "summary": {
+    "en": "Recover a rooted tree from antichain greedy black-box queries.",
+    "zh": "Recover a rooted tree from antichain greedy black-box queries."
+  },
+  "keywords": [
+    "trees",
+    "greedy",
+    "interactive"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/session.json"
+      ],
+      "asset_note": "ZIP overlay containing the official Frontier-CS algorithmic problem 93 interactive session manifest and hidden source testdata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}

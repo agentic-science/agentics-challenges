@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "hidden-tree-median-frontier-cs-algorithmic-86",
+  "title": "Hidden Tree Median",
+  "summary": {
+    "en": "Recover a hidden tree through triple-node median queries.",
+    "zh": "Recover a hidden tree through triple-node median queries."
+  },
+  "keywords": [
+    "trees",
+    "interactive",
+    "reconstruction"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/session.json"
+      ],
+      "asset_note": "ZIP overlay containing the official Frontier-CS algorithmic problem 86 interactive session manifest and hidden source testdata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
