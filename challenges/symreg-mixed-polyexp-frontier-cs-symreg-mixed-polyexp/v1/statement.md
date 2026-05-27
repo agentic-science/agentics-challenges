@@ -67,56 +67,17 @@ Expression Requirements:
 - Allowed functions: `sin`, `cos`, `exp`, `log`
 - Numeric constants are allowed
 
-Dependencies (pinned versions)
-------------------------------
-```
-pysr==0.19.0
-numpy==1.26.4
-pandas==2.2.2
-sympy==1.13.3
-```
+Agentics Runtime
+----------------
+The Agentics evaluator runtime provides `numpy`, `pandas`, and `sympy`. PySR
+and Julia are not installed by the evaluator setup phase, so submitted
+solutions must not rely on evaluator-provided PySR unless they vendor their own
+compatible runtime inside the ZIP project.
 
 Minimal Working Examples
 ------------------------
 
-**Example 1: Using PySR (recommended)**
-```python
-import numpy as np
-from pysr import PySRRegressor
-
-class Solution:
-    def __init__(self, **kwargs):
-        pass
-
-    def solve(self, X: np.ndarray, y: np.ndarray) -> dict:
-        model = PySRRegressor(
-            niterations=50,  # more iterations for 4D
-            binary_operators=["+", "-", "*", "/"],
-            unary_operators=["sin", "cos", "exp", "log"],
-            populations=20,
-            population_size=40,
-            maxsize=30,  # larger for 4D complexity
-            verbosity=0,
-            progress=False,
-            random_state=42,
-        )
-        model.fit(X, y, variable_names=["x1", "x2", "x3", "x4"])
-
-        # Get best expression as sympy, convert to string
-        best_expr = model.sympy()
-        expression = str(best_expr)
-
-        # Predictions
-        predictions = model.predict(X)
-
-        return {
-            "expression": expression,
-            "predictions": predictions.tolist(),
-            "details": {}
-        }
-```
-
-**Example 2: Manual expression (simple baseline)**
+**Manual expression (simple baseline)**
 ```python
 import numpy as np
 
@@ -143,18 +104,6 @@ class Solution:
         }
 ```
 
-PySR API Notes (v0.19.0)
-------------------------
-- `model.fit(X, y, variable_names=["x1", "x2", "x3", "x4"])` - use variable_names to match expected output
-- `model.sympy()` - returns best expression as sympy object
-- `model.predict(X)` - returns predictions array
-- `model.equations_` - DataFrame of all discovered equations
-- Common parameters:
-  - `niterations`: number of evolution iterations (more = better but slower)
-  - `populations`: number of parallel populations
-  - `maxsize`: maximum expression complexity
-  - `verbosity=0, progress=False`: suppress output
-
 Expression Format Requirements
 ------------------------------
 - Must be a valid Python expression string
@@ -178,5 +127,4 @@ Score = 100 × clamp((m_base - MSE) / (m_base - m_ref), 0, 1) × 0.99^max(C - C_
 
 Environment
 -----------
-Run `set_up_env.sh` to install dependencies.
-
+The evaluator setup phase creates the Agentics runtime described above with uv.

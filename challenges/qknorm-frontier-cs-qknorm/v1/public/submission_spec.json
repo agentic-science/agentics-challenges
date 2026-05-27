@@ -5,7 +5,7 @@
     "cuda_backend": true,
     "gpu_required": true,
     "torch_version": ">=2.0.0",
-    "flashinfer_version": ">=0.5.0"
+    "flashinfer_version": "==0.5.0"
   },
   "evaluation": {
     "timeout_seconds": 300,

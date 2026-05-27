@@ -4,7 +4,7 @@ from pathlib import Path
 ENV_PROJECT_DIR = "evaluator-env"
 PYTHON_INSTALL_DIR = "uv-python"
 PYTHON_REQUEST = "3.12"
-PYPROJECT = '[project]\nname = "imagenet_500k_frontier_cs_imagenet_500k"\nversion = "0.1.0"\nrequires-python = ">=3.12,<3.13"\ndependencies = [\n  "torch>=2.3,<2.6",\n  "numpy>=1.26",\n  "tqdm>=4.64",\n]\n\n[tool.uv]\npackage = false\n'
+PYPROJECT = '[project]\nname = "imagenet_500k_frontier_cs_imagenet_500k"\nversion = "0.1.0"\nrequires-python = ">=3.10,<3.13"\ndependencies = [\n  "torch>=2.2,<2.4",\n  "numpy>=1.24",\n  "tqdm>=4.64",\n]\n\n[tool.uv]\npackage = false\n'
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Set up evaluator env")
