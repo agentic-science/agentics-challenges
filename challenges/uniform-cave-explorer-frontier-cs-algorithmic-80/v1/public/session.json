@@ -1,0 +1,15 @@
+{
+  "session_name": "public-smoke",
+  "metadata": {
+    "case": {
+      "n": 1,
+      "m": 2,
+      "adj": [
+        [
+          0,
+          0
+        ]
+      ]
+    }
+  }
+}
