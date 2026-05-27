@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "gemm-annoying-frontier-cs-gemm-annoying",
+  "title": "GEMM Optimization: Annoying Shapes",
+  "summary": {
+    "en": "Optimize a Triton GEMM with GELU for awkward matrix dimensions.",
+    "zh": "Optimize a Triton GEMM with GELU for awkward matrix dimensions."
+  },
+  "keywords": [
+    "cuda",
+    "triton",
+    "gemm",
+    "frontier-cs"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/submission_spec.json"
+      ],
+      "asset_note": "Official benchmark spec for research/problems/gemm_optimization/annoying."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
