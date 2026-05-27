@@ -28,6 +28,7 @@
 - [ ] `solution.protocol` 为 `zip_project`
 - [ ] 已声明 separated-evaluator、interactive-evaluator 或 coexecuted-evaluator command
 - [ ] 已声明 separated-evaluator、interactive-evaluator 或 coexecuted-evaluator `result_file`
+- [ ] 如果使用 `piped_stdio`，已设置 `acknowledge_stdio_protocol_framing: true`，并已说明 stdin/stdout message protocol
 - [ ] 任何 target 设置 `validation_enabled: true` 时，已声明 validation source
 - [ ] `private_benchmark_enabled: true` 时，已声明 official source
 - [ ] Metric schema 已声明 primary metric、direction、visibility 和 tie-breakers
@@ -47,6 +48,7 @@
 
 - [ ] 该 challenge 不需要 Docker-in-Docker
 - [ ] 该 challenge 不是 exploit、vulnerability、PoC generation、sandbox escape 或其他 security workload
+- [ ] 如果使用 `piped_stdio`，已说明 EOF behavior、malformed participant output handling、session termination 和由可信 evaluator 写入 `result.json`
 - [ ] 如果使用 `coexecuted_benchmark`，已设置 `acknowledge_danger: true`
 - [ ] 如果使用 `coexecuted_benchmark`，已省略 `resource_profile.solution.run`
 - [ ] 如果使用 `coexecuted_benchmark`，不包含 secrets，因为 participant code 和 private official data 会共享 coexecuted-evaluator container

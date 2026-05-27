@@ -29,6 +29,7 @@ challenge proposal.
 - [ ] `solution.protocol` is `zip_project`
 - [ ] Separated-evaluator, interactive-evaluator, or coexecuted-evaluator command is declared
 - [ ] Separated-evaluator, interactive-evaluator, or coexecuted-evaluator `result_file` is declared
+- [ ] If using `piped_stdio`, `acknowledge_stdio_protocol_framing: true` is set and the stdin/stdout message protocol is documented
 - [ ] Validation source is declared when any target has `validation_enabled: true`
 - [ ] Official source is declared when `private_benchmark_enabled: true`
 - [ ] Metric schema declares the primary metric, direction, visibility, and tie-breakers
@@ -48,6 +49,7 @@ challenge proposal.
 
 - [ ] This challenge does not require Docker-in-Docker
 - [ ] This challenge is not an exploit, vulnerability, PoC generation, sandbox escape, or other security workload
+- [ ] If using `piped_stdio`, EOF behavior, malformed participant output handling, session termination, and trusted evaluator `result.json` ownership are documented
 - [ ] If using `coexecuted_benchmark`, `acknowledge_danger: true` is set
 - [ ] If using `coexecuted_benchmark`, `resource_profile.solution.run` is omitted
 - [ ] If using `coexecuted_benchmark`, no secrets are present because participant code and private official data share the coexecuted-evaluator container

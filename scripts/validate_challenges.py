@@ -178,6 +178,10 @@ def validate_bundle(
         executor = required_object(execution, "coexecuted_evaluator")
         executor_label = "execution.coexecuted_evaluator.command script"
     elif mode == "piped_stdio":
+        if execution.get("acknowledge_stdio_protocol_framing") is not True:
+            raise ValidationError(
+                f"{bundle_root}: execution.acknowledge_stdio_protocol_framing must be true for piped_stdio: the challenge author must document the stdin/stdout message protocol, including session start and termination, multi-case framing if used, EOF behavior, malformed participant output handling, and trusted evaluator result.json ownership."
+            )
         reject_both_execution_fields(bundle_root, execution, "validation_session", "validation_setup")
         reject_both_execution_fields(bundle_root, execution, "official_session", "official_evaluation_setup")
         executor = required_object(execution, "interactive_evaluator")
