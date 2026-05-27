@@ -1,0 +1,26 @@
+{
+  "session_name": "public-smoke",
+  "input_files": [
+    {
+      "path": "cases/public.in",
+      "content": "4\n1 0 3 2\n"
+    },
+    {
+      "path": "cases/public.ans",
+      "content": "6\n"
+    }
+  ],
+  "metadata": {
+    "source_problem_id": 82,
+    "source_path": "algorithmic/problems/82",
+    "adapter": "frontier-cs-testlib-interactor-wrapper",
+    "query_limit": 4269,
+    "cases": [
+      {
+        "case_name": "public-smoke",
+        "input_path": "cases/public.in",
+        "answer_path": "cases/public.ans"
+      }
+    ]
+  }
+}
