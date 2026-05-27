@@ -1,0 +1,21 @@
+{
+  "runner": "llm_sql",
+  "datasets": [
+    "public/datasets/PDMX.csv",
+    "public/datasets/credit.csv"
+  ],
+  "col_merges": [
+    [
+      [
+        "artist_name",
+        "track_name"
+      ]
+    ],
+    [
+      [
+        "LIMIT_BAL",
+        "AGE"
+      ]
+    ]
+  ]
+}
