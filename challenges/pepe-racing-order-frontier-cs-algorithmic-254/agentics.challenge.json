@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "pepe-racing-order-frontier-cs-algorithmic-254",
+  "title": "Pepe Racing Order",
+  "summary": {
+    "en": "Order the fastest pepes from the source racing instances.",
+    "zh": "Order the fastest pepes from the source racing instances."
+  },
+  "keywords": [
+    "ordering",
+    "racing",
+    "interactive"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/session.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 254 official interactive session manifest and hidden source testdata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
