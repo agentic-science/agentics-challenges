@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Small-case adjacency baseline for the Lamp Ring Permutation piped_stdio protocol.",
+  "note": "Batched adjacency baseline for the Lamp Ring Permutation piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,3 +1,3 @@
 # Hidden Cycle Length Test Solution
 
-This baseline uses `walk 0` to learn the starting label, then walks one step at a time until that label reappears on small public cycles.
+This baseline samples random-length walks, records repeated visible labels, and guesses the GCD of offset differences found from collisions. It is a simple honest strategy for large hidden cycles, not a tuned optimal solver.
