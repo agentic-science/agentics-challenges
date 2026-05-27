@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 	int n = inf.readInt();
 
 	int max = 1e6, tot = 0;
-	std::vector cnt(n, 0);
+	std::unordered_map<int, int> cnt;
 
 	while (true) {
 		int action_type = ouf.readInt();
@@ -32,9 +32,7 @@ int main(int argc, char* argv[]) {
 			for (int i = 0; i < m; i++) {
 				collisions += cnt[a[i] % n]++;
 			}
-			for (int i = 0; i < m; i++) {
-				cnt[a[i] % n]--;
-			}
+			cnt.clear();
 			println(collisions);
 		} else if (action_type == 1) {
 			if (ouf.readInt() == n) {

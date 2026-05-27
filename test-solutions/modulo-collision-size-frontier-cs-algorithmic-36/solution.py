@@ -11,7 +11,7 @@ def ask_difference(delta: int) -> int:
     return int(line.strip())
 
 
-def solve_one_case(limit: int = 1000) -> None:
+def solve_one_case(limit: int = 64) -> None:
     for candidate in range(2, limit + 1):
         if ask_difference(candidate) > 0:
             print(f"1 {candidate}", flush=True)

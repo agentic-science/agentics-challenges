@@ -230,7 +230,7 @@ def main() -> int:
                 return 0
 
             report_path = tmp_dir / f"report-{index}.txt"
-            cmd = [str(binary), str(input_path), "/dev/stdin", str(answer_path), str(report_path)]
+            cmd = [str(binary), str(input_path), "/dev/stdout", str(answer_path), str(report_path)]
             completed = subprocess.run(
                 cmd,
                 stdin=sys.stdin.buffer,
@@ -259,6 +259,25 @@ def main() -> int:
                 }
             )
             if protocol_error:
+                break
+            if completed.returncode != 0 and score <= 0.0:
+                for remaining_index, remaining_case in enumerate(cases[index:], start=index + 1):
+                    remaining_name = (
+                        str(remaining_case.get("case_name", f"case-{remaining_index}"))
+                        if isinstance(remaining_case, dict)
+                        else f"case-{remaining_index}"
+                    )
+                    case_results.append(
+                        {
+                            "case_name": remaining_name,
+                            "score": 0.0,
+                            "source_ratio": 0.0,
+                            "cost": 0.0,
+                            "protocol_error": False,
+                            "message": "session ended after a zero-score terminal interactor result",
+                            "exit_code": completed.returncode,
+                        }
+                    )
                 break
 
     signal_session_end(metadata)

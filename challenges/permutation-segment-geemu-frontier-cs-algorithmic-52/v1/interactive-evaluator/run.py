@@ -230,7 +230,7 @@ def main() -> int:
                 return 0
 
             report_path = tmp_dir / f"report-{index}.txt"
-            cmd = [str(binary), str(input_path), "/dev/stdin", str(answer_path), str(report_path)]
+            cmd = [str(binary), str(input_path), "/dev/stdout", str(answer_path), str(report_path)]
             completed = subprocess.run(
                 cmd,
                 stdin=sys.stdin.buffer,

@@ -19,6 +19,6 @@ Submitted `zip_project` solutions communicate with the trusted interactive evalu
 - Original title: Hack!
 - Original shape: Frontier-CS interactive algorithmic benchmark with `config.yaml`, `statement.txt`, `interactor.cpp`, and hidden bucket counts.
 - Agentics mode: `piped_stdio`.
-- Trusted evaluator: copied source `interactor.cpp` compiled with Testlib inside `interactive-evaluator/run.py`.
+- Trusted evaluator: source-equivalent `interactor.cpp` compiled with Testlib inside `interactive-evaluator/run.py`; it uses sparse per-query residue counts so official bucket counts up to the source limit do not require allocating `n` buckets.
 
 Public validation is intentionally tiny. Official Frontier-CS hidden bucket-count data must be supplied through the required private asset `official-runs` at `private-benchmark/session.json` and is not committed.

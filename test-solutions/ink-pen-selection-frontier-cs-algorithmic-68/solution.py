@@ -27,15 +27,19 @@ def solve_case(n: int) -> None:
 
 
 def main() -> None:
-    first = sys.stdin.readline()
-    if first == "":
-        return
-    t = int(first.strip())
-    for _ in range(t):
-        line = sys.stdin.readline()
-        if line == "":
+    while True:
+        first = sys.stdin.readline()
+        if first == "":
             return
-        solve_case(int(line.strip()))
+        first = first.strip()
+        if not first:
+            continue
+        t = int(first)
+        for _ in range(t):
+            line = sys.stdin.readline()
+            if line == "":
+                return
+            solve_case(int(line.strip()))
 
 
 if __name__ == "__main__":
