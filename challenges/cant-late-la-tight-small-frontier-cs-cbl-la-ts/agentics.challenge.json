@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "cant-late-la-tight-small-frontier-cs-cbl-la-ts",
+  "title": "Cant Be Late: Low Availability, Tight Deadline, Small Overhead",
+  "summary": {
+    "en": "Optimize a cloud spot-instance scheduling strategy for the Frontier-CS cant_be_late low/tight/small variant.",
+    "zh": "Optimize a cloud spot-instance scheduling strategy for the Frontier-CS cant_be_late low/tight/small variant."
+  },
+  "keywords": [
+    "scheduling",
+    "cloud",
+    "simulation",
+    "frontier-cs"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/real_traces.tar.gz"
+      ],
+      "asset_note": "Official trace bundle for research/problems/cant_be_late/low_availability_tight_deadline_small_overhead."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
