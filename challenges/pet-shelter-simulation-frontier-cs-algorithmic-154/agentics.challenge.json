@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "pet-shelter-simulation-frontier-cs-algorithmic-154",
+  "title": "Pet Shelter Simulation",
+  "summary": {
+    "en": "Emit a simple valid move script for the pet shelter simulation instance.",
+    "zh": "Emit a simple valid move script for the pet shelter simulation instance."
+  },
+  "keywords": [
+    "simulation",
+    "heuristic",
+    "grid"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/session.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 154 official interactive session manifest and hidden source testdata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
