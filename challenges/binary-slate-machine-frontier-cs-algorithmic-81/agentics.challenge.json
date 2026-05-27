@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "binary-slate-machine-frontier-cs-algorithmic-81",
+  "title": "Binary Slate Machine",
+  "summary": {
+    "en": "Recover the hidden binary slate string from Frontier-CS machine records.",
+    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Binary Slate Machine。"
+  },
+  "keywords": [
+    "strings",
+    "automaton",
+    "offline"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/runs.json"
+      ],
+      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
