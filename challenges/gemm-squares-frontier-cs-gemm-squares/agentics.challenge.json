@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "gemm-squares-frontier-cs-gemm-squares",
+  "title": "GEMM Squares Optimization",
+  "summary": {
+    "en": "Optimize Triton GEMM with GELU for square CUDA matrix shapes.",
+    "zh": "Optimize Triton GEMM with GELU for square CUDA matrix shapes."
+  },
+  "keywords": [
+    "cuda",
+    "gemm",
+    "triton"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/config.json",
+        "private-benchmark/submission_spec.json"
+      ],
+      "asset_note": "Private official data/config for Frontier-CS `research/problems/gemm_optimization/squares`."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
