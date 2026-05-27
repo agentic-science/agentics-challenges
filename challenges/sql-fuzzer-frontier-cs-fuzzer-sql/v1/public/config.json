@@ -1,0 +1,4 @@
+{
+  "runner": "sql_fuzzer",
+  "time_budget_sec": 1.0
+}
