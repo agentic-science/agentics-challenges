@@ -1,0 +1,12 @@
+{
+  "problem_name": "fused_linear_jsd",
+  "metadata": {
+    "shapes": [
+      [
+        8,
+        128,
+        64
+      ]
+    ]
+  }
+}
