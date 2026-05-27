@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "mixed-gemm-frontier-cs-mixed-gemm",
+  "title": "Mixed GEMM GELU Optimization",
+  "summary": {
+    "en": "Optimize mixed-precision linear, bias, and GELU CUDA computation.",
+    "zh": "Optimize mixed-precision linear, bias, and GELU CUDA computation."
+  },
+  "keywords": [
+    "cuda",
+    "gemm",
+    "gelu"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/config.json",
+        "private-benchmark/submission_spec.json"
+      ],
+      "asset_note": "Private official data/config for Frontier-CS `research/problems/mixed_gemm`."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
