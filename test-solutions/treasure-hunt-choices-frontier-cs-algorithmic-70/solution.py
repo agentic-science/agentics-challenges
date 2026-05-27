@@ -4,15 +4,23 @@ import sys
 
 
 def main() -> None:
-    try:
-        sys.stdin.readline()
-        header = sys.stdin.readline().split()
-        edge_count = int(header[1]) if len(header) > 1 else 0
-        for _ in range(max(0, edge_count)):
+    t = int(sys.stdin.readline())
+    for _ in range(t):
+        _n, m, _start, _base = map(int, sys.stdin.readline().split())
+        for _ in range(m):
             sys.stdin.readline()
-        print("1", flush=True)
-    except Exception:
-        return
+        while True:
+            line = sys.stdin.readline().strip()
+            if line in {"AC", "F", ""}:
+                break
+            values = list(map(int, line.split()))
+            degree = values[0]
+            choice = 1
+            for index in range(degree):
+                if values[1 + 2 * index + 1] == 0:
+                    choice = index + 1
+                    break
+            print(choice, flush=True)
 
 
 if __name__ == "__main__":
