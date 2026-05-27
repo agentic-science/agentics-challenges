@@ -55,13 +55,13 @@
             "disk_limit_mb": 16384,
             "network_access": "enabled"
           },
-          "run": {
-            "timeout_sec": 3600,
-            "memory_limit_mb": 8192,
-            "cpu_limit_millis": 8000,
-            "disk_limit_mb": 8192,
-            "network_access": "disabled"
-          }
+        "run": {
+          "timeout_sec": 3600,
+          "memory_limit_mb": 12288,
+          "cpu_limit_millis": 8000,
+          "disk_limit_mb": 8192,
+          "network_access": "disabled"
+        }
         },
         "resource_description": "ARM64 CPU profile for Frontier-CS coexecuted CPU benchmarks.",
         "hardware_metadata": {
