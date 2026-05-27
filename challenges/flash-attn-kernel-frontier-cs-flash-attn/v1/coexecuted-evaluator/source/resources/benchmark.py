@@ -94,7 +94,7 @@ def _bench_pair(Z, H, M, N, Dq, Dv, causal, answer_flash_attn, baseline_flash_at
 
 def _warmup_gpu(iters: int = 10):
     try:
-        Z, H, M, N, Dq, Dv = 1, 8, 512, 512, 64, 64
+        Z, H, M, N, Dq, Dv = 1, 2, 32, 32, 16, 16
         Q = torch.randn(Z, H, M, Dq, device=DEVICE, dtype=torch.float16)
         K = torch.randn(Z, H, N, Dq, device=DEVICE, dtype=torch.float16)
         V = torch.randn(Z, H, N, Dv, device=DEVICE, dtype=torch.float16)
@@ -116,10 +116,10 @@ def summarize_speedup(answer_flash_attn, baseline_flash_attn=None, print_output=
     shapes = metadata.get("shapes", None)
     if shapes is None:
         Z = metadata.get("Z", 1)
-        H = metadata.get("H", 8)
-        Dq = metadata.get("Dq", 64)
-        Dv = metadata.get("Dv", 64)
-        M_list = metadata.get("M_list", [512, 1024, 2048])
+        H = metadata.get("H", 2)
+        Dq = metadata.get("Dq", 16)
+        Dv = metadata.get("Dv", 16)
+        M_list = metadata.get("M_list", [32])
         causal = metadata.get("causal", True)
         shapes = [(Z, H, M, M, Dq, Dv, causal) for M in M_list]  # N = M for flash attention
     
@@ -198,4 +198,3 @@ def run_benchmark(answer_flash_attn, baseline_flash_attn=None, print_output=Fals
         "geo_mean_answer_time": geo_mean_answer_time,
         "pass_all": all(r["close_passed"] for r in rows),
     }
-

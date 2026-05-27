@@ -28,7 +28,7 @@ def run(a):
     if not sol.is_file(): return {'score':0,'pass_all':False,'error':'missing solution.py'},[]
     sp=cd/('public' if a.mode=='validation' else 'private-benchmark')/'submission_spec.json'
     meta=json.loads(sp.read_text()).get('metadata',{}) if sp.is_file() else {}
-    if a.mode=='validation' and isinstance(meta,dict) and 'shapes' in meta: os.environ['AGENTICS_GEMM_SHAPES']=json.dumps(meta['shapes'])
+    if isinstance(meta,dict) and 'shapes' in meta: os.environ['AGENTICS_GEMM_SHAPES']=json.dumps(meta['shapes'])
     mod=imp(cd/'coexecuted-evaluator/source/evaluator.py','agentics_gpu_eval'); stream=io.StringIO()
     with contextlib.redirect_stdout(stream),contextlib.redirect_stderr(stream): raw=mod.evaluate(sol,sp)
     return raw if isinstance(raw,dict) else {'score':0,'pass_all':False,'error':'bad source result'},cap(stream.getvalue())
