@@ -1,0 +1,20 @@
+[project]
+name = "qknorm-optimization"
+version = "0.1.0"
+description = "QKNorm optimization problem resources"
+requires-python = ">=3.10"
+dependencies = [
+    "flashinfer-python",
+    "flashinfer-cubin",
+]
+# Docker image already has torch, triton, numpy, tqdm
+
+[tool.setuptools]
+py-modules = ["benchmark"]
+
+[tool.setuptools.packages.find]
+exclude = ["__pycache__"]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
