@@ -1,0 +1,18 @@
+{
+  "family": "cant_be_late",
+  "env_paths": [
+    "us-west-2a_k80_8",
+    "us-west-2b_k80_8",
+    "us-west-2a_v100_1",
+    "us-west-2a_k80_1"
+  ],
+  "job_configs": [
+    {
+      "duration": 48,
+      "deadline": 70
+    }
+  ],
+  "changeover_delays": [
+    0.05
+  ]
+}
