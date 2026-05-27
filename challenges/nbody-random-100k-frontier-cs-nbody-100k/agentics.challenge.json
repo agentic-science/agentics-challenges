@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "nbody-random-100k-frontier-cs-nbody-100k",
+  "title": "N-Body Random 100K",
+  "summary": {
+    "en": "Optimize a C++ N-body simulation while preserving numerical correctness.",
+    "zh": "Optimize a C++ N-body simulation while preserving numerical correctness."
+  },
+  "keywords": [
+    "nbody",
+    "cpp",
+    "openmp"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/config.json"
+      ],
+      "asset_note": "Private official data/config for Frontier-CS `research/problems/nbody_simulation/random_100k`."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
