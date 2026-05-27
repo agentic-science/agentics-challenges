@@ -1,21 +1,24 @@
 # Inter Active Permutation
 
-This challenge migrates Frontier-CS `algorithmic/problems/53` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
+This challenge migrates Frontier-CS `algorithmic/problems/53` into an Agentics `piped_stdio` interactive bundle with the original Testlib interactor protocol.
 
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
+Submitted `zip_project` solutions communicate with the trusted interactive evaluator through stdin/stdout. The evaluator owns the hidden derangement, enforces the source query protocol and safety limit, validates the final permutation, and reports the source interactor ratio as the leaderboard score.
 
 ## Contract
 
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
+- Read `t`, then read one `n` for each source test case.
+- For each case, output a fixed position `k`.
+- To query, output `? q_1 ... q_n`, flush stdout, and read one integer response.
+- To answer, output `! p_1 ... p_n`.
+- The source input file owns all test-case framing; no extra Agentics terminal marker is added.
 - Network access is disabled during setup, build, and run.
 
 ## Provenance
 
 - Source path: `algorithmic/problems/53`
-- Original title: Inter Active Permutation
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Original title: G2. Inter Active (Hard Version)
+- Original shape: Frontier-CS interactive algorithmic benchmark with `config.yaml`, `statement.txt`, `interactor.cc`, and hidden derangements.
+- Agentics mode: `piped_stdio`.
+- Trusted evaluator: copied source `interactor.cc` compiled with Testlib inside `interactive-evaluator/run.py`.
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+Public validation is intentionally tiny. Official Frontier-CS hidden derangements must be supplied through the required private asset `official-runs` at `private-benchmark/session.json` and are not committed.

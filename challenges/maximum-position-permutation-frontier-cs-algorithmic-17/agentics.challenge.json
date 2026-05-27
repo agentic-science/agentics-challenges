@@ -2,15 +2,15 @@
   "schema_version": 1,
   "request": "new_challenge",
   "challenge_name": "maximum-position-permutation-frontier-cs-algorithmic-17",
-  "title": "Maximum Position In A Permutation",
+  "title": "Maximum Position Permutation",
   "summary": {
-    "en": "Locate the maximum element in Frontier-CS permutation benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Maximum Position In A Permutation。"
+    "en": "Locate the maximum value in a hidden permutation using second-maximum interval queries.",
+    "zh": "通过区间次大值位置查询定位隐藏排列中的最大值位置。"
   },
   "keywords": [
-    "permutation",
-    "search",
-    "offline"
+    "interactive",
+    "permutations",
+    "binary-search"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing Frontier-CS official interactive source sessions under private-benchmark/."
     }
   ],
   "ci": {

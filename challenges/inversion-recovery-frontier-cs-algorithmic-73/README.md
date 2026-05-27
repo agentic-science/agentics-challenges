@@ -1,21 +1,13 @@
 # Inversion Recovery
 
-This challenge migrates Frontier-CS `algorithmic/problems/73` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
+This challenge migrates Frontier-CS `algorithmic/problems/73` as a faithful `piped_stdio` interactive task. The trusted interactive evaluator compiles and runs the original Frontier-CS Testlib `interactor.cpp`, preserving the hidden permutation, inversion-parity query protocol, 1,999,000-query limit, final permutation validation, and source exponential query-efficiency scoring.
 
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
-
-## Provenance
+Submitted `zip_project` solutions communicate only through stdin/stdout. A case starts when the evaluator prints `n`. The participant may ask `0 l r` queries and eventually prints `1 p1 p2 ... pn`. Agentics sessions may contain multiple source cases: after a final answer, the next case starts immediately with another `n` line, and EOF means there are no more cases.
 
 - Source path: `algorithmic/problems/73`
-- Original title: Inversion Recovery
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Original title: `Inversion`
+- Execution mode: `piped_stdio`
+- Public validation: one tiny deterministic permutation
+- Official evaluation: private Frontier-CS-derived source cases in `private-benchmark/session.json`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+Malformed commands, invalid intervals, excess queries, wrong final permutations, and EOF before a final answer are handled by the source interactor. The trusted evaluator writes `result.json`; participant code must not create it.

@@ -1,3 +1,3 @@
-# Weighted Tree Distances Smoke Solution
+# Weighted Tree Distances Test Solution
 
-Prints `0` for the tiny public validation run.
+This baseline queries all pairwise distances for each small tree, identifies direct edges from the additive tree metric, and submits the reconstructed weighted edge list.

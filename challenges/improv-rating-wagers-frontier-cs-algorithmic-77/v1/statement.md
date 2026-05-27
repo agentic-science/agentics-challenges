@@ -1,21 +1,61 @@
 # Improv Rating Wagers
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive challenge. You play as Izzy in a sequence of improv
+wagers. For every wager, the evaluator first reveals the other participants'
+binary predictions. You must output Izzy's prediction before the evaluator
+reveals the actual outcome.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+The original Frontier-CS problem was interactive. This Agentics migration keeps
+the source `interactor.cc` protocol in a `piped_stdio` session.
 
 ## Input
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/77`.
+For each case, the evaluator writes:
+
+```text
+n m
+```
+
+Then, for each of the `m` wagers, it writes one binary string of length `n`.
+The `i`-th character is the prediction made by participant `i`.
+
+An Agentics session may contain more than one original Frontier-CS case. After a
+case ends, keep reading stdin. If another `n m` header arrives, solve that case.
+When the evaluator writes a line containing only `0`, the session is complete
+and your program should exit.
 
 ## Output
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+For each wager, output exactly one integer:
+
+```text
+0
+```
+
+or:
+
+```text
+1
+```
+
+Flush stdout after every prediction. The evaluator then writes the true outcome,
+also `0` or `1`, before proceeding to the next wager.
 
 ## Scoring
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+Let `c` be Izzy's number of wrong predictions. Let `b` be the smallest number of
+wrong predictions made by any other participant. The trusted evaluator uses the
+same source score as Frontier-CS:
 
-## Solution Interface
+```text
+min((2*b - c) / b, 1)
+```
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+clamped at zero and reported as a 0-100 Agentics score. Output outside `0` and
+`1`, EOF before the session ends, or malformed protocol data receives zero.
+
+## Result Ownership
+
+Your solution only communicates over stdin/stdout. The trusted interactive
+evaluator owns all hidden wager outcomes, enforces protocol validity, and writes
+`result.json`.

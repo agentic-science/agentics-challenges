@@ -1,21 +1,13 @@
 # Ink Pen Selection
 
-This challenge migrates Frontier-CS `algorithmic/problems/68` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
+This challenge migrates Frontier-CS `algorithmic/problems/68` as a faithful `piped_stdio` interactive task. The trusted interactive evaluator compiles and runs the original Frontier-CS Testlib `interactor.cpp`, preserving hidden ink permutations, the write-test protocol, final two-pen validation, and source scoring by fraction of successful cases.
 
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
-
-## Provenance
+Submitted `zip_project` solutions communicate only through stdin/stdout. The evaluator first prints `t`, then each case prints `n`. The participant may try pens with `0 i`, which consumes one unit if the pen still has ink, and must end the case with `1 i j`. The next case starts immediately after a valid selection, until all `t` cases are complete.
 
 - Source path: `algorithmic/problems/68`
-- Original title: Ink Pen Selection
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Original title: `Pen`
+- Execution mode: `piped_stdio`
+- Public validation: one tiny deterministic permutation
+- Official evaluation: private Frontier-CS-derived source cases in `private-benchmark/session.json`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+Malformed commands, out-of-range pen indices, choosing the same pen twice, EOF before all cases finish, and invalid action types are handled by the source interactor. The trusted evaluator writes `result.json`; participant code must not create it.

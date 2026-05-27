@@ -1,3 +1,4 @@
-# SCP Maze Exit Smoke Solution
+# SCP Maze Exit Test Solution
 
-Prints `0` for the tiny public validation run.
+This baseline uses distance queries to identify which edge color moves closer to
+the exit and immediately backs out of wrong trial moves.

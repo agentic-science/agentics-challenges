@@ -1,21 +1,60 @@
 # Bitwise OR Permutation
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive challenge. A hidden permutation `p` contains every value
+from `0` to `n - 1` exactly once. You may ask for the bitwise OR of two hidden
+positions, then must recover the whole permutation.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+The original Frontier-CS problem was interactive. This Agentics migration keeps
+the source `interactor.cc` protocol in a `piped_stdio` session.
 
 ## Input
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/82`.
+For each case, the evaluator writes:
+
+```text
+n
+```
+
+Official cases have `3 <= n <= 2048`. Public validation uses a tiny deterministic
+case.
+
+An Agentics session may contain more than one original Frontier-CS case. After
+you submit a final permutation for one case, keep reading stdin. If another
+positive `n` arrives, solve that case. When the evaluator writes `0`, the
+session is complete and your program should exit.
 
 ## Output
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+To ask a query, output:
+
+```text
+? i j
+```
+
+where `1 <= i, j <= n` and `i != j`. Flush stdout and read the integer
+`p_i | p_j`.
+
+To finish the current case, output:
+
+```text
+! p_1 p_2 ... p_n
+```
+
+The final answer does not count as a query.
 
 ## Scoring
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+The source interactor enforces a hard limit of `4269` answered queries. It
+validates that the final sequence is exactly the hidden permutation. For
+accepted runs, it computes the original raw score `(4269 - queries) / 10` and
+reports a source ratio against the optimal query count recorded with that hidden
+case. Agentics scales that ratio to 0-100.
 
-## Solution Interface
+Invalid commands, invalid indices, too many queries, EOF, a non-permutation
+answer, or a wrong permutation receives zero.
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+## Result Ownership
+
+Your solution only communicates over stdin/stdout. The trusted interactive
+evaluator owns the hidden permutation, answers all OR queries, enforces protocol
+validity, and writes `result.json`.

@@ -4,14 +4,10 @@
   "challenge_name": "weighted-tree-distances-frontier-cs-algorithmic-10",
   "title": "Weighted Tree Distances",
   "summary": {
-    "en": "Recover weighted tree answers from Frontier-CS tree-distance benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Weighted Tree Distances。"
+    "en": "Reconstruct hidden weighted trees through the original Frontier-CS distance-query interaction.",
+    "zh": "通过原始 Frontier-CS 距离查询互动协议重建隐藏带权树。"
   },
-  "keywords": [
-    "tree",
-    "distance",
-    "offline"
-  ],
+  "keywords": ["interactive", "tree", "distances"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
@@ -19,10 +15,8 @@
       "asset_name": "official-runs",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing the official Frontier-CS weighted-tree sessions and hidden edge lists."
     }
   ],
   "ci": {

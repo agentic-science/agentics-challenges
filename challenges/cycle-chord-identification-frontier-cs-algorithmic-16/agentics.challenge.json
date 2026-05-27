@@ -4,13 +4,13 @@
   "challenge_name": "cycle-chord-identification-frontier-cs-algorithmic-16",
   "title": "Cycle Chord Identification",
   "summary": {
-    "en": "Identify hidden cycle chord data from Frontier-CS benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Cycle Chord Identification。"
+    "en": "Find the hidden chord in a cycle by querying shortest-path distances.",
+    "zh": "通过最短路距离查询找出环上的隐藏弦。"
   },
   "keywords": [
-    "cycle",
-    "graph",
-    "offline"
+    "interactive",
+    "graphs",
+    "search"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing Frontier-CS official interactive source sessions under private-benchmark/."
     }
   ],
   "ci": {

@@ -1,21 +1,10 @@
 # Hidden Cycle Length
 
-This challenge migrates Frontier-CS `algorithmic/problems/14` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
+This challenge migrates Frontier-CS `algorithmic/problems/14` as a faithful `piped_stdio` interactive task. The trusted evaluator compiles and runs the source Testlib interactor, preserving the hidden cycle length, token position, lazy random label assignment, `walk`/`guess` protocol, 200000-walk limit, and source log-space scoring curve.
 
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
+- Source title: hidden cycle length interactive problem
+- Source files inspected: `statement.txt`, `config.yaml`, `interactor.cpp`, and `testdata/`
+- Agentics mode: `piped_stdio`
+- Private asset: `official-runs.zip` provides `private-benchmark/session.json` plus official `.in` and `.ans` files outside Git
 
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
-
-## Provenance
-
-- Source path: `algorithmic/problems/14`
-- Original title: Hidden Cycle Length
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
-
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+Public validation is a tiny deterministic smoke case. Official evaluation uses the private Frontier-CS cases and reports the source interactor ratio as `score` on a 0-100 scale.

@@ -1,3 +1,3 @@
 # Inversion Recovery Smoke Solution
 
-Prints `0` for the tiny public validation run.
+This public smoke solution queries all subarray inversion parities for small `n`, then brute-forces the unique permutation consistent with those answers.

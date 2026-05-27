@@ -1,3 +1,3 @@
-# DiverC Autofill Words Smoke Solution
+# DiverC Letter Sweep Baseline
 
-Prints `0` for the tiny public validation run.
+Queries each one-letter prefix with `K = N` and returns the union of all words. It is simple and correct for the public smoke case, but intentionally not cost-optimal for official scoring.

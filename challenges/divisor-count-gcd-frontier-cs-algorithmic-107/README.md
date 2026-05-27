@@ -1,21 +1,13 @@
-# Divisor Count From GCD
+# Guess Divisors Count
 
-This challenge migrates Frontier-CS `algorithmic/problems/107` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
-
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
+This challenge migrates Frontier-CS `algorithmic/problems/107` as a faithful `piped_stdio` interactive task. The trusted evaluator compiles and runs the original Testlib `interactor.cpp`, so the hidden integers, GCD query protocol, per-game query limit, approximate final validation, and source max-query scoring remain judge-owned.
 
 ## Provenance
 
 - Source path: `algorithmic/problems/107`
-- Original title: Divisor Count From GCD
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Source title: `F. Guess Divisors Count`
+- Source files inspected: `statement.txt`, `config.yaml`, `interactor.cpp`, and `testdata/`
+- Agentics mode: `piped_stdio`
+- Official private asset: `official-runs.zip`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+The public bundle contains a tiny deterministic smoke session. Official hidden integers and divisor-count answers are packaged outside Git as `private-benchmark/session.json` plus `private-benchmark/cases/`.

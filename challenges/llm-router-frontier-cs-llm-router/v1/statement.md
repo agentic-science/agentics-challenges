@@ -1,148 +1,24 @@
-# LLM Router Cost-Accuracy Routing
+# LLM Router
 
-Ported from Frontier-CS `research/problems/llm_router`.
-
-## Agentics Interface
-
-Submit a ZIP project containing the source interface described below. The trusted evaluator imports or compiles participant code from `/workspace`, so this challenge uses `coexecuted_benchmark` with `acknowledge_danger: true`.
-
-## Public And Official Data
-
-Public validation uses a small deterministic configuration committed under `v1/public`. Official scoring uses the private `official-runs` overlay under `private-benchmark/`.
-
-## Original Statement
-
-LLM Router
-================================
-
-Overview
---------
-This benchmark evaluates a language model's ability to implement an LLM routing policy. Given a user query, the router must choose one model from a small candidate set with different cost–quality tradeoffs. The goal is to maximize accuracy while minimizing inference cost. The task is fully offline: model correctness and costs are precomputed. The router must generalize from query text alone.
-
-Problem Setting
---------
-You operate a router that sits in front of a pool of large language models (LLMs). For each incoming query q, the router must select exactly one model from a fixed candidate set: ["cheap", "mid", "expensive"].
-
-These are abstract routing tiers. Each tier corresponds to a concrete LLM with a known cost and accuracy profile, but this mapping is not visible to the router. Intuitively:
-- cheap: fast and inexpensive, but less reliable
-- mid: moderate cost and accuracy
-- expensive: highest accuracy, highest cost
-No single model is optimal for all queries.
-
-You have access to a reference dataset of queries, each labeled with which concrete LLMs produced correct answers and their costs. During evaluation, the router must generalize to unseen queries, selecting the best model from the candidate set based on the query text alone.
-
-You are allowed to develop heuristics or machine learning models to implement the routing policy. However, the solution must be stateless: each query is handled independently without memory of previous queries.
-
-Target
---------
-The goal is to achieve high accuracy while minimizing average inference cost.
-
-API Specification
---------
-Implement a `Solution` class:
+Submit a ZIP project containing `solution.py` with:
 
 ```python
 class Solution:
-    def solve(self, query: str, eval_name: str, candidate_models: list[str]
-    ) -> str:
-        """
-        Select exactly one routing option for the given query.
-
-        Args:
-            query: The user query.
-            eval_name: The dataset or task name (e.g., "mbpp").
-            candidate_models: A list of available routing options
-                              (["cheap", "mid", "expensive"] by default).
-
-        Returns:
-            A single string from candidate_models indicating
-            the chosen model.
-        """
+    def solve(self, query: str, eval_name: str, candidate_models: list[str]) -> str:
+        ...
 ```
 
-**Constraints**:
-- The return value must be an element of candidate_models.
-- The method is called once per query.
-- The solution must be stateless across queries.
-- External API calls and internet access are not allowed.
+For each offline prompt, return exactly one string from `candidate_models`, normally `["cheap", "mid", "expensive"]`. Invalid returns are treated by the source evaluator as `"cheap"` for that query.
 
-Returning an invalid value results in a score of 0 for that query.
+The challenge is fully offline. External API calls and internet access are disabled. The public bundle includes the source reference dataset at `resources/reference_data.csv`; you may inspect it during solution development and at runtime. Official evaluation uses a separate private RouterBench test split.
 
-Dataset
---------
-You will be provided with a dataset of queries, each associated with multiple concrete LLMs, whether they generate correct answers, and costs.
+Scoring follows the source evaluator. For each row, the chosen tier maps to one concrete LLM. The evaluator looks up that model's correctness and cost, then computes:
 
-During evaluation, there will be a separate evaluation dataset. For each query in this dataset, the router receives only:
-- query
-- eval_name
-- candidate_models
-
-One example mapping of routing tiers to concrete LLMs is:
-- "cheap": "mistralai/mistral-7b-chat",
-- "mid": "mistralai/mixtral-8x7b-chat",
-- "expensive": "gpt-4-1106-preview".
-
-Scoring (0-100)
---------
-The router is evaluated on a fixed set of queries.
-
-For each query:
-- The evaluator calls Solution.solve(...).
-- The chosen model's correctness and cost are looked up.
-- Accuracy and cost are accumulated.
-
-Let:
-- accuracy = fraction of queries answered correctly
-- avg_cost = average inference cost per query
-
-The raw score is computed as: raw_score = accuracy − λ × avg_cost, where λ = 150.0. Naively guessing "cheap"/"mid"/"expensive" all the time is expected to yield a uniformly low score.
-
-The final benchmark score is normalized to the range [0, 100], where the oracle router always gets 100.
-
-Dataset Contract
---------
-The evaluator owns the benchmark rows. Your solution receives one row at a time
-through the `solve(query, eval_name, candidate_models)` call and should choose
-one of the supplied routing tiers. Public validation uses a tiny committed CSV
-under `public/datasets/` to exercise the interface. Official scoring uses the
-private `official-runs` overlay and does not expose the full benchmark as a
-solution resource.
-
-**Columns:**
-- `sample_id`: Unique identifier (e.g., "mmlu-sociology.val.78")
-- `prompt`: The query text (may contain newlines, escaped as \n)
-- `eval_name`: Dataset/task name (e.g., "mbpp", "mmlu-sociology", "hellaswag")
-- `{model_name}`: Correctness score (0.0 or 1.0) for each LLM
-- `{model_name}|model_response`: The actual response text from each LLM
-- `{model_name}|total_cost`: Inference cost for each LLM
-- `oracle_model_to_route_to`: The optimal model for this query
-
-**Models in dataset:**
-- WizardLM/WizardLM-13B-V1.2
-- claude-instant-v1, claude-v1, claude-v2
-- gpt-3.5-turbo-1106, gpt-4-1106-preview
-- meta/code-llama-instruct-34b-chat, meta/llama-2-70b-chat
-- mistralai/mistral-7b-chat, mistralai/mixtral-8x7b-chat
-- zero-one-ai/Yi-34B-Chat
-
-**Example row (key columns only):**
-```
-sample_id: mmlu-sociology.val.78
-prompt: "['Please answer with the letter...Which of the following best describes...?\nA) Ethnocentrism\nB) Institutionalization\nC) Stereotyping\nD) Scapegoating\n...']"
-eval_name: mmlu-sociology
-
-# Correctness (1.0 = correct, 0.0 = wrong):
-mistralai/mistral-7b-chat: 1.0
-mistralai/mixtral-8x7b-chat: 1.0
-gpt-4-1106-preview: 1.0
-WizardLM/WizardLM-13B-V1.2: 1.0
-
-# Costs:
-mistralai/mistral-7b-chat|total_cost: 1.74e-05
-mistralai/mixtral-8x7b-chat|total_cost: 6.75e-05
-gpt-4-1106-preview|total_cost: 0.00088
-
-oracle_model_to_route_to: mistralai/mistral-7b-chat
+```text
+raw_score = accuracy - 150.0 * avg_cost
+score = raw_score / oracle_raw_score * 100
 ```
 
-In this example, all models answered correctly, but mistral-7b-chat has the lowest cost, so it is the oracle choice.
+where the oracle chooses the lowest-cost correct tier for every row. The primary metric is `score`.
+
+This challenge uses `coexecuted_benchmark` with `acknowledge_danger: true` because the trusted evaluator imports and executes participant Python from `/workspace`. Public validation is a tiny deterministic CSV. Official benchmark rows are private benchmark data, visible to participant code only during official coexecution, and contain no secrets.

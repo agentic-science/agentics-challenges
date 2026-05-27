@@ -1,21 +1,27 @@
 # Greedy Tree Blackbox
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive challenge. The evaluator first prints:
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+```text
+n ty
+```
 
-## Input
+The hidden object is a rooted tree on vertices `1..n`. Every internal node has at least two children. `ty` is a source test identifier and has no algorithmic effect.
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/93`.
+For a query, print one line:
 
-## Output
+```text
+? sz v1 v2 ... vsz
+```
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+The `vi` values must be distinct vertices in `[1, n]`. The evaluator scans the sequence from left to right, greedily keeps a node only when it is neither an ancestor nor a descendant of any already kept node, and replies with the number of kept nodes. Flush after every query.
 
-## Scoring
+To answer, print one line:
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+```text
+! p1 p2 ... pn
+```
 
-## Solution Interface
+`pi` is the parent of vertex `i`; the root must have parent `0`. Flush and then continue reading for another source case or exit on EOF.
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The trusted evaluator owns the hidden parent array, rejects duplicate or out-of-range query elements, validates the exact parent array, and writes `result.json`. Source scoring gives full credit through `45000` queries, zero at or above `200000`, and the original clamped linear ratio between those counts.

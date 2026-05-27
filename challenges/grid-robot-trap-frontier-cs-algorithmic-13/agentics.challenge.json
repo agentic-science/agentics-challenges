@@ -4,14 +4,10 @@
   "challenge_name": "grid-robot-trap-frontier-cs-algorithmic-13",
   "title": "Grid Robot Trap",
   "summary": {
-    "en": "Report the canonical trap result for Frontier-CS grid robot benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Grid Robot Trap。"
+    "en": "Trap a moving robot on the grid through the original Frontier-CS turn-by-turn interaction.",
+    "zh": "通过原始 Frontier-CS 逐回合互动协议在网格中困住移动机器人。"
   },
-  "keywords": [
-    "grid",
-    "robot",
-    "offline"
-  ],
+  "keywords": ["interactive", "grid", "strategy"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
@@ -19,10 +15,8 @@
       "asset_name": "official-runs",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing the official Frontier-CS robot sessions and scorer metadata."
     }
   ],
   "ci": {

@@ -1,49 +1,37 @@
-# SQL Parser Coverage Fuzzing
+# SQL Parser Test Case Generation
 
-Write a ZIP project that generates SQL statements for a Python SQL parser. Your goal is to maximize the evaluator's parser coverage score while keeping the output valid and bounded.
+Submit a ZIP project containing `solution.py` with:
 
-Each run receives a JSON file:
+```python
+class Solution:
+    def solve(self, resources_path: str) -> list[str]:
+        ...
+```
+
+The `resources_path` directory contains the participant-visible source resources:
 
 ```text
-AGENTICS_INPUT_DIR/case.json
+resources/
+  sql_grammar.txt
+  sql_engine/
+    __init__.py
+    parser.py
+    tokenizer.py
+    ast_nodes.py
+    ast_to_sql.py
 ```
 
-Your `run.sh` must write:
+Return a list of SQL statement strings. The trusted evaluator parses each string with `sql_engine.parse_sql` while Python `coverage` measures `parser.py`, `tokenizer.py`, and `ast_nodes.py`. Statements that raise parser exceptions do not improve coverage.
+
+The source score is:
 
 ```text
-AGENTICS_OUTPUT_DIR/statements.json
+weighted_cov = 0.6 * line_coverage + 0.4 * branch_coverage
+coverage_score = 0.7 * (weighted_cov / 100)^3 * 100
+efficiency_bonus = 30 * 2^(-N / 50)
+score = coverage_score + efficiency_bonus
 ```
 
-`statements.json` must be either a JSON array of SQL strings or an object with a `statements` array. Example:
+where `N` is the number of returned string statements.
 
-```json
-{
-  "statements": [
-    "CREATE TABLE users (id INT PRIMARY KEY, name TEXT);",
-    "INSERT INTO users (id, name) VALUES (1, 'ada');",
-    "SELECT name FROM users WHERE id = 1;"
-  ]
-}
-```
-
-The evaluator parses your statements with the bundled parser target and reports:
-
-- `score`: combined line and feature coverage on a 0-100 scale.
-- `line_coverage`: executable parser lines reached.
-- `feature_coverage`: evaluator-defined SQL feature categories exercised.
-- `valid_statements`: statements that parsed successfully.
-
-Malformed JSON, non-string statements, empty output, excessive statement counts, or oversized statements receive no score for that run.
-
-## Limits
-
-The evaluator may provide per-run limits in `case.json`:
-
-- `statement_limit`: maximum number of statements to score.
-- `max_statement_bytes`: maximum UTF-8 size per statement.
-
-Do not rely on internet access during setup, build, or run.
-
-## Provenance
-
-This challenge is based on Frontier-CS `research/problems/grammar_fuzzing/seed/sql`. The original benchmark called `Solution.solve(resources_path)` and expected `list[str]`. The Agentics version uses the normal `zip_project` protocol and a separated trusted evaluator.
+This challenge uses `coexecuted_benchmark` with `acknowledge_danger: true` because the trusted evaluator imports and executes participant Python from `/workspace`. External network access is disabled during evaluation. Public validation uses the same parser resources with a tiny smoke config; official scoring uses the source benchmark settings packaged outside Git as private config.

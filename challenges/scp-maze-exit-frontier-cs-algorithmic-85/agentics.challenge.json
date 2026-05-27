@@ -4,13 +4,13 @@
   "challenge_name": "scp-maze-exit-frontier-cs-algorithmic-85",
   "title": "SCP Maze Exit",
   "summary": {
-    "en": "Report the canonical exit-routing target from Frontier-CS maze records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：SCP Maze Exit。"
+    "en": "Navigate an infinite colored tree to the exit through the original interactive distance device.",
+    "zh": "借助原始交互式距离装置，在无限彩色树中找到出口。"
   },
   "keywords": [
-    "maze",
     "tree",
-    "offline"
+    "pathfinding",
+    "interactive"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest and hidden maze seed."
     }
   ],
   "ci": {

@@ -4,13 +4,13 @@
   "challenge_name": "permutation-segment-geemu-frontier-cs-algorithmic-52",
   "title": "Permutation Segment Geemu",
   "summary": {
-    "en": "Recover the canonical permutation target from Frontier-CS Geemu benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Permutation Segment Geemu。"
+    "en": "Recover a mutable hidden permutation through value-segment queries and swaps.",
+    "zh": "通过值连续段查询和交换操作恢复可变隐藏排列。"
   },
   "keywords": [
     "permutation",
-    "segments",
-    "offline"
+    "interactive",
+    "queries"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest, hidden permutations, and reference costs."
     }
   ],
   "ci": {

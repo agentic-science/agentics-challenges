@@ -1,5 +1,3 @@
-# SQL Parser Coverage Test Solution
+# SQL Parser Coverage Smoke Solution
 
-Small deterministic smoke solution for `sql-parser-coverage-frontier-cs-grammar-fuzzing-seed-sql`.
-
-It writes a compact set of SQL statements that exercise several parser features.
+This smoke solution returns a small hand-written set of valid SQL statements that exercise the documented parser interface. It does not read evaluator outputs or private benchmark files.

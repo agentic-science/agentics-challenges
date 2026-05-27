@@ -1,21 +1,19 @@
 # Hidden Cycle Length
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+The judge owns a hidden cycle of length `n` and a token initially placed at a hidden starting vertex. Each vertex has a visible label. The starting vertex is labeled with its own position; newly visited positions receive unique labels lazily from the source interactor.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+At the start of a source case the evaluator is ready for commands; it does not reveal `n`.
 
-## Input
+To move the token, write:
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/14`.
+```text
+walk x
+```
 
-## Output
+where `0 <= x <= 10^9`, then flush. The evaluator moves `x` steps forward around the hidden cycle and returns the visible label at the reached vertex. A `walk 0` command returns the current label and counts as a walk.
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+To finish the current case, write `guess g`, flush, and continue reading. The guess must be in `[1, 10^9]`; it is correct only when `g = n`.
 
-## Scoring
+Agentics may chain multiple source cases. After a correct guess, read one wrapper-framing line. `NEXT` means another hidden source case begins and you should start issuing `walk` or `guess` commands for it. `0 0` means the session is complete and your program should exit. Malformed commands, too many walks, EOF before a guess, or a wrong guess receive zero from the trusted evaluator. The trusted evaluator writes `result.json`; participant code must only speak the stdin/stdout protocol.
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
-
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The official score is the original Frontier-CS log-space query-count score, scaled to `score` from 0 to 100.

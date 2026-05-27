@@ -1,21 +1,19 @@
 # Weighted Tree Distances
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+The judge owns one or more hidden weighted trees. Edge weights are positive integers. For each tree you may query distances and must output every edge with its weight.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+At the start of each Frontier-CS source file the evaluator writes `T`. If `T` is positive, it then writes `n` for each dataset before that dataset's interaction begins. If the Agentics wrapper writes terminal `T = 0`, the session is complete and your program should exit.
 
-## Input
+For a dataset, write `? u v`, flush, and read the distance between vertices `u` and `v`. Vertices are one-based, must lie in `[1, n]`, and must be distinct.
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/10`.
+To answer the dataset, write:
 
-## Output
+```text
+! u_1 v_1 w_1 u_2 v_2 w_2 ... u_{n-1} v_{n-1} w_{n-1}
+```
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+The edges may be in any order. After answering, continue reading: either the next `n` in the same source file, a new positive `T` for another source file, or terminal `0`.
 
-## Scoring
+Malformed commands, invalid vertices, duplicate or non-existing answer edges, wrong weights, EOF before an answer, or exceeding the source query limit receive zero from the trusted evaluator. The trusted evaluator writes `result.json`; participant code must only speak the stdin/stdout protocol.
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
-
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The official score is the original Frontier-CS query-efficiency score averaged by source file, scaled to `score` from 0 to 100.

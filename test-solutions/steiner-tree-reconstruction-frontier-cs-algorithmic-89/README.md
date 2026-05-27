@@ -1,3 +1,3 @@
-# Steiner Tree Reconstruction Smoke Solution
+# Steiner Tree Reconstruction Test Solution
 
-Prints `0` for the tiny public validation run.
+A simple honest baseline that uses the documented interactive protocol. It is intended for public smoke validation and does not read evaluator files or private data.

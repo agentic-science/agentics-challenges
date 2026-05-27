@@ -2,15 +2,15 @@
   "schema_version": 1,
   "request": "new_challenge",
   "challenge_name": "divisor-count-gcd-frontier-cs-algorithmic-107",
-  "title": "Divisor Count From GCD",
+  "title": "Guess Divisors Count",
   "summary": {
-    "en": "Recover divisor-count targets from Frontier-CS GCD benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Divisor Count From GCD。"
+    "en": "Estimate divisor counts for hidden integers through the original GCD query protocol.",
+    "zh": "Estimate divisor counts for hidden integers through the original GCD query protocol."
   },
   "keywords": [
     "number-theory",
-    "divisors",
-    "offline"
+    "gcd",
+    "interactive"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS divisor-count session manifest, hidden integers, and judge-owned divisor counts."
     }
   ],
   "ci": {

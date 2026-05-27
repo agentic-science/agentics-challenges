@@ -1,6 +1,5 @@
 {
-  "runner": "llm_router",
   "datasets": [
-    "public/datasets/routerbench_0shot_test.csv"
+    "public/routerbench_public.csv"
   ]
 }

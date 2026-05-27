@@ -1,3 +1,5 @@
-# Improv Rating Wagers Smoke Solution
+# Improv Rating Wagers Test Solution
 
-Prints `0` for the tiny public validation run.
+This is an honest online-learning baseline. It maintains participant weights,
+predicts the weighted majority for each wager, then updates weights after the
+outcome is revealed.

@@ -1,3 +1,3 @@
-# mamba2-scan-frontier-cs-mamba2-scan Smoke Solution
+# Mamba2 Scan Smoke Solution
 
-Cheap public-validation smoke solution.
+This smoke solution returns a straightforward PyTorch implementation of the documented recurrence. It is intended to pass correctness on public validation and is not optimized for the official private benchmark.

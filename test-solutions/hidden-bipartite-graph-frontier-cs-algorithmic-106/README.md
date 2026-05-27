@@ -1,3 +1,3 @@
 # Hidden Bipartite Graph Smoke Solution
 
-Prints `0` for the tiny public validation run.
+This public smoke solution uses the documented interactive protocol. It reconstructs all edges with pair queries when `n <= 100`, then checks bipartiteness locally and prints a valid partition or odd cycle. It is meant for small validation sessions, not as a competitive private-benchmark strategy.

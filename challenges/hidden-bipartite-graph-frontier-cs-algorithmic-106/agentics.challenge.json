@@ -4,13 +4,13 @@
   "challenge_name": "hidden-bipartite-graph-frontier-cs-algorithmic-106",
   "title": "Hidden Bipartite Graph",
   "summary": {
-    "en": "Certify bipartiteness from Frontier-CS hidden-graph benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Hidden Bipartite Graph。"
+    "en": "Decide whether a hidden graph is bipartite using the original edge-count query protocol.",
+    "zh": "Decide whether a hidden graph is bipartite using the original edge-count query protocol."
   },
   "keywords": [
-    "graph",
+    "graphs",
     "bipartite",
-    "offline"
+    "interactive"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS hidden graph session manifest and source testdata."
     }
   ],
   "ci": {

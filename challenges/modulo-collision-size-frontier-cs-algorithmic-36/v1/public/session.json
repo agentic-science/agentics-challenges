@@ -1,0 +1,28 @@
+{
+  "session_name": "public-smoke",
+  "input_files": [
+    {
+      "path": "cases/public.in",
+      "content": "5\n"
+    },
+    {
+      "path": "cases/public.ans",
+      "content": ""
+    }
+  ],
+  "metadata": {
+    "source_problem_id": 36,
+    "source_path": "algorithmic/problems/36",
+    "adapter": "frontier-cs-testlib-interactor-wrapper",
+    "cost_kind": "collision_total_cost",
+    "cost_metric_name": "query_cost",
+    "query_cost_limit": 1000000,
+    "cases": [
+      {
+        "case_name": "public-smoke",
+        "input_path": "cases/public.in",
+        "answer_path": "cases/public.ans"
+      }
+    ]
+  }
+}

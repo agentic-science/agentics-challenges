@@ -1,21 +1,19 @@
 # Magic Word Spells
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive `zip_project` challenge. The trusted evaluator starts a case by printing:
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+```text
+n q
+```
 
-## Input
+Print `n` distinct magic words, one per line. Each word must contain only `X` and `O`, and each length must be between `1` and `30n`, inclusive. Flush after printing the words.
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/69`.
+For each of the `q` students, the evaluator prints one integer `p`: the number of distinct non-empty substrings in the concatenation of an evaluator-owned ordered pair of your words. You must reply with the exact ordered pair:
 
-## Output
+```text
+u v
+```
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+Indices are 1-based, and order matters. Flush after each pair. In Agentics official evaluation, a session may contain multiple source cases; after the last answer for one case, the next case starts immediately with another `n q` line. Exit on EOF.
 
-## Scoring
-
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
-
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+Malformed words, duplicate words, length violations, invalid pair indices, wrong ordered pairs, and EOF are handled by the source interactor. The source score for a case is `(30n^2 - total_length) / (30n^2 - optimal_total_length)`, clamped by the original interactor, and Agentics reports that ratio scaled to `score` from 0 to 100. The trusted evaluator writes `result.json`.

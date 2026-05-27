@@ -1,21 +1,25 @@
 # Inversion Recovery
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive `zip_project` challenge. For each case, the trusted evaluator prints:
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+```text
+n
+```
 
-## Input
+It has a hidden permutation `p1, p2, ..., pn` of `1..n`. To query a subarray, print:
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/73`.
+```text
+0 l r
+```
 
-## Output
+where `1 <= l <= r <= n`. The evaluator replies with the parity of the number of inversions in `p_l, ..., p_r`.
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+You may ask at most 1,999,000 queries in a case. To finish the case, print:
 
-## Scoring
+```text
+1 p1 p2 ... pn
+```
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+The final answer does not count as a query. In Agentics, a session may contain multiple source cases; after a final answer, the next case begins immediately with another `n` line. Exit when stdin reaches EOF. Malformed output, invalid intervals, too many queries, EOF before a final answer, and wrong final permutations are handled by the source interactor.
 
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+Official scoring uses the source formula `(exp(-q / 249875) - exp(-8)) / (1 - exp(-8))`, averaged across private cases and scaled to `score` from 0 to 100. The trusted evaluator writes `result.json`.

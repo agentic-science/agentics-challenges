@@ -4,13 +4,13 @@
   "challenge_name": "dishonest-attendance-frontier-cs-algorithmic-104",
   "title": "Dishonest Attendance",
   "summary": {
-    "en": "Report canonical attendance-query targets from Frontier-CS benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Dishonest Attendance。"
+    "en": "Find an adaptively hidden absent student despite bounded dishonest replies.",
+    "zh": "Find an adaptively hidden absent student despite bounded dishonest replies."
   },
   "keywords": [
     "search",
-    "adversarial",
-    "offline"
+    "interactive",
+    "adaptive"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS algorithmic problem 104 interactive session manifest and hidden source testdata."
     }
   ],
   "ci": {

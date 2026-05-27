@@ -1,21 +1,30 @@
 # Space Thief Stars
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive `zip_project` challenge. For each case, the trusted evaluator prints:
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+```text
+N M
+U0 V0
+...
+U(M-1) V(M-1)
+```
 
-## Input
+The graph is connected and undirected. A hidden key star `A` and treasure star `B` are fixed by the evaluator.
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/63`.
+To ask a question, print one line beginning with `0`, followed by `M` integers. For edge `i`, output `0` to orient it from `Ui` to `Vi`, or `1` to orient it from `Vi` to `Ui`:
 
-## Output
+```text
+0 d0 d1 ... d(M-1)
+```
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+The evaluator replies with `1` if `B` is reachable from `A` in that directed graph, and `0` otherwise. You may ask at most 600 questions in a case.
 
-## Scoring
+To finish the case, print:
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+```text
+1 A B
+```
 
-## Solution Interface
+The final guess does not count as a query. In Agentics, a session may contain multiple source cases; after a final guess, the next case begins immediately with another `N M` line. Exit when stdin reaches EOF. Malformed output, invalid bits, too many queries, EOF before a final guess, and wrong guesses are handled by the source interactor. The trusted evaluator writes `result.json`.
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+Official scoring uses the source ratio `(600 - q) / 600` for each case, averaged across private cases and scaled to `score` from 0 to 100.

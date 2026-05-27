@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "challenge_name": "moving-mole-tree-frontier-cs-algorithmic-30",
-  "challenge_title": "Moving Mole On A Tree",
+  "challenge_title": "Moving Mole Tree",
   "summary": {
-    "en": "Report the hidden mole target from Frontier-CS rooted-tree benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Moving Mole On A Tree。"
+    "en": "Track a hidden mole on a rooted tree through subtree queries that can move the target.",
+    "zh": "通过会移动目标的子树查询在有根树中追踪隐藏鼹鼠。"
   },
   "keywords": [
-    "tree",
-    "search",
-    "offline"
+    "interactive",
+    "trees",
+    "search"
   ],
   "solution": {
     "protocol": "zip_project",
@@ -47,10 +47,10 @@
             "network_access": "disabled"
           },
           "run": {
-            "timeout_sec": 30,
+            "timeout_sec": 60,
             "memory_limit_mb": 1024,
             "cpu_limit_millis": 1000,
-            "disk_limit_mb": 2048,
+            "disk_limit_mb": 1024,
             "network_access": "disabled"
           }
         },
@@ -63,14 +63,14 @@
             "network_access": "disabled"
           },
           "run": {
-            "timeout_sec": 120,
+            "timeout_sec": 180,
             "memory_limit_mb": 1024,
             "cpu_limit_millis": 1000,
             "disk_limit_mb": 2048,
             "network_access": "disabled"
           }
         },
-        "resource_description": "ARM64 CPU profile for offline Frontier-CS reference-output validation.",
+        "resource_description": "ARM64 CPU profile for a trusted Frontier-CS moving-mole interactive session.",
         "hardware_metadata": {
           "kind": "cpu"
         }
@@ -88,16 +88,17 @@
   },
   "solution_publication": "public",
   "execution": {
-    "mode": "separated_evaluator",
-    "separated_evaluator": {
+    "mode": "piped_stdio",
+    "acknowledge_stdio_protocol_framing": true,
+    "interactive_evaluator": {
       "command": [
         "python",
-        "separated-evaluator/run.py"
+        "interactive-evaluator/run.py"
       ],
       "result_file": "result.json"
     },
-    "validation_runs": "public/runs.json",
-    "official_runs": "private-benchmark/runs.json"
+    "validation_session": "public/session.json",
+    "official_session": "private-benchmark/session.json"
   },
   "datasets": {
     "public_dir": "public",
@@ -113,29 +114,54 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average exact-reference score on a 0-100 scale."
+        "metric_description": "Frontier-CS moving-mole ratio scaled to a 0-100 score."
       },
       {
-        "name": "valid_cases",
-        "label": "Valid Cases",
+        "name": "source_ratio",
+        "label": "Source Ratio",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Raw bounded source scoring ratio."
+      },
+      {
+        "name": "case_count",
+        "label": "Case Count",
         "unit": "cases",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Number of runs whose output exactly matches the private reference after whitespace normalization."
+        "metric_description": "Number of source input files completed."
       },
       {
-        "name": "total_cases",
-        "label": "Total Cases",
-        "unit": "cases",
-        "direction": "maximize",
+        "name": "protocol_errors",
+        "label": "Protocol Errors",
+        "unit": "errors",
+        "direction": "minimize",
         "visibility": "public",
-        "metric_description": "Number of evaluated runs."
+        "metric_description": "Protocol or evaluator wrapper errors detected during the session."
+      },
+      {
+        "name": "query_count",
+        "label": "Query Count",
+        "unit": "queries",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Number of subtree queries."
+      },
+      {
+        "name": "depth_cost",
+        "label": "Depth Cost",
+        "unit": "depth",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Sum of queried node depths used by the source scoring formula."
       }
     ],
     "ranking": {
       "primary_metric_name": "score",
       "tie_breaker_metric_names": [
-        "valid_cases"
+        "protocol_errors",
+        "depth_cost",
+        "query_count"
       ]
     }
   }

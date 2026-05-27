@@ -4,25 +4,19 @@
   "challenge_name": "ink-pen-selection-frontier-cs-algorithmic-68",
   "title": "Ink Pen Selection",
   "summary": {
-    "en": "Choose qualifying pen pairs from Frontier-CS ink permutation records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Ink Pen Selection。"
+    "en": "Select two pens with enough remaining hidden ink after interactive write tests.",
+    "zh": "通过交互式试写，在隐藏墨水量中选择剩余墨水足够的两支笔。"
   },
-  "keywords": [
-    "permutation",
-    "selection",
-    "offline"
-  ],
+  "keywords": ["interactive", "selection", "hidden-state"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
     {
-      "asset_name": "official-runs",
+      "asset_name": "official-session",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing Frontier-CS-derived official interactive cases at private-benchmark/session.json."
     }
   ],
   "ci": {

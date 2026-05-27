@@ -1,21 +1,37 @@
-# Maximum Position In A Permutation
+# Maximum Position Permutation
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+You are given an unknown permutation of length `n`. Your task is to determine the position of value `n`.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+## Session
 
-## Input
+The evaluator starts each Frontier-CS source session by writing an integer `T`. For each test case it then writes `n`. Public validation uses two small cases; official evaluation may run several private source sessions back to back. After the last session the evaluator writes terminal `0` and then closes stdout. Treat EOF as successful session termination too.
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/17`.
+## Queries
 
-## Output
+To ask for interval information, write:
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+```text
+? l r
+```
 
-## Scoring
+where `1 <= l < r <= n`, then flush stdout. The evaluator replies with the position of the second-largest value in the hidden subarray `p[l..r]`.
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+To answer the current case, write:
 
-## Solution Interface
+```text
+! x
+```
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+where `x` is the position of value `n`.
+
+## Limits And Scoring
+
+For each test case, the source interactor enforces:
+
+- `2 <= n <= 100000`
+- the total `n` over the source session is at most `100000`
+- the sum of `(r - l + 1)` over all queries in a test case is at most `30n`
+
+Let `q` be the query count and `L = log2(n)`. The source score for a test case is `100` when `q <= L`, `0` when `q >= 15L`, and linearly interpolated between those values. The final source score is the minimum bounded percentage over all cases in the source session. Agentics scales that ratio to the public `score` metric from `0` to `100`.
+
+Malformed commands, invalid intervals, exceeding the segment-sum limit, EOF before a final answer, or a wrong position are protocol failures. The trusted evaluator owns hidden data and writes `result.json`.

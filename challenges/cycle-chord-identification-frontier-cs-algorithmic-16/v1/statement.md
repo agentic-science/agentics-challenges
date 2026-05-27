@@ -1,21 +1,42 @@
 # Cycle Chord Identification
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+You interact with a hidden undirected cycle on vertices `1..n`. The cycle has edges `(i, i+1)` and `(n, 1)`, and the judge has added one hidden non-adjacent chord. Your task is to identify the chord.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+## Session
 
-## Input
+The evaluator starts each Frontier-CS source session by writing an integer `T`. For each test case it then writes `n`. Public validation uses one tiny case; official evaluation may run several private source sessions back to back. After the last session the evaluator writes terminal `0` and then closes stdout. Treat EOF as successful session termination too.
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/16`.
+## Queries
 
-## Output
+To query a shortest-path distance, write:
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+```text
+? x y
+```
 
-## Scoring
+where `1 <= x, y <= n`, then flush stdout. The evaluator replies with one integer, the shortest-path distance between `x` and `y` in the cycle plus hidden chord graph.
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+To answer the current case, write:
 
-## Solution Interface
+```text
+! u v
+```
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+where `u` and `v` are your guessed chord endpoints. The evaluator replies with `1` for a correct guess and `-1` for an incorrect guess. A correct guess advances to the next test case or source session. An incorrect guess ends the run with score zero for that source session.
+
+## Limits And Scoring
+
+The original Frontier-CS interactor allows at most `500` distance queries per test case. The final answer does not count as a query. The trusted evaluator writes `result.json`; participant programs must not create or modify it.
+
+The source scoring function is:
+
+```text
+f(Q) = 100 - Q^2 / 200                                 for 0 <= Q <= 40
+f(Q) = 72 * exp(-0.0329013504337 * (Q - 40)) + 20      for 40 < Q <= 100
+f(Q) = 30 * (1 - (Q - 100) / 400)^2                    for 100 < Q <= 500
+f(Q) = 0                                               for Q > 500
+```
+
+The shipped source interactor reports the minimum ratio inside a source input file; this migration preserves that behavior and scales it to the public `score` metric from `0` to `100`.
+
+Malformed commands, out-of-range vertices, too many queries, EOF before a final answer, or a wrong chord are protocol failures.

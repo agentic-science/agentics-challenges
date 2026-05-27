@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap smoke solution for mamba2-scan-frontier-cs-mamba2-scan.",
+  "note": "Source-baseline PyTorch scan smoke solution for mamba2-scan-frontier-cs-mamba2-scan.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,21 +1,17 @@
 # DiverC Autofill Words
 
-This challenge migrates Frontier-CS `algorithmic/problems/28` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
-
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
+This challenge migrates Frontier-CS `algorithmic/problems/28` (`Hacking the Project`) as a faithful `piped_stdio` interactive task. The trusted evaluator compiles and runs the original Testlib `interactor.cc`, preserving the generated word lists, prefix query responses, answer validation, and source scoring.
 
 ## Provenance
 
 - Source path: `algorithmic/problems/28`
-- Original title: DiverC Autofill Words
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Source type: interactive, `interactor.cc`
+- Agentics mode: `piped_stdio`
+- Public validation: one tiny deterministic dictionary-count case
+- Official data: private Frontier-CS `testdata/*.in` sessions packaged outside Git under `private-benchmark/`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+The original statement says the service can be adaptive. The shipped interactor deterministically generates up to 1000 lexicographic 10-character words for each starting letter and uses hidden per-letter counts from the input file. This migration preserves that shipped evaluator behavior.
+
+## Private Assets
+
+Upload `official-runs.zip` with `private-benchmark/session.json` and the source input and answer files referenced by that manifest. Official per-letter counts and source testdata must remain out of Git.

@@ -4,14 +4,10 @@
   "challenge_name": "matrix-kth-smallest-frontier-cs-algorithmic-4",
   "title": "Matrix K-th Smallest",
   "summary": {
-    "en": "Find the canonical k-th value from Frontier-CS monotone matrix benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Matrix K-th Smallest。"
+    "en": "Find the k-th value in a hidden sorted matrix through the original Frontier-CS query protocol.",
+    "zh": "通过原始 Frontier-CS 查询协议找出隐藏有序矩阵中的第 k 小值。"
   },
-  "keywords": [
-    "matrix",
-    "order-statistic",
-    "offline"
-  ],
+  "keywords": ["interactive", "matrix", "order-statistics"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
@@ -19,10 +15,8 @@
       "asset_name": "official-runs",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing the official Frontier-CS matrix sessions and hidden answers."
     }
   ],
   "ci": {

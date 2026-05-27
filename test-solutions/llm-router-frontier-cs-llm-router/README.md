@@ -1,3 +1,3 @@
-# llm-router-frontier-cs-llm-router Smoke Solution
+# LLM Router Smoke Solution
 
-Cheap public-validation smoke solution.
+This smoke solution always chooses the cheapest available tier. It uses only the documented `Solution.solve` interface and does not inspect private benchmark rows.

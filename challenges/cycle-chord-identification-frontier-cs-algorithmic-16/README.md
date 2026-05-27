@@ -1,21 +1,17 @@
 # Cycle Chord Identification
 
-This challenge migrates Frontier-CS `algorithmic/problems/16` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
-
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
+This challenge migrates Frontier-CS `algorithmic/problems/16` (`Identify Chord`) as a faithful `piped_stdio` interactive task. The trusted evaluator compiles and runs the original Testlib `interactor.cpp`, so the hidden chord, shortest-path query responses, 500-query limit, final validation, and source query-count scoring stay judge-owned.
 
 ## Provenance
 
 - Source path: `algorithmic/problems/16`
-- Original title: Cycle Chord Identification
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Source type: interactive, `interactor.cpp`
+- Agentics mode: `piped_stdio`
+- Public validation: one small deterministic cycle with chord `(2, 5)`
+- Official data: private Frontier-CS `testdata/*.in` sessions packaged outside Git under `private-benchmark/`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+The source statement describes average per-test scoring, but the shipped interactor keeps the minimum per-case ratio within each source input file. This migration preserves the shipped interactor behavior.
+
+## Private Assets
+
+Upload `official-runs.zip` with `private-benchmark/session.json` and the source input and answer files referenced by that manifest. Official chords, source testdata, and evaluator-only files must remain out of Git.

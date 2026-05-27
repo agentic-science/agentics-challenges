@@ -4,13 +4,13 @@
   "challenge_name": "mamba2-scan-frontier-cs-mamba2-scan",
   "title": "Mamba2 Scan Optimization",
   "summary": {
-    "en": "Optimize a CUDA scan kernel for Mamba2-style recurrence.",
-    "zh": "Optimize a CUDA scan kernel for Mamba2-style recurrence."
+    "en": "Optimize a CUDA/Triton implementation of the Mamba2 sequential scan recurrence.",
+    "zh": "Optimize a CUDA/Triton implementation of the Mamba2 sequential scan recurrence."
   },
   "keywords": [
     "cuda",
-    "scan",
-    "triton"
+    "triton",
+    "scan"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,10 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/config.json",
-        "private-benchmark/submission_spec.json"
+        "private-benchmark/config.json"
       ],
-      "asset_note": "Private official data/config for Frontier-CS `research/problems/mamba2_scan`."
+      "asset_note": "Private official config selecting the source-scale Frontier-CS Mamba2 scan benchmark shapes."
     }
   ],
   "ci": {

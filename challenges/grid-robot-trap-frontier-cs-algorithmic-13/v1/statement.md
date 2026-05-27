@@ -1,21 +1,15 @@
 # Grid Robot Trap
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+The judge owns a robot on the positive integer grid. All cells start white. Each turn you blacken one cell and the robot moves to a white adjacent cell according to the trusted source interactor.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+At the start of a source case the evaluator writes:
 
-## Input
+```text
+sx sy
+```
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/13`.
+For each turn, write one line `x y`, flush, and read the robot response. Your coordinates must satisfy `1 <= x, y <= 3000`. If the robot is trapped, the evaluator writes `0 0`; that completes the current source case. Otherwise the evaluator writes the robot's new positive coordinates, which become the current position for the next turn.
 
-## Output
+Agentics may chain multiple source cases. After a case returns `0 0`, keep reading: another positive `sx sy` starts the next case, while a second `0 0` at case boundary means the session is complete and your program should exit. EOF before trapping the robot, malformed coordinates, out-of-range marks, or failing to trap within 3000 turns receive zero from the trusted evaluator. The trusted evaluator writes `result.json`; participant code must only speak the stdin/stdout protocol.
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
-
-## Scoring
-
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
-
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The official score is the original Frontier-CS turn-efficiency score, scaled to `score` from 0 to 100.

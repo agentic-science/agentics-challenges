@@ -4,13 +4,13 @@
   "challenge_name": "steiner-tree-reconstruction-frontier-cs-algorithmic-89",
   "title": "Steiner Tree Reconstruction",
   "summary": {
-    "en": "Recover hidden tree edges from Frontier-CS Steiner-query records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Steiner Tree Reconstruction。"
+    "en": "Reconstruct a hidden tree using Steiner-membership queries.",
+    "zh": "Reconstruct a hidden tree using Steiner-membership queries."
   },
   "keywords": [
-    "tree",
+    "trees",
     "steiner",
-    "offline"
+    "interactive"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS algorithmic problem 89 interactive session manifest and hidden source testdata."
     }
   ],
   "ci": {

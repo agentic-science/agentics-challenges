@@ -1,0 +1,4 @@
+sample_id,prompt,eval_name,mistralai/mistral-7b-chat,mistralai/mixtral-8x7b-chat,gpt-4-1106-preview,mistralai/mistral-7b-chat|total_cost,mistralai/mixtral-8x7b-chat|total_cost,gpt-4-1106-preview|total_cost,oracle_model_to_route_to
+public.mbpp.1,Write a Python function that adds two numbers.,mbpp,1.0,1.0,1.0,0.00001,0.00004,0.00050,mistralai/mistral-7b-chat
+public.mmlu.1,Choose the correct answer for a basic world history question.,mmlu-history,1.0,1.0,1.0,0.00002,0.00005,0.00080,mistralai/mistral-7b-chat
+public.hellaswag.1,Pick the most plausible continuation for a short commonsense scenario.,hellaswag,0.0,1.0,1.0,0.00001,0.00005,0.00070,mistralai/mixtral-8x7b-chat

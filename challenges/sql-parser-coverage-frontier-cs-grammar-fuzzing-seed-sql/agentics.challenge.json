@@ -2,12 +2,16 @@
   "schema_version": 1,
   "request": "new_challenge",
   "challenge_name": "sql-parser-coverage-frontier-cs-grammar-fuzzing-seed-sql",
-  "title": "SQL Parser Coverage Fuzzing",
+  "title": "SQL Parser Test Case Generation",
   "summary": {
-    "en": "Generate SQL statements that exercise a Python SQL parser and maximize evaluator-measured parser coverage.",
-    "zh": "生成 SQL 语句，驱动 Python SQL 解析器并最大化 evaluator 测得的解析器覆盖率。"
+    "en": "Generate SQL seed statements that maximize coverage of the provided parser.",
+    "zh": "Generate SQL seed statements that maximize coverage of the provided parser."
   },
-  "keywords": ["fuzzing", "sql", "coverage"],
+  "keywords": [
+    "fuzzing",
+    "sql",
+    "coverage"
+  ],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
@@ -15,8 +19,10 @@
       "asset_name": "official-runs",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": ["private-benchmark/runs.json"],
-      "asset_note": "ZIP overlay containing the private official run manifest at private-benchmark/runs.json."
+      "required_paths": [
+        "private-benchmark/config.json"
+      ],
+      "asset_note": "Private official config preserving the Frontier-CS SQL seed coverage benchmark settings."
     }
   ],
   "ci": {

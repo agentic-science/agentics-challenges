@@ -4,25 +4,19 @@
   "challenge_name": "disk-probing-frontier-cs-algorithmic-60",
   "title": "Disk Probing",
   "summary": {
-    "en": "Recover the hidden disk center and radius from Frontier-CS benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Disk Probing。"
+    "en": "Recover a hidden circular disk by probing line-segment intersection lengths.",
+    "zh": "通过线段探测返回的相交长度恢复隐藏圆盘。"
   },
-  "keywords": [
-    "geometry",
-    "circle",
-    "offline"
-  ],
+  "keywords": ["interactive", "geometry", "hidden-state"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
     {
-      "asset_name": "official-runs",
+      "asset_name": "official-session",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing the private official interactive session at private-benchmark/session.json."
     }
   ],
   "ci": {

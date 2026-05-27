@@ -1,0 +1,18 @@
+{
+  "session_name": "public-smoke",
+  "metadata": {
+    "source_problem_id": 30,
+    "source_path": "algorithmic/problems/30",
+    "adapter": "frontier-cs-moving-mole-python-adapter",
+    "cases": [
+      {
+        "case_name": "public-smoke",
+        "generated_input": {
+          "kind": "two_branch_smoke",
+          "target": 2,
+          "best": 1
+        }
+      }
+    ]
+  }
+}

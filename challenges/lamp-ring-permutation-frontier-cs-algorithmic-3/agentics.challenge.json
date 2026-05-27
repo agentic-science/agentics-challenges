@@ -4,14 +4,10 @@
   "challenge_name": "lamp-ring-permutation-frontier-cs-algorithmic-3",
   "title": "Lamp Ring Permutation",
   "summary": {
-    "en": "Recover the hidden ring order from a Frontier-CS lamp-socket benchmark record.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Lamp Ring Permutation。"
+    "en": "Recover a hidden cyclic lamp permutation through the original Frontier-CS adjacency interaction.",
+    "zh": "通过原始 Frontier-CS 相邻性互动协议恢复隐藏的环形灯座排列。"
   },
-  "keywords": [
-    "interactive",
-    "permutation",
-    "offline"
-  ],
+  "keywords": ["interactive", "permutation", "cycle"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
@@ -19,10 +15,8 @@
       "asset_name": "official-runs",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing the official Frontier-CS Testlib session files and hidden permutations."
     }
   ],
   "ci": {

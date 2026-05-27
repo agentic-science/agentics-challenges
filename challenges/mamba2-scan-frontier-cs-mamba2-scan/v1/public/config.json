@@ -1,4 +1,3 @@
 {
-  "runner": "frontier_python_evaluate",
   "submission_spec_path": "public/submission_spec.json"
 }

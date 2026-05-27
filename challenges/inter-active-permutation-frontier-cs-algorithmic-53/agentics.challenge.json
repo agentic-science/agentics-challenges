@@ -4,13 +4,13 @@
   "challenge_name": "inter-active-permutation-frontier-cs-algorithmic-53",
   "title": "Inter Active Permutation",
   "summary": {
-    "en": "Recover hidden permutations from Frontier-CS Inter Active benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Inter Active Permutation。"
+    "en": "Recover hidden derangements through the original Inter Active permutation query protocol.",
+    "zh": "通过原始 Inter Active 排列查询协议恢复隐藏错排。"
   },
   "keywords": [
     "permutation",
-    "queries",
-    "offline"
+    "interactive",
+    "queries"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest and hidden derangements."
     }
   ],
   "ci": {

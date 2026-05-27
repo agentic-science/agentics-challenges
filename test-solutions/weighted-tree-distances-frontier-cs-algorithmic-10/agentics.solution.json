@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Tiny public smoke solution for offline Frontier-CS exact-reference migrations.",
+  "note": "Full-distance reconstruction baseline for the Weighted Tree Distances piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

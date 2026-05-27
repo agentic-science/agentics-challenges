@@ -1,3 +1,3 @@
-# Lamp Ring Permutation Smoke Solution
+# Lamp Ring Permutation Test Solution
 
-Prints `0` for the tiny public validation run.
+This baseline uses the documented toggle protocol to batch-test every pair for moderate cases, reconstructs the cycle from the discovered adjacency graph, and falls back to the identity order when the case is too large for the simple baseline.

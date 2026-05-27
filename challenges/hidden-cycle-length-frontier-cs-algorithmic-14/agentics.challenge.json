@@ -4,14 +4,10 @@
   "challenge_name": "hidden-cycle-length-frontier-cs-algorithmic-14",
   "title": "Hidden Cycle Length",
   "summary": {
-    "en": "Recover the hidden cycle length from Frontier-CS cycle benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Hidden Cycle Length。"
+    "en": "Determine a hidden cycle size through the original Frontier-CS walk-and-guess interaction.",
+    "zh": "通过原始 Frontier-CS 行走与猜测互动协议确定隐藏环长度。"
   },
-  "keywords": [
-    "cycle",
-    "graph",
-    "offline"
-  ],
+  "keywords": ["interactive", "cycle", "search"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
@@ -19,10 +15,8 @@
       "asset_name": "official-runs",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing the official Frontier-CS hidden cycle sessions."
     }
   ],
   "ci": {

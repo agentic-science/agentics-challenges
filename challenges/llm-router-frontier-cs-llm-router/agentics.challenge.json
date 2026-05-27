@@ -2,10 +2,10 @@
   "schema_version": 1,
   "request": "new_challenge",
   "challenge_name": "llm-router-frontier-cs-llm-router",
-  "title": "LLM Router Cost-Accuracy Routing",
+  "title": "LLM Router",
   "summary": {
-    "en": "Choose cheap, mid, or expensive LLM tiers to balance correctness and cost.",
-    "zh": "Choose cheap, mid, or expensive LLM tiers to balance correctness and cost."
+    "en": "Route offline LLM prompts to cheap, mid, or expensive model tiers for accuracy-cost tradeoffs.",
+    "zh": "Route offline LLM prompts to cheap, mid, or expensive model tiers for accuracy-cost tradeoffs."
   },
   "keywords": [
     "llm",
@@ -21,9 +21,9 @@
       "required": true,
       "required_paths": [
         "private-benchmark/config.json",
-        "private-benchmark/datasets/routerbench_0shot_test.csv"
+        "private-benchmark/routerbench_0shot_test.csv"
       ],
-      "asset_note": "Private official data/config for Frontier-CS `research/problems/llm_router`."
+      "asset_note": "Private official RouterBench evaluation split and config for Frontier-CS `research/problems/llm_router`."
     }
   ],
   "ci": {

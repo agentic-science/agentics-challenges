@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Tiny public smoke solution for offline Frontier-CS exact-reference migrations.",
+  "note": "Honest exhaustive small-graph smoke solution for hidden-bipartite-graph-frontier-cs-algorithmic-106.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

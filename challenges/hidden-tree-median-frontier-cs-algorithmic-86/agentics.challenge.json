@@ -4,13 +4,13 @@
   "challenge_name": "hidden-tree-median-frontier-cs-algorithmic-86",
   "title": "Hidden Tree Median",
   "summary": {
-    "en": "Recover hidden tree structure targets from Frontier-CS median-query records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Hidden Tree Median。"
+    "en": "Recover a hidden tree through triple-node median queries.",
+    "zh": "Recover a hidden tree through triple-node median queries."
   },
   "keywords": [
-    "tree",
-    "median",
-    "offline"
+    "trees",
+    "interactive",
+    "reconstruction"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS algorithmic problem 86 interactive session manifest and hidden source testdata."
     }
   ],
   "ci": {

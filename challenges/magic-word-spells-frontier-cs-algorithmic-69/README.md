@@ -1,21 +1,13 @@
 # Magic Word Spells
 
-This challenge migrates Frontier-CS `algorithmic/problems/69` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
+This challenge migrates Frontier-CS `algorithmic/problems/69` as a faithful `piped_stdio` interactive task. The trusted interactive evaluator compiles and runs the original Frontier-CS Testlib `interactor.cc`, preserving the word validation rules, generated power questions, exact ordered-pair checks, and source length-ratio scoring.
 
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
-
-## Provenance
+Submitted `zip_project` solutions communicate only through stdin/stdout. The source interactor prints `n q`, then reads `n` participant-created words over `{X, O}`. It sends `q` spell powers, each derived from the participant's own words and evaluator-owned ordered pairs, and expects the exact ordered pair of word indices after each power.
 
 - Source path: `algorithmic/problems/69`
-- Original title: Magic Word Spells
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Original title: `Magic Words`
+- Execution mode: `piped_stdio`
+- Public validation: one tiny deterministic `n = 3` session
+- Official evaluation: private Frontier-CS-derived source cases and optimal totals in `private-benchmark/session.json`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+Malformed words, duplicate words, length violations, invalid answers, wrong ordered pairs, and EOF are handled by the source interactor. The trusted evaluator writes `result.json`; participant code must not create it.

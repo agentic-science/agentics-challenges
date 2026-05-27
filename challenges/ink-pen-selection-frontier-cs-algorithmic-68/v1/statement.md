@@ -1,21 +1,31 @@
 # Ink Pen Selection
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive `zip_project` challenge. The evaluator first prints the number of cases:
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+```text
+t
+```
 
-## Input
+For each case, it prints:
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/68`.
+```text
+n
+```
 
-## Output
+The hidden ink amounts form a permutation of `0, 1, ..., n - 1`. To try pen `i`, print:
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+```text
+0 i
+```
 
-## Scoring
+The evaluator replies with `1` if the pen had ink before this write and consumes one unit from that pen. It replies with `0` if the pen was already empty.
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+To finish the case, print two distinct pen indices:
 
-## Solution Interface
+```text
+1 i j
+```
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The case succeeds if the remaining ink in those two pens sums to at least `n`. After the selection, the next case starts immediately with its `n`, or the session ends after all `t` cases. EOF before completing the announced cases, malformed output, invalid pen indices, equal selected indices, and invalid action types are handled by the source interactor.
+
+Official scoring is the source ratio `successful_cases / t`, scaled to `score` from 0 to 100. The trusted evaluator owns all hidden ink states and writes `result.json`.

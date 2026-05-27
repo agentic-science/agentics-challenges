@@ -1,21 +1,64 @@
-# ModPow Timing Key
+# Modpow Timing Key
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive challenge. A hidden device stores a modulus `n` and an
+exponent `d`. It computes `a^d mod n` with the original Frontier-CS
+square-and-multiply pseudocode, but it only reports the time taken by the
+modular multiplications. Recover `d`.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+The original Frontier-CS problem was interactive. This Agentics migration keeps
+the source `interactor.cc` protocol in a `piped_stdio` session.
 
 ## Input
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/79`.
+For each case, the evaluator writes one integer:
+
+```text
+n
+```
+
+Official cases use the original generation model: `n = p*q` for two random
+30-bit primes and `d` is coprime with `(p-1)*(q-1)`. Public validation may use a
+smaller illustrative modulus for a deterministic smoke test.
+
+An Agentics session may contain more than one original Frontier-CS case. After
+you submit a final answer for one case, keep reading stdin. If another positive
+`n` arrives, solve that case. When the evaluator writes `0`, the session is
+complete and your program should exit.
 
 ## Output
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+To query the device, output:
+
+```text
+? a
+```
+
+where `0 <= a < n`. Flush stdout and read the reported time.
+
+To finish the current case, output:
+
+```text
+! d
+```
+
+This final answer must be issued exactly once and must be the last request for
+that case.
 
 ## Scoring
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+The source interactor allows at most `30000` timing queries. If `d` is correct,
+the source ratio is based on query count:
 
-## Solution Interface
+```text
+(30000 - queries) / (30000 - 4000)
+```
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+clamped to `[0, 1]` and reported as a 0-100 Agentics score. Invalid commands,
+invalid query values, too many queries, EOF, or an incorrect final key receive
+zero.
+
+## Result Ownership
+
+Your solution only communicates over stdin/stdout. The trusted interactive
+evaluator owns all hidden keys, computes all timing replies, enforces protocol
+validity, and writes `result.json`.

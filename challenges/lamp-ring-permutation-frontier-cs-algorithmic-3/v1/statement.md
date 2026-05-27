@@ -1,21 +1,17 @@
 # Lamp Ring Permutation
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+The judge owns a hidden cyclic permutation `p_1, ..., p_n` of lamp labels. It also owns a hidden set `S` of currently lit lamp positions, initially empty.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+At session start the evaluator writes two integers:
 
-## Input
+```text
+subtask n
+```
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/3`.
+To query, write one line with `L` followed by `L` labels in `[1, n]`, then flush. The evaluator toggles those labels in order. After each toggle it returns `1` if the current lit set contains an adjacent pair on the hidden cycle, otherwise `0`; all `L` response bits are returned in order on one line. The lit set is not reset between queries.
 
-## Output
+To answer the current case, write `-1` followed by a permutation of all `n` labels, then flush. Any cyclic shift or reversal of the hidden cycle is accepted. The answer line does not count as a query.
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+Agentics may chain multiple source test files in one stdin/stdout session. After a correct final answer, keep reading: another positive `subtask n` starts the next case, while `0 0` means the session is complete and your program should exit. EOF before a final answer, malformed integers, out-of-range labels, excessive query rounds, excessive total operations, or an incorrect final permutation receive zero from the trusted evaluator. The trusted evaluator writes `result.json`; participant code must only speak the protocol above.
 
-## Scoring
-
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
-
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The score is the original Frontier-CS ratio based on query rounds and total toggles, scaled to `score` from 0 to 100.

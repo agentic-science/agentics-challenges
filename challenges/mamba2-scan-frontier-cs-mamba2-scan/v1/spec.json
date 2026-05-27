@@ -3,13 +3,13 @@
   "challenge_name": "mamba2-scan-frontier-cs-mamba2-scan",
   "challenge_title": "Mamba2 Scan Optimization",
   "summary": {
-    "en": "Optimize a CUDA scan kernel for Mamba2-style recurrence.",
-    "zh": "Optimize a CUDA scan kernel for Mamba2-style recurrence."
+    "en": "Optimize a CUDA/Triton implementation of the Mamba2 sequential scan recurrence.",
+    "zh": "Optimize a CUDA/Triton implementation of the Mamba2 sequential scan recurrence."
   },
   "keywords": [
     "cuda",
-    "scan",
-    "triton"
+    "triton",
+    "scan"
   ],
   "solution": {
     "protocol": "zip_project",
@@ -63,7 +63,7 @@
             "network_access": "disabled"
           }
         },
-        "resource_description": "ARM64 CUDA 13.0 profile for Frontier-CS coexecuted GPU benchmarks.",
+        "resource_description": "ARM64 CUDA 13.0 profile for the Frontier-CS Mamba2 scan benchmark.",
         "hardware_metadata": {
           "kind": "cuda",
           "gpu_model": "NVIDIA GB10",
@@ -100,14 +100,14 @@
         "python",
         "coexecuted-evaluator/setup.py"
       ],
-      "reproducibility_notes": "Creates a uv-managed project environment under /setup using uv sync; no uv pip interface is used."
+      "reproducibility_notes": "Creates a uv-managed CUDA evaluator environment under /setup using uv sync and the PyTorch cu130 index."
     },
     "official_evaluation_setup": {
       "command": [
         "python",
         "coexecuted-evaluator/setup.py"
       ],
-      "reproducibility_notes": "Creates the same uv-managed project environment for official evaluation; private benchmark data is not used for dependency resolution."
+      "reproducibility_notes": "Creates the same uv-managed CUDA evaluator environment for official evaluation."
     }
   },
   "datasets": {
@@ -124,42 +124,72 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Score"
+        "metric_description": "Source score after strict correctness gating, capped to 0-100."
       },
       {
         "name": "score_unbounded",
         "label": "Unbounded Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Unbounded Score"
+        "metric_description": "Linear source performance score before capping."
+      },
+      {
+        "name": "runs_successfully",
+        "label": "Runs Successfully",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Whether the evaluator loaded the submitted implementation."
       },
       {
         "name": "correctness",
         "label": "Correctness",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Correctness"
+        "metric_description": "Whether every benchmark shape passed source allclose checks."
       },
       {
         "name": "geometric_mean_speedup",
         "label": "Geometric Mean Speedup",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Geometric Mean Speedup"
+        "metric_description": "Geometric mean speedup over the source GPU baseline."
+      },
+      {
+        "name": "arithmetic_mean_speedup",
+        "label": "Arithmetic Mean Speedup",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Source arithmetic speedup field."
+      },
+      {
+        "name": "median_speedup",
+        "label": "Median Speedup",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Source median speedup field."
       },
       {
         "name": "passed_tests",
         "label": "Passed Tests",
+        "unit": "tests",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Passed Tests"
+        "metric_description": "Number of benchmark rows passing the allclose check."
+      },
+      {
+        "name": "total_tests",
+        "label": "Total Tests",
+        "unit": "tests",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Number of benchmark rows evaluated."
       }
     ],
     "ranking": {
       "primary_metric_name": "score",
       "tie_breaker_metric_names": [
         "score_unbounded",
-        "correctness"
+        "geometric_mean_speedup"
       ]
     }
   }

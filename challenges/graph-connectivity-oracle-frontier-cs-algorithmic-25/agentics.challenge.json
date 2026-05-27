@@ -4,13 +4,13 @@
   "challenge_name": "graph-connectivity-oracle-frontier-cs-algorithmic-25",
   "title": "Graph Connectivity Oracle",
   "summary": {
-    "en": "Decide connectivity from Frontier-CS oracle benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Graph Connectivity Oracle。"
+    "en": "Decide graph connectivity through a hidden cut-neighborhood oracle.",
+    "zh": "通过隐藏图的割邻域计数交互式判断图是否连通。"
   },
   "keywords": [
-    "graph",
-    "connectivity",
-    "offline"
+    "interactive",
+    "graphs",
+    "oracle"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing Frontier-CS official interactive source sessions under private-benchmark/."
     }
   ],
   "ci": {

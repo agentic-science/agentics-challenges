@@ -4,13 +4,13 @@
   "challenge_name": "improv-rating-wagers-frontier-cs-algorithmic-77",
   "title": "Improv Rating Wagers",
   "summary": {
-    "en": "Report canonical predictions for Frontier-CS rating-wager benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Improv Rating Wagers。"
+    "en": "Predict an interactive wager stream while competing against the best hidden participant.",
+    "zh": "在交互式竞猜序列中预测结果，并与隐藏参与者中的最佳者竞争。"
   },
   "keywords": [
     "prediction",
-    "online",
-    "offline"
+    "online-learning",
+    "interactive"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest and hidden wager streams."
     }
   ],
   "ci": {

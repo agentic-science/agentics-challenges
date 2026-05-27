@@ -1,3 +1,3 @@
-# Graph Connectivity Oracle Smoke Solution
+# Graph Connectivity Cut Brute Force
 
-Prints `0` for the tiny public validation run.
+For small public graphs, checks every nonempty proper subset with the source-compatible `?#bits` token. A zero boundary proves disconnected; otherwise the graph is connected.

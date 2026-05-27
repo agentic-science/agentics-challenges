@@ -4,13 +4,13 @@
   "challenge_name": "tree-centroid-guess-frontier-cs-algorithmic-54",
   "title": "Tree Centroid Guess",
   "summary": {
-    "en": "Report the centroid target from Frontier-CS tree benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Tree Centroid Guess。"
+    "en": "Find the unique centroid of a hidden tree through distance queries.",
+    "zh": "通过距离查询找出隐藏树的唯一重心。"
   },
   "keywords": [
-    "tree",
-    "centroid",
-    "offline"
+    "trees",
+    "interactive",
+    "queries"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest, hidden tree, and centroid answer."
     }
   ],
   "ci": {

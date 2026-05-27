@@ -1,44 +1,15 @@
-# SQL Parser Coverage Fuzzing
+# SQL Parser Test Case Generation
 
-Generate SQL statements that exercise a bundled Python SQL parser. The submitted ZIP project runs once per Agentics invocation and writes `statements.json` to `AGENTICS_OUTPUT_DIR`.
-
-The evaluator parses the generated statements, measures which parser lines and SQL feature categories were exercised, and reports a coverage-oriented score.
-
-## Contract
-
-Each run receives `case.json` in `AGENTICS_INPUT_DIR`. The solution must write:
-
-```text
-AGENTICS_OUTPUT_DIR/statements.json
-```
-
-The file must contain either a JSON array of strings or an object with a `statements` array:
-
-```json
-[
-  "CREATE TABLE users (id INT PRIMARY KEY, name TEXT);",
-  "SELECT name FROM users WHERE id = 1;"
-]
-```
-
-The evaluator rejects excessive statement counts and oversized statements before parsing.
+This challenge ports Frontier-CS `research/problems/grammar_fuzzing/seed/sql` into Agentics as a `coexecuted_benchmark` challenge. The trusted evaluator imports the participant's `solution.py`, calls `Solution.solve(resources_path)`, parses the returned SQL statements with the source SQL engine, and measures line and branch coverage.
 
 ## Provenance
 
-This challenge is migrated from Frontier-CS:
+- Source path: `research/problems/grammar_fuzzing/seed/sql`
+- Source title: `SQL Parser Test Case Generation`
+- Source files inspected: `readme`, `config.yaml`, `evaluator.py`, `run_evaluator.sh`, `evaluate.sh`, `resources/sql_grammar.txt`, and `resources/sql_engine/`
+- Agentics mode: `coexecuted_benchmark`
+- Official private asset: `official-runs.zip`
 
-- `research/problems/grammar_fuzzing/seed/sql`
-- Original title: SQL Parser Test Case Generation
-- Original shape: `Solution.solve(resources_path) -> list[str]`, scored by parser coverage and efficiency.
+The grammar and parser resources are participant-visible, matching the source contract. The public config uses a tiny deterministic smoke setting. Official evaluation uses the source coverage scoring settings selected through a private `private-benchmark/config.json` overlay.
 
-The Agentics version uses `separated_evaluator`: submitted solutions only produce statement files, while the trusted evaluator owns scoring.
-
-## Files
-
-- `v1/spec.json` declares the Agentics bundle.
-- `v1/statement.md` is the submitter-facing statement.
-- `v1/public/runs.json` contains a small deterministic public validation run.
-- `v1/resources/sql_engine` and `v1/resources/sql_grammar.txt` contain the public parser target.
-- `v1/separated-evaluator/run.py` validates outputs and writes Agentics result JSON.
-
-Official run metadata is uploaded as a private asset overlay and is not committed.
+This challenge uses `coexecuted_benchmark`: trusted evaluator code imports participant Python from `/workspace`. Official benchmark config is visible in that container and contains no secrets.

@@ -4,25 +4,19 @@
   "challenge_name": "space-thief-stars-frontier-cs-algorithmic-63",
   "title": "Space Thief Stars",
   "summary": {
-    "en": "Report the hidden key and treasure stars from Frontier-CS graph records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Space Thief Stars。"
+    "en": "Identify hidden key and treasure stars through directed reachability questions.",
+    "zh": "通过有向可达性询问识别隐藏钥匙星和宝箱星。"
   },
-  "keywords": [
-    "graph",
-    "reachability",
-    "offline"
-  ],
+  "keywords": ["interactive", "graph", "hidden-state"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
     {
-      "asset_name": "official-runs",
+      "asset_name": "official-session",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing Frontier-CS-derived official interactive cases at private-benchmark/session.json."
     }
   ],
   "ci": {

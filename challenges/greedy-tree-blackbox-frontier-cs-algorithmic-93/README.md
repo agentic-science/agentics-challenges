@@ -1,21 +1,16 @@
 # Greedy Tree Blackbox
 
-This challenge migrates Frontier-CS `algorithmic/problems/93` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
+This challenge migrates Frontier-CS `algorithmic/problems/93` as a faithful `piped_stdio` interactive task. The trusted interactive evaluator owns the hidden source state, speaks the original stdin/stdout protocol, enforces protocol and query limits, validates the final answer, and writes Agentics `result.json`.
 
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
+Submitted `zip_project` solutions communicate only through stdin/stdout. Private official source cases are visible only to the trusted evaluator.
 
 ## Contract
 
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
+- Source path: `algorithmic/problems/93`.
+- Original title: Greedy.
+- Agentics mode: `piped_stdio`.
+- Evaluator adapter: the original Frontier-CS Testlib interactor is copied to `v1/interactive-evaluator/interactor.cpp` and compiled by `interactive-evaluator/run.py`.
+- Public validation is a tiny deterministic smoke case. Official scoring uses the private `official-runs` ZIP overlay at `private-benchmark/session.json`.
+- A session may contain one or more original source cases. After finishing a case, keep reading stdin; EOF means the Agentics session is complete.
 
-## Provenance
-
-- Source path: `algorithmic/problems/93`
-- Original title: Greedy Tree Blackbox
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
-
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+Protocol errors, malformed output, query-limit failures, and wrong final answers receive the source interactor's zero score for the affected case. The leaderboard `score` is the average source ratio scaled to 0..100.

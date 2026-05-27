@@ -1,6 +1,6 @@
 {
-  "problem_name": "mamba2_scan",
-  "description": "Triton kernel optimization problem for high-performance Mamba2 Scan computation",
+  "problem_name": "mamba2_scan_public_smoke",
+  "description": "Tiny public Mamba2 scan validation shape.",
   "requirements": {
     "cuda_backend": true,
     "gpu_required": true,
@@ -8,16 +8,16 @@
     "torch_version": ">=2.0.0"
   },
   "evaluation": {
-    "timeout_seconds": 300,
-    "memory_limit_mb": 8192,
-    "gpu_memory_limit_mb": 4096
+    "timeout_seconds": 60,
+    "memory_limit_mb": 4096,
+    "gpu_memory_limit_mb": 2048
   },
   "metadata": {
     "L_list": [
-      16
+      128
     ],
-    "D": 16,
-    "chunk": 8,
-    "BD": 16
+    "D": 64,
+    "chunk": 32,
+    "BD": 32
   }
 }

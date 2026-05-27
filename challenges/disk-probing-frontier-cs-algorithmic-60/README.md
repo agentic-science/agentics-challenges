@@ -1,21 +1,13 @@
 # Disk Probing
 
-This challenge migrates Frontier-CS `algorithmic/problems/60` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
+This challenge migrates Frontier-CS `algorithmic/problems/60` as a faithful `piped_stdio` interactive task. The trusted interactive evaluator compiles and runs the original Frontier-CS Testlib `interactor.cpp`, so the hidden disk, segment-query protocol, 1024-query limit, exact final-answer validation, and source query-efficiency scoring remain evaluator-owned.
 
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
-
-## Provenance
+Submitted `zip_project` solutions communicate only through stdin/stdout. This source problem has no startup prompt: a participant begins by writing `query x1 y1 x2 y2` commands and eventually writes one `answer x y r` command. To preserve that no-prompt source framing, each Agentics session contains one original source-style case.
 
 - Source path: `algorithmic/problems/60`
-- Original title: Disk Probing
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Original title: `Problem K: Probing the Disk`
+- Execution mode: `piped_stdio`
+- Public validation: one tiny deterministic sample-style hidden disk
+- Official evaluation: private Frontier-CS-derived hidden disk in `private-benchmark/session.json`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+Malformed commands, out-of-range coordinates, repeated endpoints, excess queries, incorrect final answers, EOF before the final answer, and extra output handled by the Testlib interactor receive the original source verdict behavior. The trusted evaluator writes `result.json`; participant code must not create it.

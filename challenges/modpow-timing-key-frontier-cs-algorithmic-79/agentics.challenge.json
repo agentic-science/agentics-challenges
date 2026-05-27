@@ -2,15 +2,15 @@
   "schema_version": 1,
   "request": "new_challenge",
   "challenge_name": "modpow-timing-key-frontier-cs-algorithmic-79",
-  "title": "ModPow Timing Key",
+  "title": "Modpow Timing Key",
   "summary": {
-    "en": "Recover the hidden exponent target from Frontier-CS modular timing records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：ModPow Timing Key。"
+    "en": "Recover a hidden modular exponent from timing queries to the original interactive device.",
+    "zh": "通过原始交互式设备的计时查询恢复隐藏的模指数。"
   },
   "keywords": [
     "number-theory",
     "timing",
-    "offline"
+    "interactive"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest and hidden n,d pairs."
     }
   ],
   "ci": {

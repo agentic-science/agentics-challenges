@@ -1,21 +1,15 @@
 # Matrix K-th Smallest
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+The judge owns a hidden `n x n` matrix whose rows and columns are nondecreasing. Your task is to identify the `k`-th smallest matrix value.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+At session start the evaluator writes:
 
-## Input
+```text
+n k
+```
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/4`.
+To inspect one cell, write `QUERY x y`, flush, and read the integer value at row `x`, column `y`. Coordinates are one-based and must be in `[1, n]`.
 
-## Output
+To finish the current case, write `DONE ans`, flush, and continue reading. A positive `n k` starts another source case, while `0 0` means the Agentics session is complete and your program should exit. EOF before `DONE`, malformed commands, out-of-bounds queries, exceeding the source query limit, or a wrong final answer receive zero from the trusted evaluator. The trusted evaluator writes `result.json`; participant code must only speak the stdin/stdout protocol.
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
-
-## Scoring
-
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
-
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The official score is the original Frontier-CS query-efficiency score for a correct answer, scaled to `score` from 0 to 100.

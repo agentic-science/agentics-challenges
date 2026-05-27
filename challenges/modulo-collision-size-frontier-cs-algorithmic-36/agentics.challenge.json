@@ -4,13 +4,13 @@
   "challenge_name": "modulo-collision-size-frontier-cs-algorithmic-36",
   "title": "Modulo Collision Size",
   "summary": {
-    "en": "Recover the hidden modulus size from Frontier-CS collision benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Modulo Collision Size。"
+    "en": "Recover a hidden unordered_set bucket count through the original collision-query protocol.",
+    "zh": "通过原始碰撞查询协议恢复隐藏的 unordered_set 桶数量。"
   },
   "keywords": [
-    "number-theory",
-    "collision",
-    "offline"
+    "hashing",
+    "interactive",
+    "search"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest and hidden bucket-count cases."
     }
   ],
   "ci": {

@@ -13,11 +13,10 @@
     "gpu_memory_limit_mb": 4096
   },
   "metadata": {
-    "L_list": [
-      16
-    ],
-    "D": 16,
-    "chunk": 8,
-    "BD": 16
+    "L_list": [2048, 4096],
+    "D": 512,
+    "chunk": 128,
+    "BD": 128
   }
 }
+

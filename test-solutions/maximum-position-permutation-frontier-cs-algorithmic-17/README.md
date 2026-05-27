@@ -1,3 +1,3 @@
-# Maximum Position In A Permutation Smoke Solution
+# Maximum Position Binary Search Baseline
 
-Prints `0` for the tiny public validation run.
+Uses the standard second-maximum position query to identify which side contains the maximum value, then binary-searches that side.

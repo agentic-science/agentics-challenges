@@ -2,15 +2,15 @@
   "schema_version": 1,
   "request": "new_challenge",
   "challenge_name": "moving-mole-tree-frontier-cs-algorithmic-30",
-  "title": "Moving Mole On A Tree",
+  "title": "Moving Mole Tree",
   "summary": {
-    "en": "Report the hidden mole target from Frontier-CS rooted-tree benchmark records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Moving Mole On A Tree。"
+    "en": "Track a hidden mole on a rooted tree through subtree queries that can move the target.",
+    "zh": "通过会移动目标的子树查询在有根树中追踪隐藏鼹鼠。"
   },
   "keywords": [
-    "tree",
-    "search",
-    "offline"
+    "interactive",
+    "trees",
+    "search"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing Frontier-CS official interactive source sessions under private-benchmark/."
     }
   ],
   "ci": {

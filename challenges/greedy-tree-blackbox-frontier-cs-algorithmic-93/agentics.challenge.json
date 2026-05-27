@@ -4,13 +4,13 @@
   "challenge_name": "greedy-tree-blackbox-frontier-cs-algorithmic-93",
   "title": "Greedy Tree Blackbox",
   "summary": {
-    "en": "Recover rooted-tree parents from Frontier-CS greedy-blackbox records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Greedy Tree Blackbox。"
+    "en": "Recover a rooted tree from antichain greedy black-box queries.",
+    "zh": "Recover a rooted tree from antichain greedy black-box queries."
   },
   "keywords": [
-    "tree",
+    "trees",
     "greedy",
-    "offline"
+    "interactive"
   ],
   "readme_path": "README.md",
   "bundle_path": "v1",
@@ -20,9 +20,9 @@
       "kind": "private_benchmark_data",
       "required": true,
       "required_paths": [
-        "private-benchmark/runs.json"
+        "private-benchmark/session.json"
       ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "asset_note": "ZIP overlay containing the official Frontier-CS algorithmic problem 93 interactive session manifest and hidden source testdata."
     }
   ],
   "ci": {

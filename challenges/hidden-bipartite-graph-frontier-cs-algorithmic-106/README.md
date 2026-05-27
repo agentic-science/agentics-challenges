@@ -1,21 +1,13 @@
 # Hidden Bipartite Graph
 
-This challenge migrates Frontier-CS `algorithmic/problems/106` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
-
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
+This challenge migrates Frontier-CS `algorithmic/problems/106` as a faithful `piped_stdio` interactive task. The trusted evaluator compiles and runs the original Testlib `interactor.cpp`, so the hidden graph, subset edge-count protocol, query limit, proof validation, and source ratio scoring stay judge-owned.
 
 ## Provenance
 
 - Source path: `algorithmic/problems/106`
-- Original title: Hidden Bipartite Graph
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Source title: `Hidden Bipartite Graph`
+- Source files inspected: `statement.txt`, `config.yaml`, `interactor.cpp`, and `testdata/`
+- Agentics mode: `piped_stdio`
+- Official private asset: `official-runs.zip`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+The public bundle contains a tiny deterministic smoke graph. Official Frontier-CS inputs and empty source answer files are packaged outside Git as `private-benchmark/session.json` plus `private-benchmark/cases/`.

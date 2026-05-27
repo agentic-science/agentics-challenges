@@ -1,21 +1,17 @@
 # Graph Connectivity Oracle
 
-This challenge migrates Frontier-CS `algorithmic/problems/25` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
-
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
+This challenge migrates Frontier-CS `algorithmic/problems/25` as a faithful `piped_stdio` interactive task. The trusted evaluator compiles and runs the original Testlib `interactor.cc`, preserving the hidden graph, cut-neighborhood oracle, 3500-operation limit, final connectivity validation, and source scoring.
 
 ## Provenance
 
 - Source path: `algorithmic/problems/25`
-- Original title: Graph Connectivity Oracle
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Source type: interactive, `interactor.cc`
+- Agentics mode: `piped_stdio`
+- Public validation: one tiny connected graph
+- Official data: private Frontier-CS `testdata/*.in` and `testdata/*.ans` sessions packaged outside Git under `private-benchmark/`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+The shipped source interactor reads each operation as a single token and ignores character index `1`. This means the accepted wire tokens are `?<separator><bits>` and `!<separator><answer>`, for example `?#0101` and `!#1`. The migration preserves that source quirk instead of normalizing it.
+
+## Private Assets
+
+Upload `official-runs.zip` with `private-benchmark/session.json` and the source input and answer files referenced by that manifest. Official graphs and answer-edge files must remain out of Git.

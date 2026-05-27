@@ -1,21 +1,13 @@
 # Space Thief Stars
 
-This challenge migrates Frontier-CS `algorithmic/problems/63` into an Agentics `separated_evaluator` bundle with the `zip_project` stdin/stdout solution contract.
+This challenge migrates Frontier-CS `algorithmic/problems/63` as a faithful `piped_stdio` interactive task. The trusted interactive evaluator compiles and runs the original Frontier-CS Testlib `interactor.cpp`, preserving the hidden key and treasure stars, directed-edge query protocol, 600-query limit, final guess validation, and source scoring.
 
-Submitted solutions are executed once per run. Each run provides a Frontier-CS-derived benchmark record on stdin, and the solution writes the canonical target answer to stdout. The trusted evaluator compares the submitted output with the run's reference answer after whitespace normalization and reports the average exact-reference score.
-
-## Contract
-
-- Read the complete stdin payload for the run.
-- Write the canonical answer tokens to stdout.
-- Whitespace between tokens is ignored, but token values and order must match the reference answer exactly.
-- Network access is disabled during setup, build, and run.
-
-## Provenance
+Submitted `zip_project` solutions communicate only through stdin/stdout. A case starts when the evaluator prints `N M` followed by the undirected edges. The participant may ask orientation queries and then prints one final guess. Agentics sessions may contain multiple source cases: after a final guess, the next case starts immediately with another `N M` line, and EOF means there are no more cases.
 
 - Source path: `algorithmic/problems/63`
-- Original title: Space Thief Stars
-- Original shape: Frontier-CS interactive-style algorithmic benchmark with source config, statement, interactor, and testdata.
-- Agentics mode: `separated_evaluator`.
+- Original title: `Space Thief`
+- Execution mode: `piped_stdio`
+- Public validation: one tiny deterministic path graph
+- Official evaluation: private Frontier-CS-derived source cases in `private-benchmark/session.json`
 
-Public validation is intentionally tiny. Official Frontier-CS-derived runs and reference answers are supplied through the required private asset `official-runs` and are not committed.
+Malformed commands, invalid orientation bits, invalid final guesses, excess queries, and EOF before a final guess are handled by the source interactor. The trusted evaluator writes `result.json`; participant code must not create it.

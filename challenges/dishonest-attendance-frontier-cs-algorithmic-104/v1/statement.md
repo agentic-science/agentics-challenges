@@ -1,21 +1,27 @@
 # Dishonest Attendance
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive challenge. The evaluator first prints `t`, then for each independent test case prints `n`. Exactly one student is absent, but the evaluator may adaptively keep several possibilities as long as all previous answers remain consistent with the Frontier-CS dishonesty constraints.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+To ask an interval attendance query, print one line:
 
-## Input
+```text
+? l r
+```
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/104`.
+`1 <= l <= r <= n`. The evaluator replies with either `r-l` or `r-l+1`, representing the number of students who raised their hands. Across any three consecutive interval queries for the true absent student, the answers are never all honest and never all dishonest. Each test case has the original source query limit from its hidden answer file.
 
-## Output
+To guess an absent student, print one line:
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+```text
+! a
+```
 
-## Scoring
+The evaluator replies `1` if `a` is now forced as the absent student, otherwise `0` and removes that candidate. You may make at most two guesses per test case. After a successful guess, print:
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
+```text
+#
+```
 
-## Solution Interface
+Then continue to the next test case. After all source cases in the Agentics session are complete, exit on EOF.
 
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The trusted evaluator owns the adaptive candidate state, validates query and guess limits, enforces the final `#`, and writes `result.json`. The source score is based on the worst per-test-case ratio `(query_limit - queries) / (query_limit - 1)`, clamped to 0..1 and scaled to `score` from 0 to 100.

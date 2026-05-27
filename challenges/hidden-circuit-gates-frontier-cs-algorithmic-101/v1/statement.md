@@ -1,21 +1,21 @@
 # Hidden Circuit Gates
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive challenge. The evaluator first prints `N R`, then `N` wiring lines `Ui Vi`. Slot `i` uses switch outputs `Ui` and `Vi`, where the hidden gate at slot `i` is either AND (`&`) or OR (`|`). The hidden gate string is evaluator-only.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+For a query, print one line:
 
-## Input
+```text
+? s
+```
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/101`.
+`s` must be a binary string of length `2N + 1`, setting switches `0..2N`. The evaluator computes the circuit from high indices down to slot `0` and replies with the output of switch `0`, either `0` or `1`. At most `5000` queries are allowed. Flush after each query.
 
-## Output
+To answer, print one line:
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+```text
+! t
+```
 
-## Scoring
+`t` must have length `N` and contain only `&` and `|`. It must exactly match all hidden slot types. Flush and then continue reading for another source case or exit on EOF.
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
-
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+Malformed strings, wrong lengths, invalid characters, query-limit failures, and wrong gate strings are rejected by the trusted evaluator. The evaluator writes `result.json`. The source score is full through `900` queries, zero from `5000` queries, and linear between those limits.

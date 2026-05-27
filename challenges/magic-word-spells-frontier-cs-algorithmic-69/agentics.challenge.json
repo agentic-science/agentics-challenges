@@ -4,25 +4,19 @@
   "challenge_name": "magic-word-spells-frontier-cs-algorithmic-69",
   "title": "Magic Word Spells",
   "summary": {
-    "en": "Report the canonical magic-word score target from Frontier-CS spell records.",
-    "zh": "将 Frontier-CS 题目迁移为离线标准输入输出基准：Magic Word Spells。"
+    "en": "Create binary magic words and identify ordered pairs from distinct-substring powers.",
+    "zh": "构造二进制魔法词，并根据不同子串数量识别有序词对。"
   },
-  "keywords": [
-    "strings",
-    "substrings",
-    "offline"
-  ],
+  "keywords": ["interactive", "strings", "suffix-automaton"],
   "readme_path": "README.md",
   "bundle_path": "v1",
   "private_assets": [
     {
-      "asset_name": "official-runs",
+      "asset_name": "official-session",
       "kind": "private_benchmark_data",
       "required": true,
-      "required_paths": [
-        "private-benchmark/runs.json"
-      ],
-      "asset_note": "ZIP overlay containing private Frontier-CS-derived official run manifest and reference answers."
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing Frontier-CS-derived official interactive cases and optimal-length answers at private-benchmark/session.json."
     }
   ],
   "ci": {

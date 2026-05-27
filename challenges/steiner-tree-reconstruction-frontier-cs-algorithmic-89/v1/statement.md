@@ -1,21 +1,25 @@
 # Steiner Tree Reconstruction
 
-You receive one Frontier-CS-derived benchmark record on stdin. Print the canonical target answer for that record.
+This is an interactive challenge. The evaluator first prints one integer `n`, the number of vertices in a hidden unweighted tree.
 
-The original Frontier-CS problem was interactive. This Agentics migration uses an offline stdin/stdout contract: all interaction is replaced by a single run input and a single submitted answer. The trusted separated evaluator owns the reference answer for each run.
+To query whether a vertex is in a Steiner subgraph, print one line:
 
-## Input
+```text
+? k v s1 s2 ... sk
+```
 
-The input is the benchmark record for one case. Its format follows the migrated source data for Frontier-CS `algorithmic/problems/89`.
+`1 <= k <= n`, `v` is in `[1, n]`, and `s1..sk` are distinct vertices in `[1, n]`. Flush stdout after the line. The evaluator replies `1` if `v` belongs to the minimal connected subgraph containing the set `S`, otherwise `0`. The total sum of all submitted `k` values must not exceed `3000000`; if the evaluator replies `-1`, exit immediately.
 
-## Output
+To submit the tree, print:
 
-Print the answer tokens for the case. Whitespace is flexible, but the token sequence must match the reference exactly.
+```text
+!
+u1 v1
+u2 v2
+...
+u(n-1) v(n-1)
+```
 
-## Scoring
+The edges may be in any order. Flush and then continue reading for another source case or exit on EOF.
 
-Each exact match receives `100`; any mismatch, malformed output, timeout, or nonzero solution exit receives `0` for that case. The leaderboard `score` is the average across official cases. Ties use `valid_cases`.
-
-## Solution Interface
-
-Submit a `zip_project` solution with an `agentics.solution.json` manifest. The manifest-declared run command is executed once per case, reads stdin, and writes stdout. Network access is disabled.
+The trusted evaluator owns the hidden tree, validates all query and final-answer syntax, enforces the total set-size limit, and writes `result.json`. Correct trees are scored by the original Frontier-CS query-count rule: full score through `3000` queries, zero beyond `1200000`, and linear interpolation between them.
