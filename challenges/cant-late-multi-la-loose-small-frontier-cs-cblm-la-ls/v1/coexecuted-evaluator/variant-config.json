@@ -1,0 +1,85 @@
+{
+  "family": "cant_be_late_multi",
+  "official_scenarios": [
+    {
+      "name": "2_zones_west",
+      "regions": [
+        "us-west-2a_v100_1",
+        "us-west-2b_v100_1"
+      ],
+      "traces": [
+        "0.json",
+        "1.json",
+        "2.json",
+        "3.json",
+        "4.json",
+        "5.json",
+        "6.json",
+        "7.json"
+      ]
+    },
+    {
+      "name": "3_zones_west",
+      "regions": [
+        "us-west-2a_v100_1",
+        "us-west-2b_v100_1",
+        "us-west-2c_v100_1"
+      ],
+      "traces": [
+        "0.json",
+        "1.json",
+        "2.json",
+        "3.json",
+        "4.json",
+        "5.json"
+      ]
+    },
+    {
+      "name": "2_regions_west_east2",
+      "regions": [
+        "us-west-2a_v100_1",
+        "us-east-2a_v100_1"
+      ],
+      "traces": [
+        "0.json",
+        "1.json",
+        "2.json",
+        "3.json",
+        "4.json",
+        "5.json",
+        "6.json",
+        "7.json"
+      ]
+    },
+    {
+      "name": "5_regions_mixed",
+      "regions": [
+        "us-west-2a_v100_1",
+        "us-west-2b_v100_1",
+        "us-west-2c_v100_1",
+        "us-east-2a_v100_1",
+        "us-east-2b_v100_1"
+      ],
+      "traces": [
+        "0.json",
+        "1.json",
+        "2.json",
+        "3.json"
+      ]
+    }
+  ],
+  "public_scenarios": [
+    {
+      "name": "public_two_region_smoke",
+      "regions": [
+        "us-east-1a_v100_1",
+        "us-east-1c_v100_1"
+      ],
+      "traces": [
+        "0.json"
+      ]
+    }
+  ],
+  "deadline_hours": 48,
+  "restart_overhead_hours": 0.05
+}
