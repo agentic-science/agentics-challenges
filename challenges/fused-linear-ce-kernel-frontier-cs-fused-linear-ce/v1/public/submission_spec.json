@@ -1,0 +1,12 @@
+{
+  "problem_name": "fused_linear_ce",
+  "metadata": {
+    "shapes": [
+      [
+        8,
+        128,
+        64
+      ]
+    ]
+  }
+}
