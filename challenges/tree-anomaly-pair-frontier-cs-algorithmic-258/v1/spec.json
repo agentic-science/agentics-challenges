@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "challenge_name": "tree-anomaly-pair-frontier-cs-algorithmic-258",
+  "challenge_title": "Tree Anomaly Pair",
+  "summary": {
+    "en": "Find the two anomaly nodes in each tree source case.",
+    "zh": "Find the two anomaly nodes in each tree source case."
+  },
+  "keywords": [
+    "tree",
+    "distance",
+    "interactive"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cpu",
+      "docker_platform": "linux/arm64",
+      "accelerator": null,
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cpu-small",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 10,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CPU profile for a trusted Frontier-CS Testlib interactive session.",
+        "hardware_metadata": {
+          "kind": "cpu"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "piped_stdio",
+    "interactive_evaluator": {
+      "command": [
+        "python",
+        "interactive-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "validation_session": "public/session.json",
+    "official_session": "private-benchmark/session.json"
+  },
+  "datasets": {
+    "public_dir": "public",
+    "private_benchmark_dir": "private-benchmark",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Average Frontier-CS interactor ratio scaled to a 0-100 score."
+      },
+      {
+        "name": "source_ratio",
+        "label": "Source Ratio",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Raw ratio reported by the Frontier-CS Testlib interactor."
+      },
+      {
+        "name": "case_count",
+        "label": "Case Count",
+        "unit": "cases",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Number of source interactor cases completed in the session."
+      },
+      {
+        "name": "protocol_errors",
+        "label": "Protocol Errors",
+        "unit": "errors",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Protocol or evaluator wrapper errors detected during the session."
+      },
+      {
+        "name": "query_count",
+        "label": "Query Count",
+        "unit": "queries",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Best-effort query count parsed from the Frontier-CS interactor report."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": [
+        "protocol_errors",
+        "query_count"
+      ]
+    }
+  }
+}
