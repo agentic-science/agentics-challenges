@@ -18,7 +18,7 @@ threading.Thread(target=drain, daemon=True).start()
 time.sleep(0.05)
 # Syntactically finish or fail fast for the public mini protocol. The large
 # token tail prevents Testlib reads from blocking on most final-answer shapes.
-payload = ("! " + " ".join(["1"] * 16000) + "\n").encode()
+payload = ("! " + " ".join(["0"] * 16000) + "\n").encode()
 try:
     os.write(sys.stdout.fileno(), payload)
 except BrokenPipeError:
