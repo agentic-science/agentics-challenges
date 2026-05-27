@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "challenge_name": "cant-late-la-tight-small-frontier-cs-cbl-la-ts",
+  "challenge_title": "Cant Be Late: Low Availability, Tight Deadline, Small Overhead",
+  "summary": {
+    "en": "Optimize a cloud spot-instance scheduling strategy for the Frontier-CS cant_be_late low/tight/small variant.",
+    "zh": "Optimize a cloud spot-instance scheduling strategy for the Frontier-CS cant_be_late low/tight/small variant."
+  },
+  "keywords": [
+    "scheduling",
+    "cloud",
+    "simulation",
+    "frontier-cs"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cpu",
+      "docker_platform": "linux/arm64",
+      "accelerator": null,
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cpu-coexecuted-small",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 900,
+            "memory_limit_mb": 4096,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 8192,
+            "network_access": "enabled"
+          },
+          "run": {
+            "timeout_sec": 360,
+            "memory_limit_mb": 4096,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 8192,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CPU profile for coexecuted Frontier-CS simulation benchmarks.",
+        "hardware_metadata": {
+          "kind": "cpu"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "coexecuted_benchmark",
+    "coexecuted_evaluator": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "validation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Creates a setup-owned uv environment; evaluator imports participant code in the same container."
+    },
+    "official_evaluation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Uses the same uv environment; private benchmark data contains no secrets."
+    },
+    "acknowledge_danger": true
+  },
+  "datasets": {
+    "public_dir": "public",
+    "private_benchmark_dir": "private-benchmark",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Normalized Frontier-CS simulator score."
+      },
+      {
+        "name": "avg_cost",
+        "label": "Average Cost",
+        "unit": "USD",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Average simulated cost."
+      },
+      {
+        "name": "successful_runs",
+        "label": "Successful Runs",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "1 when the simulator completes."
+      },
+      {
+        "name": "od_anchor",
+        "label": "On-Demand Anchor",
+        "unit": "USD",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "On-demand reference cost."
+      },
+      {
+        "name": "spot_anchor",
+        "label": "Spot Anchor",
+        "unit": "USD",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Spot reference cost."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": [
+        "avg_cost",
+        "successful_runs"
+      ]
+    }
+  }
+}
