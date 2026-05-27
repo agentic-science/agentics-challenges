@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "ragged-attention-frontier-cs-ragged-attn",
+  "title": "Ragged Attention Optimization",
+  "summary": {
+    "en": "Optimize ragged CUDA attention with per-row length masks.",
+    "zh": "Optimize ragged CUDA attention with per-row length masks."
+  },
+  "keywords": [
+    "cuda",
+    "attention",
+    "triton"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/config.json",
+        "private-benchmark/submission_spec.json"
+      ],
+      "asset_note": "Private official data/config for Frontier-CS `research/problems/ragged_attention`."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
