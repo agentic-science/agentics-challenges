@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "symreg-peaks-frontier-cs-symreg-peaks",
+  "title": "Symbolic Regression Peaks",
+  "summary": {
+    "en": "Fit a compact symbolic expression to a source-derived regression dataset.",
+    "zh": "Fit a compact symbolic expression to a source-derived regression dataset."
+  },
+  "keywords": [
+    "symbolic",
+    "regression",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/config.json",
+        "private-benchmark/reference_metrics.json",
+        "private-benchmark/data/dataset_peaks.csv"
+      ],
+      "asset_note": "Private official data/config for Frontier-CS `research/problems/symbolic_regression/peaks`."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
