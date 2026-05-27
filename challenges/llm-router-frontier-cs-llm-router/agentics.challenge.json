@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "llm-router-frontier-cs-llm-router",
+  "title": "LLM Router",
+  "summary": {
+    "en": "Route offline LLM prompts to cheap, mid, or expensive model tiers for accuracy-cost tradeoffs.",
+    "zh": "Route offline LLM prompts to cheap, mid, or expensive model tiers for accuracy-cost tradeoffs."
+  },
+  "keywords": [
+    "llm",
+    "routing",
+    "cost"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/config.json",
+        "private-benchmark/routerbench_0shot_test.csv"
+      ],
+      "asset_note": "Private official RouterBench evaluation split and config for Frontier-CS `research/problems/llm_router`."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}

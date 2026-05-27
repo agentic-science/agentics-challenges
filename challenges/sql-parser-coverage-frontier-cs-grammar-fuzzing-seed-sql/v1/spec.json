@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "challenge_name": "sql-parser-coverage-frontier-cs-grammar-fuzzing-seed-sql",
+  "challenge_title": "SQL Parser Test Case Generation",
+  "summary": {
+    "en": "Generate SQL seed statements that maximize coverage of the provided parser.",
+    "zh": "Generate SQL seed statements that maximize coverage of the provided parser."
+  },
+  "keywords": [
+    "fuzzing",
+    "sql",
+    "coverage"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cpu",
+      "docker_platform": "linux/arm64",
+      "accelerator": null,
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cpu-medium",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 600,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 4096,
+            "network_access": "enabled"
+          },
+          "run": {
+            "timeout_sec": 600,
+            "memory_limit_mb": 4096,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 4096,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CPU profile for the Frontier-CS SQL parser coverage benchmark.",
+        "hardware_metadata": {
+          "kind": "cpu"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "coexecuted_benchmark",
+    "coexecuted_evaluator": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "acknowledge_danger": true,
+    "validation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Creates a uv-managed evaluator environment under /setup using uv sync."
+    },
+    "official_evaluation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Creates the same uv-managed evaluator environment for official evaluation."
+    }
+  },
+  "datasets": {
+    "public_dir": "public",
+    "private_benchmark_dir": "private-benchmark",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Source coverage score with efficiency bonus."
+      },
+      {
+        "name": "runs_successfully",
+        "label": "Runs Successfully",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Whether the evaluator loaded and ran the submitted generator."
+      },
+      {
+        "name": "line_coverage",
+        "label": "Line Coverage",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Line coverage percentage over parser.py, tokenizer.py, and ast_nodes.py."
+      },
+      {
+        "name": "branch_coverage",
+        "label": "Branch Coverage",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Branch coverage percentage over the measured SQL engine files."
+      },
+      {
+        "name": "coverage_score",
+        "label": "Coverage Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Non-linear weighted coverage contribution."
+      },
+      {
+        "name": "efficiency_bonus",
+        "label": "Efficiency Bonus",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Source bonus for using fewer SQL statements."
+      },
+      {
+        "name": "successful_parses",
+        "label": "Successful Parses",
+        "unit": "statements",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Number of returned statements parsed successfully."
+      },
+      {
+        "name": "total_statements",
+        "label": "Total Statements",
+        "unit": "statements",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Number of string statements returned by the solution."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": [
+        "line_coverage",
+        "branch_coverage"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "problem_name": "mamba2_scan_public_smoke",
+  "description": "Tiny public Mamba2 scan validation shape.",
+  "requirements": {
+    "cuda_backend": true,
+    "gpu_required": true,
+    "triton_version": ">=2.1.0",
+    "torch_version": ">=2.0.0"
+  },
+  "evaluation": {
+    "timeout_seconds": 60,
+    "memory_limit_mb": 4096,
+    "gpu_memory_limit_mb": 2048
+  },
+  "metadata": {
+    "L_list": [
+      128
+    ],
+    "D": 64,
+    "chunk": 32,
+    "BD": 32
+  }
+}

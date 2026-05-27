@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "challenge_name": "llm-router-frontier-cs-llm-router",
+  "challenge_title": "LLM Router",
+  "summary": {
+    "en": "Route offline LLM prompts to cheap, mid, or expensive model tiers for accuracy-cost tradeoffs.",
+    "zh": "Route offline LLM prompts to cheap, mid, or expensive model tiers for accuracy-cost tradeoffs."
+  },
+  "keywords": [
+    "llm",
+    "routing",
+    "cost"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cpu",
+      "docker_platform": "linux/arm64",
+      "accelerator": null,
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cpu-medium",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 600,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 4096,
+            "network_access": "enabled"
+          },
+          "run": {
+            "timeout_sec": 600,
+            "memory_limit_mb": 4096,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 4096,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CPU profile for the Frontier-CS LLM router benchmark.",
+        "hardware_metadata": {
+          "kind": "cpu"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "coexecuted_benchmark",
+    "coexecuted_evaluator": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "acknowledge_danger": true,
+    "validation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Creates a uv-managed evaluator environment under /setup using uv sync."
+    },
+    "official_evaluation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Creates the same uv-managed evaluator environment for official evaluation; private rows are not used for dependency resolution."
+    }
+  },
+  "datasets": {
+    "public_dir": "public",
+    "private_benchmark_dir": "private-benchmark",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Source normalized accuracy-minus-cost score."
+      },
+      {
+        "name": "score_unbounded",
+        "label": "Unbounded Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Raw source score before any platform interpretation."
+      },
+      {
+        "name": "runs_successfully",
+        "label": "Runs Successfully",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Whether the source evaluator loaded and ran the submitted router."
+      },
+      {
+        "name": "total_queries",
+        "label": "Total Queries",
+        "unit": "queries",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Number of prompts evaluated."
+      },
+      {
+        "name": "accuracy",
+        "label": "Accuracy",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Fraction of prompts answered correctly by the selected tiers."
+      },
+      {
+        "name": "avg_cost",
+        "label": "Average Cost",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Mean source inference cost of selected tiers."
+      },
+      {
+        "name": "raw_score",
+        "label": "Raw Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Accuracy minus lambda times average cost."
+      },
+      {
+        "name": "oracle_raw_score",
+        "label": "Oracle Raw Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Raw score of the source oracle router over the evaluated rows."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": [
+        "accuracy",
+        "avg_cost"
+      ]
+    }
+  }
+}
