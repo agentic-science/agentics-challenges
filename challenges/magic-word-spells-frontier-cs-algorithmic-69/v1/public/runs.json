@@ -1,0 +1,11 @@
+{
+  "runs": [
+    {
+      "run_name": "public-smoke",
+      "interface": "stdio",
+      "stdin_text": "public smoke for magic-word-spells-frontier-cs-algorithmic-69\n",
+      "answer_text": "0\n",
+      "source_note": "Tiny committed validation case, not an official Frontier-CS benchmark."
+    }
+  ]
+}
