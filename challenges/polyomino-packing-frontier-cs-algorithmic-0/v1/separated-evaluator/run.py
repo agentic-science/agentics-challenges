@@ -163,7 +163,7 @@ def score_run(run: dict[str, Any], solution_runs_dir: Path) -> tuple[dict[str, A
         width, height, placements = parse_output(stdout_path.read_text(encoding="utf-8"), len(shapes))
         validate_placement(shapes, width, height, placements)
         total_area = width * height
-        score = round(100000.0 * float(total_cells) / float(total_area), 6)
+        score = round(100.0 * float(total_cells) / float(total_area), 6)
         result = {
             "case_name": run_name,
             "status": "passed",
@@ -211,10 +211,9 @@ def aggregate(results: list[dict[str, Any]]) -> dict[str, Any]:
     if total == 0:
         return {"score": 0.0, "valid_cases": 0, "passed": 0, "total": 0, "total_cells": 0, "total_area": 0}
     valid_cases = sum(1 for result in results if result["status"] == "passed")
-    all_valid = valid_cases == total
     average_score = round(sum(float(result["score"]) for result in results) / total, 6)
     return {
-        "score": average_score if all_valid else 0.0,
+        "score": average_score,
         "valid_cases": valid_cases,
         "passed": valid_cases,
         "total": total,
@@ -234,9 +233,8 @@ def main() -> int:
         logs.extend(run_logs)
 
     summary = aggregate(results)
-    all_valid = summary["valid_cases"] == summary["total"] and summary["total"] > 0
     payload: dict[str, Any] = {
-        "status": "passed" if all_valid else "failed",
+        "status": "passed" if summary["total"] > 0 else "failed",
         "mode": args.mode,
         "rank_score": summary["score"],
         "aggregate_metrics": [

@@ -42,10 +42,10 @@ All transformed cells must lie inside `[0, W) x [0, H)`, and no two transformed 
 Each valid case scores:
 
 ```text
-100000 * total_cells / (W * H)
+100 * total_cells / (W * H)
 ```
 
-Higher is better. If any case is invalid, the official submission receives score `0`.
+Higher is better. Invalid cases contribute `0` to the official average.
 
 ## Public Validation
 

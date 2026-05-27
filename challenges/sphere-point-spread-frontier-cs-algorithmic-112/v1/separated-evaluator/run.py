@@ -194,8 +194,9 @@ def validate_sphere_spread(input_text: str, answer_text: str, output_text: str) 
     n = ints(input_text)[0]
     ref = max(float(answer_text.split()[0]), 1e-12)
     values = floats(output_text)
-    if len(values) < 1 + 3 * n:
-        raise ValueError(f"expected claimed distance plus {n} points")
+    expected_values = 1 + 3 * n
+    if len(values) != expected_values:
+        raise ValueError(f"expected exactly {expected_values} numeric values, found {len(values)}")
     claimed = values[0]
     if claimed < 0:
         raise ValueError("claimed minimum distance cannot be negative")

@@ -29,7 +29,7 @@ C_K,1 ... C_K,K
 
 The second line contains `K` row lengths, matching the Frontier-CS sample-grader output format. In this Agentics version every row length must equal `K`, and `K` must be at most `240`.
 
-Every country must appear at least once. For every input edge, at least one pair of side-adjacent cells must use those two colors. For every side-adjacent pair of cells with different colors, that color pair must be an input edge.
+For every input edge, at least one pair of side-adjacent cells must use those two colors. For every side-adjacent pair of cells with different colors, that color pair must be an input edge. To preserve the source checker behavior, isolated country colors are not required to appear unless they are needed for an input edge.
 
 ## Scoring
 

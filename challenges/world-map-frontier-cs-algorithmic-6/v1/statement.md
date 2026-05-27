@@ -31,9 +31,10 @@ C_K,1 C_K,2 ... C_K,K
 
 Your grid must satisfy all of these rules:
 
-- Every country appears in at least one cell.
 - For every input edge `(A_i, B_i)`, there is at least one side-adjacent cell pair colored `A_i` and `B_i`.
 - For every side-adjacent cell pair with different colors, that color pair is one of the input edges.
+
+To match the original Frontier-CS checker, colors for isolated countries do not need to appear unless they are needed to represent an input edge.
 
 Extra output tokens are rejected.
 

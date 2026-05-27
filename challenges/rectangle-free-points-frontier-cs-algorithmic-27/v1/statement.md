@@ -39,7 +39,7 @@ Each valid case scores:
 100 * min(k / (1.5 * U(n, m)), 1)
 ```
 
-Higher is better. If any case is invalid, the official submission receives score `0`.
+Higher is better. Invalid cases contribute `0` to the official average.
 
 ## Public Validation
 

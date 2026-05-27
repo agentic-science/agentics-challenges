@@ -228,9 +228,8 @@ def graph_from_input(input_text: str) -> tuple[int, list[tuple[int, int]]]:
 
 def read_binary_vector(output_text: str, n: int) -> list[int]:
     values = ints(output_text)
-    if len(values) < n:
-        raise ValueError(f"expected {n} binary values, found {len(values)}")
-    values = values[:n]
+    if len(values) != n:
+        raise ValueError(f"expected exactly {n} binary values, found {len(values)}")
     if any(value not in (0, 1) for value in values):
         raise ValueError("output values must be 0 or 1")
     return values
@@ -281,9 +280,8 @@ def validate_clique(input_text: str, answer_text: str, output_text: str) -> tupl
 def validate_coloring(input_text: str, answer_text: str, output_text: str) -> tuple[float, dict[str, Any], str]:
     n, edges = graph_from_input(input_text)
     colors = ints(output_text)
-    if len(colors) < n:
-        raise ValueError(f"expected {n} colors, found {len(colors)}")
-    colors = colors[:n]
+    if len(colors) != n:
+        raise ValueError(f"expected exactly {n} colors, found {len(colors)}")
     for u, v in edges:
         if colors[u - 1] == colors[v - 1]:
             raise ValueError(f"adjacent vertices {u} and {v} share a color")
@@ -296,9 +294,8 @@ def validate_clique_cover(input_text: str, answer_text: str, output_text: str) -
     n, edges = graph_from_input(input_text)
     edge_set = {tuple(sorted(edge)) for edge in edges}
     group_ids = ints(output_text)
-    if len(group_ids) < n:
-        raise ValueError(f"expected {n} clique ids, found {len(group_ids)}")
-    group_ids = group_ids[:n]
+    if len(group_ids) != n:
+        raise ValueError(f"expected exactly {n} clique ids, found {len(group_ids)}")
     groups: dict[int, list[int]] = {}
     for vertex, group_id in enumerate(group_ids, start=1):
         groups.setdefault(group_id, []).append(vertex)

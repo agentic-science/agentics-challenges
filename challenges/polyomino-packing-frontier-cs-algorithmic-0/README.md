@@ -2,7 +2,7 @@
 
 Place every input polyomino in one axis-aligned rectangle. Each submitted solution receives one instance on stdin and writes the rectangle dimensions followed by one transform per piece on stdout.
 
-The evaluator validates reflection, rotation, translation, bounds, and overlap. Valid placements score by density: `100000 * total_cells / (W * H)`.
+The evaluator validates reflection, rotation, translation, bounds, and overlap. Valid placements score by density: `100 * total_cells / (W * H)`.
 
 ## Contract
 

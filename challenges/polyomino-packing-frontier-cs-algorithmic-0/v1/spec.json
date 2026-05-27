@@ -104,7 +104,7 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average density score, computed as 100000 * total_cells / rectangle area."
+        "metric_description": "Average density score, computed as 100 * total_cells / rectangle area."
       },
       {
         "name": "valid_cases",

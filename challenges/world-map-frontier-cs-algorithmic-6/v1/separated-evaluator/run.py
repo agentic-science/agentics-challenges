@@ -109,11 +109,6 @@ def normalized_edge(left: int, right: int) -> tuple[int, int]:
 
 
 def validate_map(n: int, edges: set[tuple[int, int]], grid: list[list[int]]) -> set[tuple[int, int]]:
-    seen_colors = {color for row in grid for color in row}
-    if len(seen_colors) != n:
-        missing = [str(color) for color in range(1, n + 1) if color not in seen_colors]
-        raise ValueError(f"missing country color(s): {', '.join(missing[:8])}")
-
     represented: set[tuple[int, int]] = set()
     k = len(grid)
     for row in range(k):
