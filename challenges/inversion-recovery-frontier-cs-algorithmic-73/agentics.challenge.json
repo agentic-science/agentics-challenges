@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "inversion-recovery-frontier-cs-algorithmic-73",
+  "title": "Inversion Recovery",
+  "summary": {
+    "en": "Recover a hidden permutation from interactive subarray inversion-parity queries.",
+    "zh": "通过子数组逆序数奇偶性交互查询恢复隐藏排列。"
+  },
+  "keywords": ["interactive", "permutation", "inversions"],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-session",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing Frontier-CS-derived official interactive cases at private-benchmark/session.json."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}

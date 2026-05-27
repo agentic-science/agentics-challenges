@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "disk-probing-frontier-cs-algorithmic-60",
+  "title": "Disk Probing",
+  "summary": {
+    "en": "Recover a hidden circular disk by probing line-segment intersection lengths.",
+    "zh": "通过线段探测返回的相交长度恢复隐藏圆盘。"
+  },
+  "keywords": ["interactive", "geometry", "hidden-state"],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-session",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": ["private-benchmark/session.json"],
+      "asset_note": "ZIP overlay containing the private official interactive session at private-benchmark/session.json."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
