@@ -1,0 +1,11 @@
+{
+  "runner": "frontier_python_evaluate",
+  "submission_spec_path": "public/submission_spec.json",
+  "benchmark_override": "quant_dot_shapes",
+  "shapes": [
+    [
+      64,
+      64
+    ]
+  ]
+}

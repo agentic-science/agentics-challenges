@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "challenge_name": "quant-dot-int4-frontier-cs-quant-dot-int4",
+  "challenge_title": "INT4 Quantized Dot Optimization",
+  "summary": {
+    "en": "Optimize packed INT4 quantized dot products on CUDA.",
+    "zh": "Optimize packed INT4 quantized dot products on CUDA."
+  },
+  "keywords": [
+    "cuda",
+    "int4",
+    "triton"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cuda",
+      "docker_platform": "linux/arm64",
+      "accelerator": "gpu",
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cuda-cu130-gb10",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cuda:cu130-ubuntu24.04-v0.2.5@sha256:8e3da4a65e297e3b1e9800da001fa2bbac9ed48453a6972117a0c3ad1d1eef13"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cuda:cu130-ubuntu24.04-v0.2.5@sha256:8e3da4a65e297e3b1e9800da001fa2bbac9ed48453a6972117a0c3ad1d1eef13"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 2048,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 2048,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 1200,
+            "memory_limit_mb": 6144,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 16384,
+            "network_access": "enabled"
+          },
+          "run": {
+            "timeout_sec": 3600,
+            "memory_limit_mb": 8192,
+            "cpu_limit_millis": 8000,
+            "disk_limit_mb": 8192,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CUDA 13.0 profile for Frontier-CS coexecuted GPU benchmarks.",
+        "hardware_metadata": {
+          "kind": "cuda",
+          "gpu_model": "NVIDIA GB10",
+          "gpu_count": 1,
+          "cuda_variant": "cu130",
+          "cuda_version": "13.0",
+          "driver_minimum": "580.142"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "coexecuted_benchmark",
+    "coexecuted_evaluator": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "acknowledge_danger": true,
+    "validation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Creates a uv-managed project environment under /setup using uv sync; no uv pip interface is used."
+    },
+    "official_evaluation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Creates the same uv-managed project environment for official evaluation; private benchmark data is not used for dependency resolution."
+    }
+  },
+  "datasets": {
+    "public_dir": "public",
+    "private_benchmark_dir": "private-benchmark",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Score"
+      },
+      {
+        "name": "score_unbounded",
+        "label": "Unbounded Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Unbounded Score"
+      },
+      {
+        "name": "correctness",
+        "label": "Correctness",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Correctness"
+      },
+      {
+        "name": "geometric_mean_speedup",
+        "label": "Geometric Mean Speedup",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Geometric Mean Speedup"
+      },
+      {
+        "name": "passed_tests",
+        "label": "Passed Tests",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Passed Tests"
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": [
+        "score_unbounded",
+        "correctness"
+      ]
+    }
+  }
+}
