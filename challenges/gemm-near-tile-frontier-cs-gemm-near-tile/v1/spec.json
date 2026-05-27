@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "challenge_name": "gemm-near-tile-frontier-cs-gemm-near-tile",
+  "challenge_title": "GEMM Optimization: Near-Tile Shapes",
+  "summary": {
+    "en": "Optimize a Triton GEMM with GELU around tile-boundary dimensions.",
+    "zh": "Optimize a Triton GEMM with GELU around tile-boundary dimensions."
+  },
+  "keywords": [
+    "cuda",
+    "triton",
+    "gemm",
+    "frontier-cs"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cuda",
+      "docker_platform": "linux/arm64",
+      "accelerator": "gpu",
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cuda-cu130-gb10",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cuda:cu130-ubuntu24.04-v0.2.5@sha256:8e3da4a65e297e3b1e9800da001fa2bbac9ed48453a6972117a0c3ad1d1eef13"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cuda:cu130-ubuntu24.04-v0.2.5@sha256:8e3da4a65e297e3b1e9800da001fa2bbac9ed48453a6972117a0c3ad1d1eef13"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 2048,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 2048,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 900,
+            "memory_limit_mb": 4096,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 12288,
+            "network_access": "enabled"
+          },
+          "run": {
+            "timeout_sec": 360,
+            "memory_limit_mb": 8192,
+            "cpu_limit_millis": 4000,
+            "disk_limit_mb": 8192,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CUDA 13.0 profile for PyTorch/Triton Frontier-CS kernel benchmarks on NVIDIA GB10.",
+        "hardware_metadata": {
+          "kind": "cuda",
+          "gpu_model": "NVIDIA GB10",
+          "gpu_count": 1,
+          "cuda_variant": "cu130",
+          "cuda_version": "13.0",
+          "driver_minimum": "580.142"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "coexecuted_benchmark",
+    "coexecuted_evaluator": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "validation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Creates a setup-owned uv environment; evaluator imports participant code in the same container."
+    },
+    "official_evaluation_setup": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
+      "reproducibility_notes": "Uses the same uv environment; private benchmark data contains no secrets."
+    },
+    "acknowledge_danger": true
+  },
+  "datasets": {
+    "public_dir": "public",
+    "private_benchmark_dir": "private-benchmark",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Source benchmark score."
+      },
+      {
+        "name": "correctness",
+        "label": "Correctness",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "1 when all correctness checks pass."
+      },
+      {
+        "name": "geometric_mean_speedup",
+        "label": "Geomean Speedup",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Geometric mean speedup."
+      },
+      {
+        "name": "arithmetic_mean_speedup",
+        "label": "Mean Speedup",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Arithmetic mean speedup."
+      },
+      {
+        "name": "median_speedup",
+        "label": "Median Speedup",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Median speedup."
+      },
+      {
+        "name": "passed_tests",
+        "label": "Passed Tests",
+        "unit": "tests",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Passed tests."
+      },
+      {
+        "name": "total_tests",
+        "label": "Total Tests",
+        "unit": "tests",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Total tests."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": [
+        "geometric_mean_speedup",
+        "median_speedup",
+        "passed_tests"
+      ]
+    }
+  }
+}
