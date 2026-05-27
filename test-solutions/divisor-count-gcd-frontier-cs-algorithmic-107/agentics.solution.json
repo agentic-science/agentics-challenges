@@ -1,0 +1,10 @@
+{
+  "protocol": "zip_project",
+  "protocol_version": 1,
+  "note": "Honest small-prime GCD probing smoke solution for divisor-count-gcd-frontier-cs-algorithmic-107.",
+  "commands": {
+    "setup": "scripts/setup.sh",
+    "build": "scripts/build.sh",
+    "run": "run.sh"
+  }
+}
