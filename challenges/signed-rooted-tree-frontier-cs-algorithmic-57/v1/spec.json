@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "challenge_name": "signed-rooted-tree-frontier-cs-algorithmic-57",
+  "challenge_title": "Signed Rooted Tree",
+  "summary": {
+    "en": "Recover hidden node signs in a rooted tree using path-sum and toggle queries.",
+    "zh": "通过交互式评测器迁移 Frontier-CS 题目：Signed Rooted Tree。"
+  },
+  "keywords": [
+    "interactive",
+    "tree",
+    "signs"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cpu",
+      "docker_platform": "linux/arm64",
+      "accelerator": null,
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cpu-small",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 512,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 2048,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CPU profile for bounded interactive Frontier-CS migrations.",
+        "hardware_metadata": {
+          "kind": "cpu"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "piped_stdio",
+    "interactive_evaluator": {
+      "command": [
+        "python",
+        "interactive-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "validation_session": "public/session.json",
+    "official_session": "private-benchmark/session.json"
+  },
+  "datasets": {
+    "public_dir": "public",
+    "private_benchmark_dir": "private-benchmark",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Correctness and query-efficiency score on a 0-100 scale."
+      },
+      {
+        "name": "correctness",
+        "label": "Correctness",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Number of cases solved correctly."
+      },
+      {
+        "name": "query_count",
+        "label": "Query Count",
+        "unit": "queries",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Total participant protocol queries or moves."
+      },
+      {
+        "name": "protocol_errors",
+        "label": "Protocol Errors",
+        "unit": "errors",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Protocol violations detected by the evaluator."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": [
+        "correctness",
+        "query_count",
+        "protocol_errors"
+      ]
+    }
+  }
+}
