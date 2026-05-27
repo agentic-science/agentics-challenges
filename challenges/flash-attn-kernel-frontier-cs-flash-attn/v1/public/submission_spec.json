@@ -1,0 +1,16 @@
+{
+  "problem_name": "flash_attn",
+  "metadata": {
+    "shapes": [
+      [
+        1,
+        2,
+        32,
+        32,
+        16,
+        16,
+        true
+      ]
+    ]
+  }
+}
