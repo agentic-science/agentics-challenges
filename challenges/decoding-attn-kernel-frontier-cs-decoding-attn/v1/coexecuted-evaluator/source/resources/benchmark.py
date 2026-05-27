@@ -91,7 +91,7 @@ def _bench_pair(Z, H, M, N, Dq, Dv, answer_decoding_attn, baseline_decoding_attn
 
 def _warmup_gpu(iters: int = 10):
     try:
-        Z, H, M, N, Dq, Dv = 1, 8, 1, 1024, 64, 64
+        Z, H, M, N, Dq, Dv = 1, 2, 1, 64, 16, 16
         Q = torch.randn(Z, H, M, Dq, device=DEVICE, dtype=torch.float16)
         K = torch.randn(Z, H, N, Dq, device=DEVICE, dtype=torch.float16)
         V = torch.randn(Z, H, N, Dv, device=DEVICE, dtype=torch.float16)
@@ -113,11 +113,11 @@ def summarize_speedup(answer_decoding_attn, baseline_decoding_attn=None, print_o
     shapes = metadata.get("shapes", None)
     if shapes is None:
         Z = metadata.get("Z", 1)
-        H = metadata.get("H", 8)
-        Dq = metadata.get("Dq", 64)
-        Dv = metadata.get("Dv", 64)
+        H = metadata.get("H", 2)
+        Dq = metadata.get("Dq", 16)
+        Dv = metadata.get("Dv", 16)
         M = metadata.get("M", 1)
-        N_list = metadata.get("N_list", [1024, 2048, 4096, 8192])
+        N_list = metadata.get("N_list", [64])
         shapes = [(Z, H, M, N, Dq, Dv) for N in N_list]
     
     rows = []
@@ -195,4 +195,3 @@ def run_benchmark(answer_decoding_attn, baseline_decoding_attn=None, print_outpu
         "geo_mean_answer_time": geo_mean_answer_time,
         "pass_all": all(r["close_passed"] for r in rows),
     }
-

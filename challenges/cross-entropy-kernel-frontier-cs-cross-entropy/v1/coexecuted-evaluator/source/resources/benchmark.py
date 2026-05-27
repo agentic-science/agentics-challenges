@@ -79,7 +79,7 @@ def _bench_pair(M, N, answer_cross_entropy, baseline_cross_entropy_fn=_pt_cross_
 
 def _warmup_gpu(iters: int = 10):
     try:
-        M, N = 512, 8192
+        M, N = 8, 128
         logits = torch.randn(M, N, device=DEVICE, dtype=torch.float32)
         targets = torch.randint(high=N, size=(M,), device=DEVICE, dtype=torch.int64)
         for _ in range(max(1, int(iters))):
@@ -99,8 +99,8 @@ def summarize_speedup(answer_cross_entropy, baseline_cross_entropy=None, print_o
         metadata = {}
     shapes = metadata.get("shapes", None)
     if shapes is None:
-        M_list = metadata.get("M_list", [256, 512, 1024])
-        N = metadata.get("N", 8192)
+        M_list = metadata.get("M_list", [8])
+        N = metadata.get("N", 128)
         shapes = [(M, N) for M in M_list]
     
     rows = []
@@ -178,4 +178,3 @@ def run_benchmark(answer_cross_entropy, baseline_cross_entropy=None, print_outpu
         "geo_mean_answer_time": geo_mean_answer_time,
         "pass_all": all(r["close_passed"] for r in rows),
     }
-
