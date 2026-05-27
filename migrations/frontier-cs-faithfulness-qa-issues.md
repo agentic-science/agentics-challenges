@@ -85,27 +85,44 @@ Reviewed challenge bundles: 247
 
 | Challenge | Source | Decision |
 | --- | --- | --- |
-| `clique-cover-frontier-cs-algorithmic-187` | `algorithmic/problems/187` | Fix evaluator strictness: reject extra tokens after the required `N` clique IDs to match Testlib trailing-output behavior. |
-| `cross-entropy-kernel-frontier-cs-cross-entropy` | `research/problems/cross_entropy` | Accepted runtime retarget to CUDA 13.0/GB10. Verify in the later private-bundle pass that official `submission_spec.json` restores source-scale benchmark metadata. |
-| `decoding-attn-kernel-frontier-cs-decoding-attn` | `research/problems/decoding_attn` | Accepted runtime retarget to CUDA 13.0/GB10. Verify in the later private-bundle pass that official metadata restores source-scale benchmark dimensions. |
-| `imagenet-1m-frontier-cs-imagenet-1m` | `research/problems/imagenet_pareto/1m` | Pending fix/decision: align uv setup dependency bounds with source runtime, or explicitly document the Agentics runtime as the official migrated contract. |
-| `imagenet-2-5m-frontier-cs-imagenet-2-5m` | `research/problems/imagenet_pareto/2_5m` | Pending fix/decision: align uv setup dependency bounds with source runtime, or explicitly document the Agentics runtime as the official migrated contract. |
-| `imagenet-200k-frontier-cs-imagenet-200k` | `research/problems/imagenet_pareto/200k` | Pending fix/decision: align uv setup dependency bounds with source runtime, or explicitly document the Agentics runtime as the official migrated contract. |
-| `imagenet-500k-frontier-cs-imagenet-500k` | `research/problems/imagenet_pareto/500k` | Pending fix/decision: align uv setup dependency bounds with source runtime, or explicitly document the Agentics runtime as the official migrated contract. |
-| `imagenet-5m-frontier-cs-imagenet-5m` | `research/problems/imagenet_pareto/5m` | Pending fix/decision: align uv setup dependency bounds with source runtime, or explicitly document the Agentics runtime as the official migrated contract. |
-| `polyomino-packing-frontier-cs-algorithmic-0` | `algorithmic/problems/0` | Fix score scale or document a deliberate Agentics scale. For strict faithfulness, score as source ratio scaled once by Agentics, not `100000 * cells / area`. |
-| `qknorm-frontier-cs-qknorm` | `research/problems/qknorm` | Accepted runtime retarget to CUDA 13.0/GB10. Verify official private metadata uses source-equivalent benchmark shapes. |
-| `quant-dot-int4-frontier-cs-quant-dot-int4` | `research/problems/quant_dot_int4` | Accepted runtime retarget to CUDA 13.0/GB10. Verify official private metadata uses source-equivalent benchmark shapes. |
-| `ragged-attention-frontier-cs-ragged-attn` | `research/problems/ragged_attention` | Accepted runtime retarget to CUDA 13.0/GB10. Verify official private metadata uses source-equivalent benchmark shapes. |
-| `rectangle-free-points-frontier-cs-algorithmic-27` | `algorithmic/problems/27` | Fix aggregation: invalid cases should contribute zero per case, not zero the whole aggregate. |
-| `sphere-point-spread-frontier-cs-algorithmic-112` | `algorithmic/problems/112` | Fix evaluator strictness: reject extra numeric or nonnumeric trailing output after the required `1 + 3n` values. |
-| `symreg-mccormick-frontier-cs-symreg-mccormick` | `research/problems/symbolic_regression/mccormick` | Fix setup/docs mismatch: either add PySR and runtime support to match the source contract, or remove/update participant-facing PySR guidance. |
-| `symreg-mixed-polyexp-frontier-cs-symreg-mixed-polyexp` | `research/problems/symbolic_regression/mixed_polyexp_4d` | Fix setup/docs mismatch: either add PySR and runtime support to match the source contract, or remove/update participant-facing PySR guidance. |
-| `symreg-peaks-frontier-cs-symreg-peaks` | `research/problems/symbolic_regression/peaks` | Fix setup/docs mismatch: either add PySR and runtime support to match the source contract, or remove/update participant-facing PySR guidance. |
-| `symreg-ripple-frontier-cs-symreg-ripple` | `research/problems/symbolic_regression/ripple` | Fix setup/docs mismatch: either add PySR and runtime support to match the source contract, or remove/update participant-facing PySR guidance. |
-| `symreg-sincos-frontier-cs-symreg-sincos` | `research/problems/symbolic_regression/sincos` | Fix setup/docs mismatch: either add PySR and runtime support to match the source contract, or remove/update participant-facing PySR guidance. |
-| `vector-addition-frontier-cs-vector-addition-2-20` | `research/problems/vector_addition/2_20` | Align with the later faithful 2_24/2_28 vector-add migrations: use source evaluator/spec path and source `Solution.solve(spec_path)` contract, or document the direct `add(x, y)` interface as an intentional Agentics-specific deviation. |
-| `world-map-frontier-cs-algorithmic-6` | `algorithmic/problems/6` | Pending decision: preserve the official Frontier-CS checker behavior by removing the extra missing-color rejection, or document the stricter statement-faithful rule as intentional. |
+| `clique-cover-frontier-cs-algorithmic-187` | `algorithmic/problems/187` | Fixed: evaluator rejects extra tokens after the required `N` clique IDs to match Testlib trailing-output behavior. |
+| `cross-entropy-kernel-frontier-cs-cross-entropy` | `research/problems/cross_entropy` | Verified: runtime retarget accepted; backup private `submission_spec.json` is source-equivalent. |
+| `decoding-attn-kernel-frontier-cs-decoding-attn` | `research/problems/decoding_attn` | Verified: runtime retarget accepted; backup private `submission_spec.json` is source-equivalent. |
+| `imagenet-1m-frontier-cs-imagenet-1m` | `research/problems/imagenet_pareto/1m` | Fixed: evaluator setup dependency bounds now align with the source runtime contract. |
+| `imagenet-2-5m-frontier-cs-imagenet-2-5m` | `research/problems/imagenet_pareto/2_5m` | Fixed: evaluator setup dependency bounds now align with the source runtime contract. |
+| `imagenet-200k-frontier-cs-imagenet-200k` | `research/problems/imagenet_pareto/200k` | Fixed: evaluator setup dependency bounds now align with the source runtime contract. |
+| `imagenet-500k-frontier-cs-imagenet-500k` | `research/problems/imagenet_pareto/500k` | Fixed: evaluator setup dependency bounds now align with the source runtime contract. |
+| `imagenet-5m-frontier-cs-imagenet-5m` | `research/problems/imagenet_pareto/5m` | Fixed: evaluator setup dependency bounds now align with the source runtime contract. |
+| `polyomino-packing-frontier-cs-algorithmic-0` | `algorithmic/problems/0` | Fixed: score now uses the source ratio scaled once by Agentics. |
+| `qknorm-frontier-cs-qknorm` | `research/problems/qknorm` | Fixed and verified: runtime retarget accepted; public/resource specs and backup private spec now match the source `flashinfer ==0.5.0` contract. |
+| `quant-dot-int4-frontier-cs-quant-dot-int4` | `research/problems/quant_dot_int4` | Verified: runtime retarget accepted; backup private `submission_spec.json` is source-equivalent. |
+| `ragged-attention-frontier-cs-ragged-attn` | `research/problems/ragged_attention` | Verified: runtime retarget accepted; backup private `submission_spec.json` is source-equivalent. |
+| `rectangle-free-points-frontier-cs-algorithmic-27` | `algorithmic/problems/27` | Fixed: invalid cases contribute zero per case, not zero the whole aggregate. |
+| `sphere-point-spread-frontier-cs-algorithmic-112` | `algorithmic/problems/112` | Fixed: evaluator rejects extra numeric or nonnumeric trailing output after the required `1 + 3n` values. |
+| `symreg-mccormick-frontier-cs-symreg-mccormick` | `research/problems/symbolic_regression/mccormick` | Fixed: participant-facing PySR guidance removed and resource dependency metadata aligned with the Agentics runtime. |
+| `symreg-mixed-polyexp-frontier-cs-symreg-mixed-polyexp` | `research/problems/symbolic_regression/mixed_polyexp_4d` | Fixed: participant-facing PySR guidance removed and resource dependency metadata aligned with the Agentics runtime. |
+| `symreg-peaks-frontier-cs-symreg-peaks` | `research/problems/symbolic_regression/peaks` | Fixed: participant-facing PySR guidance removed and resource dependency metadata aligned with the Agentics runtime. |
+| `symreg-ripple-frontier-cs-symreg-ripple` | `research/problems/symbolic_regression/ripple` | Fixed: participant-facing PySR guidance removed and resource dependency metadata aligned with the Agentics runtime. |
+| `symreg-sincos-frontier-cs-symreg-sincos` | `research/problems/symbolic_regression/sincos` | Fixed: participant-facing PySR guidance removed and resource dependency metadata aligned with the Agentics runtime. |
+| `vector-addition-frontier-cs-vector-addition-2-20` | `research/problems/vector_addition/2_20` | Fixed: aligned with the later faithful vector-add migrations using source evaluator/spec path and `Solution.solve(spec_path)`. |
+| `world-map-frontier-cs-algorithmic-6` | `algorithmic/problems/6` | Fixed: removed the extra missing-color rejection to preserve the official checker behavior. |
+
+## P2 Fix Pass
+
+Date: 2026-05-28
+
+All P2s above were addressed with challenge-bundle or private-bundle fixes:
+
+- `clique-cover-frontier-cs-algorithmic-187`: evaluator now rejects extra tokens after the required output values.
+- `sphere-point-spread-frontier-cs-algorithmic-112`: evaluator now requires exactly `1 + 3n` numeric values.
+- `polyomino-packing-frontier-cs-algorithmic-0`: scoring now uses `100 * cells / rectangle_area`, matching the source checker ratio scaled once by Agentics, and invalid cases contribute zero per case.
+- `rectangle-free-points-frontier-cs-algorithmic-27`: invalid cases now contribute zero per case instead of zeroing the whole aggregate.
+- `world-map-frontier-cs-algorithmic-6`: removed the extra missing-color rejection to preserve the official checker behavior.
+- `imagenet-{200k,500k,1m,2-5m,5m}`: evaluator setup dependency bounds now match the source runtime contract for Python, PyTorch, NumPy, and tqdm.
+- `symreg-{mccormick,mixed-polyexp,peaks,ripple,sincos}`: participant-facing docs and resource pyprojects now match the Agentics runtime contract, which provides NumPy, pandas, and SymPy but not evaluator-provided PySR/Julia.
+- `qknorm-frontier-cs-qknorm`: public/resource specs and the backup private bundle now use the source `flashinfer_version ==0.5.0` submission spec.
+- `cross-entropy-kernel-frontier-cs-cross-entropy`, `decoding-attn-kernel-frontier-cs-decoding-attn`, `quant-dot-int4-frontier-cs-quant-dot-int4`, `qknorm-frontier-cs-qknorm`, and `ragged-attention-frontier-cs-ragged-attn`: backup private submission specs were JSON-canonicalized against the Frontier-CS source specs and verified source-equivalent.
+- `vector-addition-frontier-cs-vector-addition-2-20`: re-aligned to the faithful vector-add pattern using the source evaluator, source resource/spec path, `Solution.solve(spec_path)`, a tiny public config, and a private official overlay with the source submission spec.
 
 ## Later QA Pass
 
