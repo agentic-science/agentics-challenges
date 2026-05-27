@@ -1,0 +1,5 @@
+src,dest,cost
+aws:a,aws:b,0.01
+aws:a,aws:c,0.02
+aws:b,aws:c,0.01
+aws:c,aws:b,0.01

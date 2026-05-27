@@ -1,0 +1,5 @@
+src_region,src_tier,src_instance_class,dst_region,dst_tier,dst_instance_class,iperf3_connections,iperf3_runtime,tag,stdout_path,stderr_path,throughput_sent,throughput_recieved,cpu_utilization,success
+aws:a,PREMIUM,m5,aws:b,PREMIUM,m5,1,1,smoke,,,5000000000,5000000000,1,True
+aws:a,PREMIUM,m5,aws:c,PREMIUM,m5,1,1,smoke,,,4000000000,4000000000,1,True
+aws:b,PREMIUM,m5,aws:c,PREMIUM,m5,1,1,smoke,,,3000000000,3000000000,1,True
+aws:c,PREMIUM,m5,aws:b,PREMIUM,m5,1,1,smoke,,,3000000000,3000000000,1,True
