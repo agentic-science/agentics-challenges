@@ -1,0 +1,24 @@
+{
+  "session_name": "public-smoke",
+  "metadata": {
+    "cases": [
+      {
+        "n": 3,
+        "m": 2,
+        "start": 1,
+        "base_move_count": 6,
+        "edges": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "shuffle_seed": 1
+      }
+    ]
+  }
+}
