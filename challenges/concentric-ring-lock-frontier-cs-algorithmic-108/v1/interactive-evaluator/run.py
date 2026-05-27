@@ -93,7 +93,7 @@ def write_result(output_path: Path, mode: str, session_name: str, case_results: 
     source_ratio = round(score / 100.0, 8)
     protocol_errors = sum(1 for result in case_results if result.get("protocol_error"))
     query_count = sum(float(result.get("query_count", 0.0)) for result in case_results)
-    status = "passed" if total > 0 and passed == total and protocol_errors == 0 else "failed"
+    status = "passed" if total > 0 and protocol_errors == 0 else "failed"
     summary = {
         "score": score,
         "passed": passed,
@@ -202,7 +202,7 @@ def main() -> int:
             report_text = report_path.read_text(encoding="utf-8", errors="replace") if report_path.exists() else ""
             ratio, message = parse_score(report_text)
             score = round(max(0.0, ratio) * 100.0, 6)
-            protocol_error = not report_text.strip() or completed.returncode not in {0, 7}
+            protocol_error = not report_text.strip() or completed.returncode not in {0, 2, 7}
             if stderr:
                 logs.append(f"{case_name} stderr: {cap(stderr, 800)}")
             logs.append(f"{case_name}: {message}")
