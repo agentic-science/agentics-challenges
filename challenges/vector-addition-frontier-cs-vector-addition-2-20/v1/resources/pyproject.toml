@@ -1,0 +1,11 @@
+[project]
+name = "vector-addition"
+version = "0.1.0"
+description = "Vector addition problem resources"
+requires-python = ">=3.8"
+# Docker image already has torch, triton, numpy - no extra deps needed
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
