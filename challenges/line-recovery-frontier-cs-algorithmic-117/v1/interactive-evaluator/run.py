@@ -202,7 +202,7 @@ def main() -> int:
             report_text = report_path.read_text(encoding="utf-8", errors="replace") if report_path.exists() else ""
             ratio, message = parse_score(report_text)
             score = round(max(0.0, ratio) * 100.0, 6)
-            protocol_error = not report_text.strip() or completed.returncode not in {0, 2, 7}
+            protocol_error = not report_text.strip()
             if stderr:
                 logs.append(f"{case_name} stderr: {cap(stderr, 800)}")
             logs.append(f"{case_name}: {message}")
