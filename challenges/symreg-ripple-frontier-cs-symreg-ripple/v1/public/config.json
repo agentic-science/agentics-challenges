@@ -1,0 +1,5 @@
+{
+  "runner": "symbolic_regression",
+  "data_dir": "public/data",
+  "reference_path": "public/reference_metrics.json"
+}
