@@ -1,0 +1,10 @@
+{
+  "protocol": "zip_project",
+  "protocol_version": 1,
+  "note": "Cheap smoke solution for ragged-attention-frontier-cs-ragged-attn.",
+  "commands": {
+    "setup": "scripts/setup.sh",
+    "build": "scripts/build.sh",
+    "run": "run.sh"
+  }
+}
