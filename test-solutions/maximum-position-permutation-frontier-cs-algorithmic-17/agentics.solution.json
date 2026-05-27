@@ -1,0 +1,10 @@
+{
+  "protocol": "zip_project",
+  "protocol_version": 1,
+  "note": "Binary-search baseline using second-maximum interval queries.",
+  "commands": {
+    "setup": "scripts/setup.sh",
+    "build": "scripts/build.sh",
+    "run": "run.sh"
+  }
+}

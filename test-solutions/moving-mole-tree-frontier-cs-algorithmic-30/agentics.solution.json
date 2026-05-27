@@ -1,0 +1,10 @@
+{
+  "protocol": "zip_project",
+  "protocol_version": 1,
+  "note": "One-probe public smoke baseline for the Moving Mole Tree protocol.",
+  "commands": {
+    "setup": "scripts/setup.sh",
+    "build": "scripts/build.sh",
+    "run": "run.sh"
+  }
+}

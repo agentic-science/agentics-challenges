@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "diverc-autofill-words-frontier-cs-algorithmic-28",
+  "title": "DiverC Autofill Words",
+  "summary": {
+    "en": "Recover the hidden DiverC dictionary through the original autofill query service.",
+    "zh": "通过原始自动补全查询服务恢复隐藏的 DiverC 词典。"
+  },
+  "keywords": [
+    "interactive",
+    "strings",
+    "oracle"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/session.json"
+      ],
+      "asset_note": "ZIP overlay containing Frontier-CS official interactive source sessions under private-benchmark/."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
