@@ -1,0 +1,18 @@
+{
+  "session_name": "public-smoke",
+  "metadata": {
+    "cases": [
+      {
+        "n": 3,
+        "pos": 2,
+        "array": [
+          1,
+          3,
+          1,
+          3,
+          2
+        ]
+      }
+    ]
+  }
+}
