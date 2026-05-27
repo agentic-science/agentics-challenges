@@ -1,0 +1,15 @@
+{
+  "problem_name": "decoding_attn",
+  "metadata": {
+    "shapes": [
+      [
+        1,
+        2,
+        1,
+        64,
+        16,
+        16
+      ]
+    ]
+  }
+}
