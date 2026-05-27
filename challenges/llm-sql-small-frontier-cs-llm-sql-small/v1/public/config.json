@@ -1,0 +1,36 @@
+{
+  "runner": "llm_sql",
+  "datasets": [
+    "public/datasets/movies.csv",
+    "public/datasets/beer.csv",
+    "public/datasets/BIRD.csv",
+    "public/datasets/products.csv"
+  ],
+  "col_merges": [
+    [
+      [
+        "movieinfo",
+        "movietitle",
+        "rottentomatoeslink"
+      ]
+    ],
+    [
+      [
+        "beer/beerId",
+        "beer/name"
+      ]
+    ],
+    [
+      [
+        "PostId",
+        "Body"
+      ]
+    ],
+    [
+      [
+        "product_title",
+        "parent_asin"
+      ]
+    ]
+  ]
+}
