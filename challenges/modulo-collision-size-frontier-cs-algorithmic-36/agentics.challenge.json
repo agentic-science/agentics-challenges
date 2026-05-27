@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "modulo-collision-size-frontier-cs-algorithmic-36",
+  "title": "Modulo Collision Size",
+  "summary": {
+    "en": "Recover a hidden unordered_set bucket count through the original collision-query protocol.",
+    "zh": "通过原始碰撞查询协议恢复隐藏的 unordered_set 桶数量。"
+  },
+  "keywords": [
+    "hashing",
+    "interactive",
+    "search"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/session.json"
+      ],
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest and hidden bucket-count cases."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}

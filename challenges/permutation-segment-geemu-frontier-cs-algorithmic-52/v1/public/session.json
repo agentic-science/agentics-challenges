@@ -1,0 +1,28 @@
+{
+  "session_name": "public-smoke",
+  "input_files": [
+    {
+      "path": "cases/public.in",
+      "content": "5 100 50\n3 5 4 1 2\n"
+    },
+    {
+      "path": "cases/public.ans",
+      "content": "15 0\n"
+    }
+  ],
+  "metadata": {
+    "source_problem_id": 52,
+    "source_path": "algorithmic/problems/52",
+    "adapter": "frontier-cs-testlib-interactor-wrapper",
+    "cost_kind": "geemu_operations",
+    "cost_metric_name": "operation_count",
+    "terminal_message": "0 0 0\n",
+    "cases": [
+      {
+        "case_name": "public-smoke",
+        "input_path": "cases/public.in",
+        "answer_path": "cases/public.ans"
+      }
+    ]
+  }
+}

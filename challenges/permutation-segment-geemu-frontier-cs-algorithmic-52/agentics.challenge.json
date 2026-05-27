@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "permutation-segment-geemu-frontier-cs-algorithmic-52",
+  "title": "Permutation Segment Geemu",
+  "summary": {
+    "en": "Recover a mutable hidden permutation through value-segment queries and swaps.",
+    "zh": "通过值连续段查询和交换操作恢复可变隐藏排列。"
+  },
+  "keywords": [
+    "permutation",
+    "interactive",
+    "queries"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/session.json"
+      ],
+      "asset_note": "ZIP overlay containing the official Frontier-CS interactive session manifest, hidden permutations, and reference costs."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
