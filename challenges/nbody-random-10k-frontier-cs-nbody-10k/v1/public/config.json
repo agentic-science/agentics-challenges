@@ -1,0 +1,9 @@
+{
+  "runner": "nbody",
+  "num_particles": 100,
+  "num_iterations": 1,
+  "space_size": 10.0,
+  "num_runs": 1,
+  "min_speedup": 1.0,
+  "max_speedup": 5.5
+}
