@@ -1,0 +1,11 @@
+{
+  "runs": [
+    {
+      "run_name": "public-smoke",
+      "interface": "stdio",
+      "stdin_text": "public smoke for cycle-chord-identification-frontier-cs-algorithmic-16\n",
+      "answer_text": "0\n",
+      "source_note": "Tiny committed validation case, not an official Frontier-CS benchmark."
+    }
+  ]
+}
