@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "imagenet-500k-frontier-cs-imagenet-500k",
+  "title": "ImageNet Pareto 500K",
+  "summary": {
+    "en": "Train a synthetic ImageNet-like CPU model under a 500K parameter budget.",
+    "zh": "Train a synthetic ImageNet-like CPU model under a 500K parameter budget."
+  },
+  "keywords": [
+    "imagenet",
+    "pareto",
+    "pytorch"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/config.json"
+      ],
+      "asset_note": "Private official data/config for Frontier-CS `research/problems/imagenet_pareto/500k`."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
