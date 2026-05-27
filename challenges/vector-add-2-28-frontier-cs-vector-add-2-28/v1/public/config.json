@@ -1,0 +1,11 @@
+{
+  "runner": "frontier_python_evaluate",
+  "submission_spec_path": "public/submission_spec.json",
+  "benchmark_override": "vector_sizes",
+  "sizes": [
+    1024
+  ],
+  "num_samples": 1,
+  "gpu_warmups": 1,
+  "inner_warmups": 1
+}

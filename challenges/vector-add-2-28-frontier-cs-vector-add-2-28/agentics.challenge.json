@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "vector-add-2-28-frontier-cs-vector-add-2-28",
+  "title": "Vector Addition 2^28 Throughput",
+  "summary": {
+    "en": "Optimize a Triton vector-addition kernel for 2^28 CUDA elements.",
+    "zh": "Optimize a Triton vector-addition kernel for 2^28 CUDA elements."
+  },
+  "keywords": [
+    "cuda",
+    "vector",
+    "triton"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/config.json",
+        "private-benchmark/submission_spec.json"
+      ],
+      "asset_note": "Private official data/config for Frontier-CS `research/problems/vector_addition/2_28`."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
