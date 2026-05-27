@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import sys
 import threading
 import time
@@ -17,6 +18,10 @@ threading.Thread(target=drain, daemon=True).start()
 time.sleep(0.05)
 # Syntactically finish or fail fast for the public mini protocol. The large
 # token tail prevents Testlib reads from blocking on most final-answer shapes.
-sys.stdout.write("! " + " ".join(["1"] * 400000) + "\n")
-sys.stdout.flush()
-time.sleep(0.1)
+payload = ("! " + " ".join(["1"] * 16000) + "\n").encode()
+try:
+    os.write(sys.stdout.fileno(), payload)
+except BrokenPipeError:
+    pass
+time.sleep(2.0)
+os._exit(0)
