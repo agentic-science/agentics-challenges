@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "poker-action-seeds-frontier-cs-algorithmic-143",
+  "title": "Poker Action Policy",
+  "summary": {
+    "en": "Emit a deterministic static poker policy for Frontier-CS hand seeds.",
+    "zh": "Emit a deterministic static poker policy for Frontier-CS hand seeds."
+  },
+  "keywords": [
+    "cards",
+    "policy",
+    "interactive"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [
+    {
+      "asset_name": "official-runs",
+      "kind": "private_benchmark_data",
+      "required": true,
+      "required_paths": [
+        "private-benchmark/session.json"
+      ],
+      "asset_note": "Frontier-CS algorithmic problem 143 official interactive session manifest and hidden source testdata."
+    }
+  ],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": false
+  }
+}
