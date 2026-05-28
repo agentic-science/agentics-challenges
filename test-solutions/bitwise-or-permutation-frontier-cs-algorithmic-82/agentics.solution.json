@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Tiny-case exhaustive reconstruction baseline for the Bitwise OR Permutation piped_stdio protocol.",
+  "note": "Deterministic zero-index reconstruction solver for the Bitwise OR Permutation piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

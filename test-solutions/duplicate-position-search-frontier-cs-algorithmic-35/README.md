@@ -1,3 +1,3 @@
 # Duplicate Position Search Smoke Solution
 
-Solves the tiny public interactive validation session.
+Uses constant-weight position codes to identify the singleton value with a bounded number of membership queries.

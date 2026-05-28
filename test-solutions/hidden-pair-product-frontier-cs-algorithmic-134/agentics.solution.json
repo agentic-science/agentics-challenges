@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for hidden-pair-product-frontier-cs-algorithmic-134; intentionally finishes or fails fast.",
+  "note": "Binary-search smoke solution for hidden-pair-product-frontier-cs-algorithmic-134.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

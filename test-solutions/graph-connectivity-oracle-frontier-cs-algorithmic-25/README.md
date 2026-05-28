@@ -1,3 +1,3 @@
-# Graph Connectivity Cut Brute Force
+# Graph Connectivity Prefix Cut Baseline
 
-For small public graphs, checks every nonempty proper subset with the source-compatible `?#bits` token. A zero boundary proves disconnected; otherwise the graph is connected.
+Checks source-compatible prefix cuts with the `?#bits` token. A zero boundary proves disconnected; otherwise the baseline reports connected.

@@ -1,10 +1,17 @@
 from __future__ import annotations
+
+
 class Solution:
     def solve(self, spec_path=None):
-        return {"code":"""import torch
-def _rmsnorm(x,w):
-    y=x.float()*torch.rsqrt(torch.mean(x.float()*x.float(),dim=-1,keepdim=True)+1e-6)
-    return (y*w.float()).to(x.dtype)
-def qknorm(q,k,norm_weight):
-    return _rmsnorm(q,norm_weight), _rmsnorm(k,norm_weight)
-"""}
+        return {
+            "code": """import torch
+import flashinfer
+
+def qknorm(q, k, norm_weight):
+    q_out = torch.empty_like(q)
+    k_out = torch.empty_like(k)
+    flashinfer.norm.rmsnorm(q, norm_weight, out=q_out)
+    flashinfer.norm.rmsnorm(k, norm_weight, out=k_out)
+    return q_out, k_out
+"""
+        }

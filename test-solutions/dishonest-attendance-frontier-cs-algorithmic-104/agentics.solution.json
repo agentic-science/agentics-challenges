@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Honest public-smoke baseline for dishonest-attendance-frontier-cs-algorithmic-104.",
+  "note": "Weighted candidate-state splitter for dishonest-attendance-frontier-cs-algorithmic-104.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

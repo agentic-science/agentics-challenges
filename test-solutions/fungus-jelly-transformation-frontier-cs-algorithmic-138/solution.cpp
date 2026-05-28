@@ -1,124 +1,273 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+#define int long long
+#define pr pair<int, int>
+#define pb push_back
+#define mid (l + r) / 2
+#define ls num << 1
+#define rs num << 1 | 1
 
-int charToIndex(char c) {
-    if ('a' <= c && c <= 'z') return c - 'a';
-    if ('A' <= c && c <= 'Z') return 26 + (c - 'A');
-    if ('0' <= c && c <= '9') return 52 + (c - '0');
-    return -1;
+inline int read() {
+    int x = 0, m = 1;
+    char ch = getchar();
+
+    while (!isdigit(ch)) {
+        if (ch == '-') m = -1;
+        ch = getchar();
+    }
+
+    while (isdigit(ch)) {
+        x = x * 10 + ch - 48;
+        ch = getchar();
+    }
+
+    return x * m;
 }
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    
-    int n, m, k;
-    if (!(cin >> n >> m >> k)) return 0;
-    vector<string> A(n), B(n);
-    for (int i = 0; i < n; ++i) cin >> A[i];
-    for (int i = 0; i < n; ++i) cin >> B[i];
-    // Read presets (but we won't use them)
-    for (int p = 0; p < k; ++p) {
-        int np, mp;
-        cin >> np >> mp;
-        string tmp;
-        for (int i = 0; i < np; ++i) cin >> tmp;
+inline void write(int x) {
+    if (x < 0) {
+        putchar('-');
+        write(-x);
+        return;
     }
-    
-    int N = n * m;
-    vector<pair<int,int>> pos(N);
-    vector<vector<int>> id(n, vector<int>(m, -1));
-    int idx = 0;
-    for (int r = 0; r < n; ++r) {
-        if (r % 2 == 0) {
-            for (int c = 0; c < m; ++c) {
-                pos[idx] = {r, c};
-                id[r][c] = idx++;
-            }
-        } else {
-            for (int c = m - 1; c >= 0; --c) {
-                pos[idx] = {r, c};
-                id[r][c] = idx++;
+
+    if (x >= 10) write(x / 10);
+    putchar(x % 10 + '0');
+}
+
+#define Pr pair<int, pr>
+
+const int N = 25;
+
+char a[N][N], b[N][N], c[N][N][N], d[N][N];
+int X[N], Y[N], Cnt[N][128], vis[N][N];
+int cnt[128];
+
+vector<Pr> ans;
+
+char get() {
+    char ch = getchar();
+    while ((ch < 'a' || ch > 'z') && (ch < 'A' || ch > 'Z') && !isdigit(ch)) ch = getchar();
+    return ch;
+}
+
+signed main() {
+    // freopen("2.in","r",stdin);
+    // freopen("1.ans","w",stdout);
+    int n = read(), m = read(), k = read();
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            a[i][j] = get();
+        }
+    }
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            b[i][j] = get();
+            cnt[b[i][j]]++;
+        }
+    }
+    for (int x = 1; x <= k; x++) {
+        int n1 = read(), m1 = read();
+        X[x] = n1;
+        Y[x] = m1;
+        for (int i = 1; i <= n1; i++) {
+            for (int j = 1; j <= m1; j++) {
+                c[x][i][j] = get();
+                Cnt[x][c[x][i][j]]++;
             }
         }
     }
-    
-    vector<char> s(N), t(N);
-    for (int i = 0; i < N; ++i) {
-        auto [r, c] = pos[i];
-        s[i] = A[r][c];
-        t[i] = B[r][c];
+    while (1) {
+        int pos = 0;
+        for (int i = 1; i <= k; i++) {
+            int res = 0, p = 0;
+            for (int j = 0; j < 128; j++) {
+                res += max(0ll, Cnt[i][j] - cnt[j]);
+                if (Cnt[i][j] && cnt[j]) p = 1;
+            }
+            if (res <= cnt[32] && p) {
+                pos = i;
+                break;
+            }
+        }
+        if (!pos) break;
+        memset(vis, 0, sizeof(vis));
+        int n1 = X[pos], m1 = Y[pos];
+        for (int i = 1; i <= n1; i++) {
+            for (int j = 1; j <= m1; j++) {
+                int xx = 0, yy = 0;
+                for (int x = 1; x <= n; x++) {
+                    for (int y = 1; y <= m; y++) {
+                        if (vis[x][y]) continue;
+                        if (b[x][y] == c[pos][i][j]) {
+                            xx = x;
+                            yy = y;
+                            break;
+                        }
+                    }
+                    if (xx) break;
+                }
+                if (!xx) {
+                    for (int x = 1; x <= n; x++) {
+                        for (int y = 1; y <= m; y++) {
+                            if (vis[x][y]) continue;
+                            if (x == i && y < j) continue;
+                            if (b[x][y] == ' ') {
+                                xx = x;
+                                yy = y;
+                                break;
+                            }
+                        }
+                        if (xx) break;
+                    }
+                }
+                while (xx < i) {
+                    ans.pb({-3, {xx, yy}});
+                    swap(b[xx][yy], b[xx + 1][yy]);
+                    xx++;
+                }
+                while (yy < j) {
+                    ans.pb({-1, {xx, yy}});
+                    swap(b[xx][yy], b[xx][yy + 1]);
+                    yy++;
+                }
+                while (yy > j) {
+                    ans.pb({-2, {xx, yy}});
+                    swap(b[xx][yy], b[xx][yy - 1]);
+                    yy--;
+                }
+                while (xx > i) {
+                    ans.pb({-4, {xx, yy}});
+                    swap(b[xx][yy], b[xx - 1][yy]);
+                    xx--;
+                }
+                vis[i][j] = 1;
+                cnt[b[i][j]]--;
+                b[i][j] = ' ';
+                cnt[b[i][j]]++;
+            }
+        }
+        ans.pb({pos, {1, 1}});
+        while (1) {
+            int xx = 0, yy = 0;
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= m; j++) {
+                    if (vis[i][j]) continue;
+                    if (Cnt[pos][b[i][j]]) {
+                        xx = i;
+                        yy = j;
+                        break;
+                    }
+                }
+                if (xx) break;
+            }
+            if (!xx) break;
+            int p = 0;
+            for (int i = 1; i <= n1; i++) {
+                for (int j = 1; j <= m1; j++) {
+                    if (c[pos][i][j] == b[xx][yy]) {
+                        p = 1;
+                        while (xx < i) {
+                            ans.pb({-3, {xx, yy}});
+                            swap(b[xx][yy], b[xx + 1][yy]);
+                            xx++;
+                        }
+                        while (yy < j) {
+                            ans.pb({-1, {xx, yy}});
+                            swap(b[xx][yy], b[xx][yy + 1]);
+                            yy++;
+                        }
+                        while (yy > j) {
+                            ans.pb({-2, {xx, yy}});
+                            swap(b[xx][yy], b[xx][yy - 1]);
+                            yy--;
+                        }
+                        while (xx > i) {
+                            ans.pb({-4, {xx, yy}});
+                            swap(b[xx][yy], b[xx - 1][yy]);
+                            xx--;
+                        }
+                        cnt[b[i][j]]--;
+                        b[i][j] = ' ';
+                        cnt[b[i][j]]++;
+                        ans.pb({pos, {1, 1}});
+                        break;
+                    }
+                }
+                if (p) break;
+            }
+        }
     }
-    
-    // Check counts
-    vector<long long> cntS(62, 0), cntT(62, 0);
-    for (int i = 0; i < N; ++i) {
-        int si = charToIndex(s[i]);
-        int ti = charToIndex(t[i]);
-        if (si < 0 || ti < 0) { cout << -1 << "\n"; return 0; }
-        cntS[si]++; cntT[ti]++;
+    memset(vis, 0, sizeof(vis));
+    int P = 1;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            int xx = 0, yy = 0;
+            for (int x = 1; x <= n; x++) {
+                for (int y = 1; y <= m; y++) {
+                    if (vis[x][y]) continue;
+                    if (b[x][y] == a[i][j]) {
+                        xx = x;
+                        yy = y;
+                        break;
+                    }
+                }
+                if (xx) break;
+            }
+            if (!xx) {
+                for (int x = 1; x <= n; x++) {
+                    for (int y = 1; y <= m; y++) {
+                        if (vis[x][y]) continue;
+                        if (b[x][y] == ' ') {
+                            xx = x;
+                            yy = y;
+                            break;
+                        }
+                    }
+                    if (xx) break;
+                }
+            }
+            if (!xx) {
+                P = 0;
+                break;
+            }
+            while (xx < i) {
+                ans.pb({-3, {xx, yy}});
+                swap(b[xx][yy], b[xx + 1][yy]);
+                xx++;
+            }
+            while (yy < j) {
+                ans.pb({-1, {xx, yy}});
+                swap(b[xx][yy], b[xx][yy + 1]);
+                yy++;
+            }
+            while (yy > j) {
+                ans.pb({-2, {xx, yy}});
+                swap(b[xx][yy], b[xx][yy - 1]);
+                yy--;
+            }
+            while (xx > i) {
+                ans.pb({-4, {xx, yy}});
+                swap(b[xx][yy], b[xx - 1][yy]);
+                xx--;
+            }
+            vis[i][j] = 1;
+        }
+        if (!P) break;
     }
-    if (cntS != cntT) {
-        cout << -1 << "\n";
+    if (!P) {
+        puts("-1");
         return 0;
     }
-    
-    vector<tuple<int,int,int>> ops;
-    auto applySwap = [&](int id1, int id2) {
-        // id1 and id2 are neighbors in the grid
-        auto [r1, c1] = pos[id1];
-        auto [r2, c2] = pos[id2];
-        if (r1 == r2) {
-            if (c1 + 1 == c2) {
-                // swap (r1,c1) with (r1,c2) where c2 = c1+1
-                ops.emplace_back(-1, r1 + 1, c1 + 1);
-            } else if (c2 + 1 == c1) {
-                // swap (r1,c1) with (r1,c2) where c1 = c2+1
-                ops.emplace_back(-2, r1 + 1, c1 + 1);
-            } else {
-                // not neighbors
-            }
-        } else if (c1 == c2) {
-            if (r1 + 1 == r2) {
-                // swap (r1,c1) with (r2,c1) where r2 = r1+1
-                ops.emplace_back(-4, r1 + 1, c1 + 1);
-            } else if (r2 + 1 == r1) {
-                // swap (r1,c1) with (r2,c1) where r1 = r2+1
-                ops.emplace_back(-3, r1 + 1, c1 + 1);
-            } else {
-                // not neighbors
-            }
-        } else {
-            // not neighbors
-        }
-        swap(s[id1], s[id2]);
-    };
-    
-    for (int i = 0; i < N; ++i) {
-        if (s[i] == t[i]) continue;
-        int j = i + 1;
-        while (j < N && s[j] != t[i]) ++j;
-        if (j == N) {
-            // should not happen because counts are equal
-            cout << -1 << "\n";
-            return 0;
-        }
-        for (int kpos = j; kpos > i; --kpos) {
-            applySwap(kpos, kpos - 1);
-        }
+    reverse(ans.begin(), ans.end());
+    write(ans.size());
+    putchar('\n');
+    for (auto u : ans) {
+        write(u.first);
+        putchar(' ');
+        write(u.second.first);
+        putchar(' ');
+        write(u.second.second);
+        putchar('\n');
     }
-    
-    if ((int)ops.size() > 400000) {
-        // Should not happen with n,m <= 20
-        cout << -1 << "\n";
-        return 0;
-    }
-    
-    cout << ops.size() << "\n";
-    for (auto &op : ops) {
-        int code, x, y;
-        tie(code, x, y) = op;
-        cout << code << " " << x << " " << y << "\n";
-    }
-    return 0;
 }

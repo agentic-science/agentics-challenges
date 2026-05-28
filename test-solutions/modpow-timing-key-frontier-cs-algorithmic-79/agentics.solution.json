@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Small-case brute-force timing baseline for the Modpow Timing Key piped_stdio protocol.",
+  "note": "Correlation timing-attack baseline for the Modpow Timing Key piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

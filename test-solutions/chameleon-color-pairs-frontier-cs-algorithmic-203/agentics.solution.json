@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for chameleon-color-pairs-frontier-cs-algorithmic-203; intentionally finishes or fails fast.",
+  "note": "Representative-set pairing solver for the chameleon color piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

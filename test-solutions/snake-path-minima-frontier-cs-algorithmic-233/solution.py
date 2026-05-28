@@ -1,27 +1,56 @@
 from __future__ import annotations
 
-import os
 import sys
-import threading
-import time
 
 
-def drain() -> None:
-    try:
-        while sys.stdin.buffer.read(8192):
-            pass
-    except Exception:
-        pass
+def read_line() -> str:
+    line = sys.stdin.readline()
+    if line == "":
+        raise EOFError("interactor closed")
+    stripped = line.strip()
+    if stripped == "-1":
+        raise SystemExit(0)
+    return stripped
 
 
-threading.Thread(target=drain, daemon=True).start()
-time.sleep(0.05)
-# Syntactically finish or fail fast for the public mini protocol. The large
-# token tail prevents Testlib reads from blocking on most final-answer shapes.
-payload = ("! " + " ".join(["1"] * 16000) + "\n").encode()
-try:
-    os.write(sys.stdout.fileno(), payload)
-except BrokenPipeError:
-    pass
-time.sleep(2.0)
-os._exit(0)
+def ask(length: int, time_index: int) -> int:
+    print(f"? {length} {time_index}", flush=True)
+    return int(read_line())
+
+
+def main() -> int:
+    while True:
+        try:
+            t = int(read_line())
+        except EOFError:
+            return 0
+        for _ in range(t):
+            n, m = map(int, read_line().split())
+            for _row in range(n):
+                read_line()
+
+            values: list[int] = []
+            total_pairs = n * (2 * n - 1)
+            query_limit = 120 * n + m
+            if total_pairs <= query_limit:
+                for length in range(1, n + 1):
+                    for time_index in range(1, 2 * n):
+                        values.append(ask(length, time_index))
+            else:
+                for length in range(1, n + 1):
+                    for time_index in range(1, 2 * n):
+                        if len(values) >= query_limit:
+                            break
+                        values.append(ask(length, time_index))
+                    if len(values) >= query_limit:
+                        break
+
+            values.sort()
+            answer = values[:m]
+            if len(answer) < m:
+                answer.extend([answer[-1] if answer else 1] * (m - len(answer)))
+            print("! " + " ".join(map(str, answer)), flush=True)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

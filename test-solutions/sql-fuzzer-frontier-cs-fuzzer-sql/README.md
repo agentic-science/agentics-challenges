@@ -1,3 +1,3 @@
 # sql-fuzzer-frontier-cs-fuzzer-sql Smoke Solution
 
-Cheap public-validation smoke solution.
+Small grammar-aware SQL corpus wrapped in the challenge fuzzer interface.

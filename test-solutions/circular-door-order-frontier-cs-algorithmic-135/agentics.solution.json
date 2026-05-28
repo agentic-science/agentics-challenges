@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for circular-door-order-frontier-cs-algorithmic-135; intentionally finishes or fails fast.",
+  "note": "Deterministic adjacent-edge and landmark-signature solver for the circular-door piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 set -eu
-exit 0
+g++ -O2 -pipe -std=gnu++17 solution.cpp -o solution

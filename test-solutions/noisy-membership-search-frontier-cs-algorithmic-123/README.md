@@ -1,3 +1,5 @@
 # Smoke solution for noisy-membership-search-frontier-cs-algorithmic-123
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Runs a small interactive baseline for the noisy membership protocol. It asks
+each binary-search membership question three times and uses the majority reply,
+which is valid under the no-two-consecutive-lies guarantee.

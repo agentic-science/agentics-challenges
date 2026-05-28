@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import sys
 
+SET_SIZE_LIMIT = 3_000_000
+
 
 def on_path(u: int, v: int, w: int) -> bool:
     print(f"? 2 {w} {u} {v}", flush=True)
@@ -31,7 +33,8 @@ def solve_small(n: int) -> list[tuple[int, int]]:
 
 
 def solve_case(n: int) -> None:
-    if n <= 45:
+    required_set_size = n * (n - 1) * max(0, n - 2)
+    if required_set_size <= SET_SIZE_LIMIT:
         edges = solve_small(n)
     else:
         edges = [(1, v) for v in range(2, n + 1)]

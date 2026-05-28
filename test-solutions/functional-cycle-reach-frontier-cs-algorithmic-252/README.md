@@ -1,3 +1,3 @@
 # Smoke solution for functional-cycle-reach-frontier-cs-algorithmic-252
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Reconstructs the public teleporter map with simple successor queries, then returns the component reaching room 1's cycle.

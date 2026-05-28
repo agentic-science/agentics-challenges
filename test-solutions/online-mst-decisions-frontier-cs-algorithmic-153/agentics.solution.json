@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for online-mst-decisions-frontier-cs-algorithmic-153; intentionally finishes or fails fast.",
+  "note": "Geometry and simulation threshold baseline for online-mst-decisions-frontier-cs-algorithmic-153.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

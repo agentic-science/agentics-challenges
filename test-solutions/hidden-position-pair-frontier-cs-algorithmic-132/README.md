@@ -1,3 +1,3 @@
 # Smoke solution for hidden-position-pair-frontier-cs-algorithmic-132
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Sends a deterministic 30-test sparse detection code and decodes the returned vector into the hidden unordered pair for the public smoke fixture.

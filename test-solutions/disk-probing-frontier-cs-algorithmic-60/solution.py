@@ -56,7 +56,7 @@ def main() -> None:
     right = lo
 
     cx = (left + right) // 2
-    r = (right - left + 2) // 2
+    r = round(vertical_length(cx) / 2.0)
 
     lo, hi = 1, MAX_COORD
     while lo < hi:

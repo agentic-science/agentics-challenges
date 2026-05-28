@@ -1,3 +1,5 @@
 # Smoke solution for mineral-pairing-frontier-cs-algorithmic-125
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Uses ordering-code passes to build a public candidate graph, peels forced
+degree-one matches, and verifies the remaining candidate pairs through the
+interactive device count. It does not read or encode hidden pairings.

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for hedgehog-cycle-length-frontier-cs-algorithmic-222; intentionally finishes or fails fast.",
+  "note": "Baby-step/giant-step smoke solution for hedgehog-cycle-length-frontier-cs-algorithmic-222.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

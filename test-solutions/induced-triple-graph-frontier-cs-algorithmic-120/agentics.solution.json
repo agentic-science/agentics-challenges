@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for induced-triple-graph-frontier-cs-algorithmic-120; intentionally finishes or fails fast.",
+  "note": "Anchored-triple reconstruction smoke solution for induced-triple-graph-frontier-cs-algorithmic-120.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 set -eu
-exec python3 -u solution.py
+exec ./solution

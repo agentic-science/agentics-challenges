@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for maze-wall-localization-frontier-cs-algorithmic-243; intentionally finishes or fails fast.",
+  "note": "Belief-set localization baseline for maze-wall-localization-frontier-cs-algorithmic-243.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

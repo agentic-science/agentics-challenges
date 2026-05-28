@@ -1,3 +1,3 @@
-# Smoke solution for demagnetized-magnets-frontier-cs-algorithmic-255
+# Demagnetized Magnets Test Solution
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Finds a magnetized anchor with singleton force queries, then reports every index that has zero force against that anchor.

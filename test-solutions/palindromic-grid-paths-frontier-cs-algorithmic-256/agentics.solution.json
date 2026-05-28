@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for palindromic-grid-paths-frontier-cs-algorithmic-256; intentionally finishes or fails fast.",
+  "note": "Tiny-grid exhaustive interactive baseline for palindromic-grid-paths-frontier-cs-algorithmic-256.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

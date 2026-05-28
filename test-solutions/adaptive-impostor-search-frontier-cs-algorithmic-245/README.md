@@ -1,3 +1,3 @@
-# Smoke solution for adaptive-impostor-search-frontier-cs-algorithmic-245
+# Test solution for adaptive-impostor-search-frontier-cs-algorithmic-245
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Eliminates symmetric reciprocal pairs and resolves the first asymmetric pair against a spare reference player. It loops over each Frontier source session sent by the interactive evaluator.

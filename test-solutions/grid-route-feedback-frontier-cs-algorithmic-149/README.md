@@ -1,3 +1,3 @@
-# Smoke solution for grid-route-feedback-frontier-cs-algorithmic-149
+# Grid Route Feedback Test Solution
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Uses a row/column segment cost model with recursive least squares updates, then routes each request with Dijkstra on the current estimates.

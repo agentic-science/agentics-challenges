@@ -1,27 +1,47 @@
 from __future__ import annotations
 
-import os
 import sys
-import threading
-import time
 
 
-def drain() -> None:
-    try:
-        while sys.stdin.buffer.read(8192):
-            pass
-    except Exception:
-        pass
+def ask(values: range) -> bool:
+    items = " ".join(str(value) for value in values)
+    print(f"? {len(values)} {items}", flush=True)
+    reply = sys.stdin.readline().strip()
+    if reply not in {"YES", "NO"}:
+        raise EOFError("interactor closed or sent an invalid reply")
+    return reply == "YES"
 
 
-threading.Thread(target=drain, daemon=True).start()
-time.sleep(0.05)
-# Syntactically finish or fail fast for the public mini protocol. The large
-# token tail prevents Testlib reads from blocking on most final-answer shapes.
-payload = ("! " + " ".join(["1"] * 16000) + "\n").encode()
-try:
-    os.write(sys.stdout.fileno(), payload)
-except BrokenPipeError:
-    pass
-time.sleep(2.0)
-os._exit(0)
+def reliable_membership(values: range) -> bool:
+    replies = [ask(values), ask(values), ask(values)]
+    return sum(1 for reply in replies if reply) >= 2
+
+
+def guess(value: int) -> bool:
+    print(f"! {value}", flush=True)
+    reply = sys.stdin.readline().strip()
+    return reply == ":)"
+
+
+def solve_case(n: int) -> None:
+    lo, hi = 1, n
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if reliable_membership(range(lo, mid + 1)):
+            hi = mid
+        else:
+            lo = mid + 1
+    guess(lo)
+
+
+def main() -> int:
+    while True:
+        line = sys.stdin.readline()
+        if not line:
+            return 0
+        solve_case(int(line))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

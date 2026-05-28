@@ -14,7 +14,7 @@ def read_int_line() -> int | None:
 
 
 def ask(bits: str) -> int:
-    print(f"?# {bits}".replace(" ", ""), flush=True)
+    print(f"?#{bits}", flush=True)
     line = sys.stdin.readline()
     if line == "":
         raise EOFError("interactor closed during query")
@@ -26,23 +26,26 @@ def answer(value: int) -> None:
 
 
 def solve_case(n: int) -> None:
-    if n <= 11:
-        for mask in range(1, (1 << n) - 1):
-            bits = "".join("1" if mask & (1 << i) else "0" for i in range(n))
-            if ask(bits) == 0:
-                answer(0)
-                return
+    if n <= 1:
         answer(1)
         return
+
+    prefix = ["0"] * n
+    for index in range(n - 1):
+        prefix[index] = "1"
+        if ask("".join(prefix)) == 0:
+            answer(0)
+            return
+
     answer(1)
 
 
 def main() -> int:
     while True:
-        t = read_int_line()
-        if t is None or t <= 0:
+        test_count = read_int_line()
+        if test_count is None or test_count <= 0:
             return 0
-        for _ in range(t):
+        for _ in range(test_count):
             n = read_int_line()
             if n is None:
                 return 0

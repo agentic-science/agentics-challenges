@@ -1,3 +1,5 @@
 # Smoke solution for xor-permutation-recovery-frontier-cs-algorithmic-249
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Uses the documented OR-query protocol. It queries every pair, identifies the
+index whose pairwise OR sum is minimal as the zero value, and recovers the
+permutation from that row.

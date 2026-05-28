@@ -1,3 +1,3 @@
 # Smoke solution for impartial-game-graph-frontier-cs-algorithmic-231
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Rebuilds the graph as a complete DAG with unique Grundy values, then identifies each hidden vertex by equality queries.

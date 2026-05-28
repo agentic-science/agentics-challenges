@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for concentric-ring-lock-frontier-cs-algorithmic-108; intentionally finishes or fails fast.",
+  "note": "Deterministic scan-and-fingerprint solver for the ring-lock piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

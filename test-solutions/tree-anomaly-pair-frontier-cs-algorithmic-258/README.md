@@ -1,3 +1,4 @@
 # Smoke solution for tree-anomaly-pair-frontier-cs-algorithmic-258
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Uses the documented interactive protocol. It queries singleton latency sums,
+derives the hidden anomaly path, and reports the two path endpoints.

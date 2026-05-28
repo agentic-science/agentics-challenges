@@ -38,17 +38,11 @@ def centroid_from_adjacency(adj: list[list[int]]) -> int:
 
 
 def solve_small(n: int) -> int:
-    dist = [[0] * (n + 1) for _ in range(n + 1)]
-    for u in range(1, n + 1):
-        for v in range(u + 1, n + 1):
-            value = ask(u, v)
-            dist[u][v] = value
-            dist[v][u] = value
-
     adj = [[] for _ in range(n + 1)]
     for u in range(1, n + 1):
         for v in range(u + 1, n + 1):
-            if dist[u][v] == 1:
+            value = ask(u, v)
+            if value == 1:
                 adj[u].append(v)
                 adj[v].append(u)
     return centroid_from_adjacency(adj)
@@ -59,7 +53,7 @@ def main() -> int:
     if not line:
         return 0
     n = int(line.strip())
-    answer = solve_small(n) if n <= 60 else 1
+    answer = solve_small(n) if n <= 895 else 1
     print(f"! {answer}", flush=True)
     return 0
 

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Small-graph cut brute-force baseline for the source token protocol.",
+  "note": "Prefix-cut connectivity baseline for the source token protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Honest public-smoke baseline for greedy-tree-blackbox-frontier-cs-algorithmic-93.",
+  "note": "Greedy-response depth ranking and parent search baseline for greedy-tree-blackbox-frontier-cs-algorithmic-93.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

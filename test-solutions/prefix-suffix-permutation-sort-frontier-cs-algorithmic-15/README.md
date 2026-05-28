@@ -1,3 +1,4 @@
-# Prefix-Suffix Permutation Sort Public Smoke Solution
+# Prefix-Suffix Permutation Sort Test Solution
 
-This solution is intentionally tiny and only targets the committed public validation fixture. It does not contain private official cases or answers and is not intended to be competitive on the private benchmark.
+Reads stdin and emits a constructive prefix/suffix swap sequence for
+`prefix-suffix-permutation-sort-frontier-cs-algorithmic-15`.

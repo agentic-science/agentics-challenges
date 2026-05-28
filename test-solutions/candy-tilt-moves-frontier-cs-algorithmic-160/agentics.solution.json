@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for candy-tilt-moves-frontier-cs-algorithmic-160; intentionally finishes or fails fast.",
+  "note": "Monte Carlo tilt planner for the candy-tilt piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

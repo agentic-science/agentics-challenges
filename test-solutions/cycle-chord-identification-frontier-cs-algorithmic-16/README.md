@@ -1,3 +1,3 @@
-# Cycle Chord Brute-Force Baseline
+# Test solution for cycle-chord-identification-frontier-cs-algorithmic-16
 
-For small public sessions, queries non-adjacent vertex pairs until a distance-1 pair reveals the hidden chord. For large sessions it falls back to a simple candidate guess, so it is useful as a protocol smoke rather than an official solver.
+Looks for a pair whose shortest path is shortened by the hidden chord, then walks along that path to extract the chord endpoints. It accepts repeated Frontier source sessions until EOF or a terminal zero.

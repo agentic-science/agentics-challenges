@@ -1,20 +1,11 @@
 from __future__ import annotations
 
-import itertools
+from collections import deque
 import sys
 
 
-def evaluate(gates: str, wiring: list[tuple[int, int]], bits: str) -> int:
-    values = [int(ch) for ch in bits]
-    for i in range(len(gates) - 1, -1, -1):
-        u, v = wiring[i]
-        gate_value = (values[u] & values[v]) if gates[i] == "&" else (values[u] | values[v])
-        values[i] ^= gate_value
-    return values[0]
-
-
-def ask(bits: str) -> int:
-    print(f"? {bits}", flush=True)
+def ask(bits: list[str]) -> int:
+    print("? " + "".join(bits), flush=True)
     line = sys.stdin.readline()
     if not line:
         raise EOFError
@@ -24,28 +15,111 @@ def ask(bits: str) -> int:
     return value
 
 
-def solve_case(n: int, r: int, wiring: list[tuple[int, int]]) -> None:
-    if n > 12:
-        print("! " + "&" * n, flush=True)
-        return
+def solve_case(n: int, _r: int, wiring: list[tuple[int, int]]) -> None:
+    total_switches = 2 * n + 1
+    parent = [-1] * total_switches
+    for i, (u, v) in enumerate(wiring):
+        parent[u] = i
+        parent[v] = i
 
-    candidates = ["".join(chars) for chars in itertools.product("&|", repeat=n) if chars.count("|") <= r]
-    m = 2 * n + 1
-    patterns = [format(x, f"0{m}b") for x in range(1 << m)]
-    used = 0
-    while len(candidates) > 1 and used < 5000:
-        chosen = None
-        for bits in patterns:
-            outputs = {evaluate(g, wiring, bits) for g in candidates}
-            if len(outputs) > 1:
-                chosen = bits
+    subtree_size = [0] * n
+    heavy = [-1] * n
+
+    for i in range(n - 1, -1, -1):
+        u, v = wiring[i]
+        size = 1
+        best_child = -1
+        best_size = -1
+        for child in (u, v):
+            if child < n:
+                child_size = subtree_size[child]
+                size += child_size
+                if child_size > best_size:
+                    best_size = child_size
+                    best_child = child
+        subtree_size[i] = size
+        heavy[i] = best_child
+
+    gate_type = ["?"] * n
+
+    def side_child(node: int) -> int:
+        u, v = wiring[node]
+        if heavy[node] == -1:
+            return v
+        return v if u == heavy[node] else u
+
+    def apply_known_ancestors(head: int, bits: list[str]) -> None:
+        current = head
+        while parent[current] != -1:
+            p = parent[current]
+            u, v = wiring[p]
+            sibling = v if u == current else u
+            if gate_type[p] == "&":
+                bits[sibling] = "1"
+            current = p
+
+    def path_from(head: int) -> list[int]:
+        path: list[int] = []
+        current = head
+        while current != -1 and current < n:
+            path.append(current)
+            current = heavy[current]
+        return path
+
+    def segment_has_or(path: list[int], left: int, right: int) -> bool:
+        bits = ["0"] * total_switches
+        apply_known_ancestors(path[0], bits)
+
+        for index in range(left):
+            node = path[index]
+            if gate_type[node] == "&":
+                bits[side_child(node)] = "1"
+
+        for index in range(left, right + 1):
+            bits[side_child(path[index])] = "1"
+
+        return ask(bits) == 1
+
+    queue: deque[int] = deque([0])
+    seen_heads: set[int] = set()
+
+    while queue:
+        head = queue.popleft()
+        if head in seen_heads or head >= n:
+            continue
+        seen_heads.add(head)
+
+        path = path_from(head)
+        pos = 0
+        while pos < len(path):
+            if not segment_has_or(path, pos, len(path) - 1):
+                for index in range(pos, len(path)):
+                    gate_type[path[index]] = "&"
                 break
-        if chosen is None:
-            break
-        response = ask(chosen)
-        used += 1
-        candidates = [g for g in candidates if evaluate(g, wiring, chosen) == response]
-    print("! " + candidates[0], flush=True)
+
+            lo, hi = pos, len(path) - 1
+            while lo < hi:
+                mid = (lo + hi) // 2
+                if segment_has_or(path, pos, mid):
+                    hi = mid
+                else:
+                    lo = mid + 1
+
+            for index in range(pos, lo):
+                gate_type[path[index]] = "&"
+            gate_type[path[lo]] = "|"
+            pos = lo + 1
+
+        for node in path:
+            u, v = wiring[node]
+            for child in (u, v):
+                if child < n and child != heavy[node]:
+                    queue.append(child)
+
+    for i, value in enumerate(gate_type):
+        if value == "?":
+            gate_type[i] = "&"
+    print("! " + "".join(gate_type), flush=True)
 
 
 def main() -> int:

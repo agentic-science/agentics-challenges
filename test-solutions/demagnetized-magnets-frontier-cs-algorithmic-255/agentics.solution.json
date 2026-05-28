@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for demagnetized-magnets-frontier-cs-algorithmic-255; intentionally finishes or fails fast.",
+  "note": "Pair-force baseline for demagnetized-magnets-frontier-cs-algorithmic-255.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

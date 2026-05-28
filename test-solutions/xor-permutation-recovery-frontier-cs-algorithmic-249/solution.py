@@ -1,27 +1,45 @@
 from __future__ import annotations
 
-import os
+from array import array
 import sys
-import threading
-import time
 
 
-def drain() -> None:
-    try:
-        while sys.stdin.buffer.read(8192):
-            pass
-    except Exception:
-        pass
+def ask(i: int, j: int) -> int:
+    print(f"? {i} {j}", flush=True)
+    line = sys.stdin.readline()
+    if not line:
+        raise EOFError("interactor closed while answering query")
+    value = int(line.strip())
+    if value == -1:
+        raise SystemExit(0)
+    return value
 
 
-threading.Thread(target=drain, daemon=True).start()
-time.sleep(0.05)
-# Syntactically finish or fail fast for the public mini protocol. The large
-# token tail prevents Testlib reads from blocking on most final-answer shapes.
-payload = ("! " + " ".join(["0"] * 16000) + "\n").encode()
-try:
-    os.write(sys.stdout.fileno(), payload)
-except BrokenPipeError:
-    pass
-time.sleep(2.0)
-os._exit(0)
+def main() -> int:
+    line = sys.stdin.readline()
+    if not line:
+        return 0
+    n = int(line.strip())
+    pair_or = [array("H", [0]) * (n + 1) for _ in range(n + 1)]
+    totals = [0] * (n + 1)
+
+    for i in range(1, n + 1):
+        for j in range(i + 1, n + 1):
+            value = ask(i, j)
+            pair_or[i][j] = value
+            pair_or[j][i] = value
+            totals[i] += value
+            totals[j] += value
+
+    zero_index = min(range(1, n + 1), key=lambda idx: totals[idx])
+    permutation = [0] * n
+    for idx in range(1, n + 1):
+        if idx != zero_index:
+            permutation[idx - 1] = pair_or[zero_index][idx]
+
+    print("! " + " ".join(map(str, permutation)), flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

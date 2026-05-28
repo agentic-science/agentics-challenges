@@ -1,3 +1,3 @@
-# Smoke solution for concentric-ring-lock-frontier-cs-algorithmic-108
+# Test solution for concentric-ring-lock-frontier-cs-algorithmic-108
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Builds a deterministic C++ interactive solver. It reconstructs the global uncovered-section map from two full ring scans, then uses short per-ring fingerprints against that map to recover the relative offsets while staying inside the source rotation limit.

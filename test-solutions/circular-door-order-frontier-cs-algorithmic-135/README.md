@@ -1,3 +1,3 @@
-# Smoke solution for circular-door-order-frontier-cs-algorithmic-135
+# Test solution for circular-door-order-frontier-cs-algorithmic-135
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Builds a deterministic C++ interactive solver. It first finds a verified adjacent door pair, then uses landmark signatures to prioritize candidate neighbors while walking the cycle with exact adjacency checks.

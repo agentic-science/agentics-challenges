@@ -1,27 +1,82 @@
 from __future__ import annotations
 
-import os
 import sys
-import threading
-import time
+from collections import deque
 
 
-def drain() -> None:
+def read_int() -> int | None:
+    line = sys.stdin.readline()
+    if not line:
+        return None
     try:
-        while sys.stdin.buffer.read(8192):
-            pass
-    except Exception:
-        pass
+        return int(line.strip())
+    except ValueError:
+        return None
 
 
-threading.Thread(target=drain, daemon=True).start()
-time.sleep(0.05)
-# Syntactically finish or fail fast for the public mini protocol. The large
-# token tail prevents Testlib reads from blocking on most final-answer shapes.
-payload = ("! " + " ".join(["0"] * 16000) + "\n").encode()
-try:
-    os.write(sys.stdout.fileno(), payload)
-except BrokenPipeError:
-    pass
-time.sleep(2.0)
-os._exit(0)
+def query(start: int, steps: int, subset: list[int]) -> int:
+    print(
+        f"? {start} {steps} {len(subset)} " + " ".join(map(str, subset)),
+        flush=True,
+    )
+    reply = read_int()
+    if reply is None or reply == -1:
+        raise SystemExit(0)
+    return reply
+
+
+def discover_successor(room: int, n: int) -> int:
+    candidates = list(range(1, n + 1))
+    while len(candidates) > 1:
+        mid = len(candidates) // 2
+        left = candidates[:mid]
+        if query(room, 1, left):
+            candidates = left
+        else:
+            candidates = candidates[mid:]
+    return candidates[0]
+
+
+def solve_case(n: int) -> None:
+    successor = [0] * (n + 1)
+    for room in range(1, n + 1):
+        successor[room] = discover_successor(room, n)
+
+    path: list[int] = []
+    seen_at = [None] * (n + 1)
+    current = 1
+    while seen_at[current] is None:
+        seen_at[current] = len(path)
+        path.append(current)
+        current = successor[current]
+
+    cycle = set(path[seen_at[current] :])
+    reverse_edges = [[] for _ in range(n + 1)]
+    for room in range(1, n + 1):
+        reverse_edges[successor[room]].append(room)
+
+    reachable = [False] * (n + 1)
+    queue: deque[int] = deque(cycle)
+    for room in cycle:
+        reachable[room] = True
+    while queue:
+        room = queue.popleft()
+        for previous in reverse_edges[room]:
+            if not reachable[previous]:
+                reachable[previous] = True
+                queue.append(previous)
+
+    answer = [room for room in range(1, n + 1) if reachable[room]]
+    print(f"! {len(answer)} " + " ".join(map(str, answer)), flush=True)
+
+
+def main() -> int:
+    while True:
+        n = read_int()
+        if n is None:
+            return 0
+        solve_case(n)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

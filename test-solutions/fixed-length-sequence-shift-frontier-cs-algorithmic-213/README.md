@@ -1,3 +1,3 @@
 # Fixed-Length Sequence Shift Smoke Solution
 
-Reads stdin and writes a conservative candidate answer to stdout for `fixed-length-sequence-shift-frontier-cs-algorithmic-213`.
+Uses `x = 2`, where each length-two shift is an adjacent swap, and performs a simple bubble-sort baseline.

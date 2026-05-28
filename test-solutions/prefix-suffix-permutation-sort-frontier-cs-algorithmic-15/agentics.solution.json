@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Public smoke solution for Prefix-Suffix Permutation Sort.",
+  "note": "Constructive test solution for Prefix-Suffix Permutation Sort.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

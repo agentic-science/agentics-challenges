@@ -1,3 +1,5 @@
 # Smoke solution for manhattan-deposit-locations-frontier-cs-algorithmic-140
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Uses legitimate Manhattan probe waves for the one-deposit public smoke case and
+falls back to center guesses when the wave budget is too small for full
+triangulation.

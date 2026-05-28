@@ -1,3 +1,3 @@
 # Dishonest Attendance Test Solution
 
-A simple honest baseline that uses the documented interactive protocol. It is intended for public smoke validation and does not read evaluator files or private data.
+Uses a weighted candidate-state splitter to keep the adversarial honesty history bounded, then marks the remaining possible absent students.

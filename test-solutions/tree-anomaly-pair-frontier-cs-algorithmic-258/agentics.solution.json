@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for tree-anomaly-pair-frontier-cs-algorithmic-258; intentionally finishes or fails fast.",
+  "note": "Honest singleton-query baseline for tree-anomaly-pair-frontier-cs-algorithmic-258.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

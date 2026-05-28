@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 set -eu
-python3 -m py_compile solution.py
+mkdir -p build
+g++ -std=c++17 -O2 -pipe solution.cpp -o build/solution
