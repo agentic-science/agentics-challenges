@@ -33,7 +33,7 @@ def run(a):
     with contextlib.redirect_stdout(stream),contextlib.redirect_stderr(stream): raw=mod.evaluate(sol,sp)
     return raw if isinstance(raw,dict) else {'score':0,'pass_all':False,'error':'bad source result'},cap(stream.getvalue())
 def main():
-    p=argparse.ArgumentParser(); [p.add_argument(x,required=True) for x in ['--challenge-dir','--workspace-dir','--output-path','--mode','--target']]; p.add_argument('--setup-dir'); a=p.parse_args(); Path(a.output_path).parent.mkdir(parents=True,exist_ok=True); os.environ.setdefault('HOME',str(Path(a.output_path).parent)); os.environ.setdefault('TMPDIR',str(Path(a.output_path).parent/'tmp')); os.environ.setdefault('TRITON_CACHE_DIR',str(Path(a.output_path).parent/'tmp/triton-cache')); reexec(a)
+    p=argparse.ArgumentParser(); [p.add_argument(x,required=True) for x in ['--challenge-dir','--workspace-dir','--output-path','--mode','--target']]; p.add_argument('--setup-dir'); a=p.parse_args(); Path(a.output_path).parent.mkdir(parents=True,exist_ok=True); os.environ.setdefault('HOME',str(Path(a.output_path).parent)); os.environ.setdefault('TMPDIR',str(Path(a.output_path).parent/'tmp')); os.environ.setdefault('TRITON_CACHE_DIR',str(Path(a.output_path).parent/'tmp/triton-cache')); os.environ.setdefault('AGENTICS_EVALUATOR_OUTPUT_DIR',str(Path(a.output_path).parent)); reexec(a)
     try: raw,logs=run(a)
     except Exception as e: raw,logs={'score':0,'pass_all':False,'error':str(e)},[]
     write(a.output_path,a.mode,raw,logs); return 0

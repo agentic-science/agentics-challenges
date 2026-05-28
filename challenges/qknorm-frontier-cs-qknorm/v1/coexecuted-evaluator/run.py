@@ -55,6 +55,7 @@ def configure_runtime_cache(output_root: Path) -> None:
     os.environ.setdefault("TMPDIR", str(tmp_root))
     os.environ.setdefault("XDG_CACHE_HOME", str(tmp_root / "cache"))
     os.environ.setdefault("TRITON_CACHE_DIR", str(tmp_root / "triton-cache"))
+    os.environ.setdefault("AGENTICS_EVALUATOR_OUTPUT_DIR", str(output_root))
     os.environ.setdefault("PYTHONDONTWRITEBYTECODE", "1")
 
 

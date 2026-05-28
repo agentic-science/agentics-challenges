@@ -20,7 +20,13 @@ import torch
 import triton
 
 DEFAULT_SPEC = HERE / "resources" / "submission_spec.json"
-ARTIFACT_PATH = Path("./output_ans").resolve()
+ARTIFACT_FILENAME = "output_ans"
+
+
+def artifact_output_path() -> Path:
+    root = os.environ.get("AGENTICS_EVALUATOR_OUTPUT_DIR")
+    base = Path(root) if root else Path.cwd()
+    return (base / ARTIFACT_FILENAME).resolve()
 
 
 def load_solution_module(solution_path: Path) -> ModuleType:
@@ -38,25 +44,26 @@ def load_solution_module(solution_path: Path) -> ModuleType:
 
 def materialize_artifact(result: Any, solution_path: Path) -> Path:
     """Materialize the solution result into an artifact file."""
-    ARTIFACT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    artifact_path = artifact_output_path()
+    artifact_path.parent.mkdir(parents=True, exist_ok=True)
     if isinstance(result, dict):
-        with ARTIFACT_PATH.open("w", encoding="utf-8") as fout:
+        with artifact_path.open("w", encoding="utf-8") as fout:
             json.dump(result, fout)
-        return ARTIFACT_PATH
+        return artifact_path
     if isinstance(result, str):
         is_possible_path = len(result) < 4096 and '\n' not in result
         if is_possible_path:
             candidate = Path(result)
             try:
                 if candidate.is_file():
-                    with ARTIFACT_PATH.open("w", encoding="utf-8") as fout:
+                    with artifact_path.open("w", encoding="utf-8") as fout:
                         json.dump({"program_path": str(candidate.resolve())}, fout)
-                    return ARTIFACT_PATH
+                    return artifact_path
             except OSError:
                 pass
-        with ARTIFACT_PATH.open("w", encoding="utf-8") as fout:
+        with artifact_path.open("w", encoding="utf-8") as fout:
             fout.write(result)
-        return ARTIFACT_PATH
+        return artifact_path
     raise TypeError(
         "Solution.solve() must return a dict/path-string/code-string; got "
         f"{type(result)!r}."

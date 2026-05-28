@@ -3,11 +3,11 @@
   "input_files": [
     {
       "path": "cases/public.in",
-      "content": "2\n"
+      "content": "6\n1 2 3 4 5 6\n"
     },
     {
       "path": "cases/public.ans",
-      "content": "1\n1 2\n"
+      "content": "8\n"
     }
   ],
   "metadata": {
