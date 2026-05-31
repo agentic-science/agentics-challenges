@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "dev-balanced-graph-partition",
+  "title": "Balanced Graph Partitioning",
+  "summary": {
+    "en": "Partition a graph into balanced parts while minimizing edge cut and communication volume.",
+    "zh": "将图平衡划分为多个部分，并最小化割边和通信量。"
+  },
+  "keywords": [
+    "graph",
+    "partitioning",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": true
+  }
+}

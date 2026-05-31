@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "dev-big-integer-subset-sum",
+  "title": "Big Integer Subset Sum",
+  "summary": {
+    "en": "Select big integers whose sum is as close as possible to the target.",
+    "zh": "选择大整数子集，使总和尽量接近目标。"
+  },
+  "keywords": [
+    "subset-sum",
+    "bigint",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": true
+  }
+}

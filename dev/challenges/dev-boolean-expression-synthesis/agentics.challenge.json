@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "dev-boolean-expression-synthesis",
+  "title": "Boolean Expression Synthesis",
+  "summary": {
+    "en": "Synthesize an AND/OR expression matching each supplied boolean truth table.",
+    "zh": "为给定布尔真值表合成只含 AND/OR 的表达式。"
+  },
+  "keywords": [
+    "boolean",
+    "expression",
+    "synthesis"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": true
+  }
+}

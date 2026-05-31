@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "challenge_name": "dev-balanced-graph-partition",
+  "challenge_title": "Balanced Graph Partitioning",
+  "summary": {
+    "en": "Partition a graph into balanced parts while minimizing edge cut and communication volume.",
+    "zh": "将图平衡划分为多个部分，并最小化割边和通信量。"
+  },
+  "keywords": [
+    "graph",
+    "partitioning",
+    "optimization"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cpu",
+      "docker_platform": "linux/arm64",
+      "accelerator": null,
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cpu-small",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 30,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 60,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 1024,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "ARM64 CPU profile for migrated Frontier-CS batch checker evaluation.",
+        "hardware_metadata": {
+          "kind": "cpu"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-01-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "separated_evaluator",
+    "separated_evaluator": {
+      "command": [
+        "python",
+        "separated-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "validation_runs": "public/validation-runs.json",
+    "official_runs": "public/official-runs.json"
+  },
+  "datasets": {
+    "public_dir": "public",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": false
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "score",
+        "label": "Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Average Frontier-CS checker score on a 0-100 scale."
+      },
+      {
+        "name": "accepted_cases",
+        "label": "Accepted Cases",
+        "unit": "cases",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Number of cases where the checker emitted a positive or accepted result."
+      },
+      {
+        "name": "average_ratio",
+        "label": "Average Ratio",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Average raw checker ratio before scaling to 0-100."
+      },
+      {
+        "name": "unbounded_score",
+        "label": "Unbounded Score",
+        "direction": "maximize",
+        "visibility": "public",
+        "metric_description": "Average unbounded checker ratio scaled to 0-100 when the checker reports one."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "score",
+      "tie_breaker_metric_names": [
+        "accepted_cases",
+        "average_ratio",
+        "unbounded_score"
+      ]
+    }
+  }
+}

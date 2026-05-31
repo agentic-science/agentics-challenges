@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "dev-black-white-components",
+  "title": "Black and White Components",
+  "summary": {
+    "en": "Draw a bounded grid with the requested black and white component counts at low weighted area.",
+    "zh": "绘制有界网格，使黑白连通块数量满足要求并降低加权面积。"
+  },
+  "keywords": [
+    "grid",
+    "components",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": true
+  }
+}

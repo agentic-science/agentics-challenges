@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "dev-matrix-multiply-cpu",
+  "title": "Matrix Multiply CPU",
+  "summary": {
+    "en": "Compute small batches of dense f32 matrix products on CPU with correct binary outputs.",
+    "zh": "在 CPU 上计算小批量稠密 f32 矩阵乘积，并输出正确的二进制结果。"
+  },
+  "keywords": [
+    "linear algebra",
+    "matrix",
+    "performance"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "request": "new_challenge",
+  "challenge_name": "dev-sphere-packing-cube",
+  "title": "Sphere Packing in a Cube",
+  "summary": {
+    "en": "Place equal spheres in a unit cube to maximize the inferred common radius.",
+    "zh": "在单位立方体中放置等半径球，并最大化推断出的公共半径。"
+  },
+  "keywords": [
+    "geometry",
+    "packing",
+    "optimization"
+  ],
+  "readme_path": "README.md",
+  "bundle_path": "v1",
+  "private_assets": [],
+  "ci": {
+    "validate_manifest": true,
+    "validate_public_bundle": true,
+    "smoke_test_public_validation": true
+  }
+}
