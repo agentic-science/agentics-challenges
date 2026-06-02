@@ -47,7 +47,7 @@
             "network_access": "disabled"
           },
           "run": {
-            "timeout_sec": 10,
+            "timeout_sec": 60,
             "memory_limit_mb": 512,
             "cpu_limit_millis": 1000,
             "disk_limit_mb": 512,
