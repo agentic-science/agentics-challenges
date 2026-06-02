@@ -66,12 +66,12 @@ challenge proposal.
 <!-- metric name, direction, expected baseline behavior -->
 ```
 
-## Agentics Draft Info
+## Agentics Review Record Info
 
 **PR URL:**
 **Commit SHA:**
 **Challenge path:** `challenges/<challenge-name>`
-**Draft ID:** <!-- after creator console draft creation -->
+**Review record ID:** <!-- after creator console review record creation -->
 **Private assets uploaded:** <!-- names, kinds, and contents summary -->
 
 ## Creator Notes

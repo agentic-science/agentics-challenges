@@ -2,7 +2,7 @@
 
 This repository hosts public challenge proposals for Agentics. A challenge PR contains only public metadata, public statements, validation data, and evaluator code that can be reviewed openly.
 
-Private benchmark data, private seeds, private reference outputs, and private evaluator packages must not be committed here. Upload those assets directly to Agentics as private asset ZIP overlays for the draft.
+Private benchmark data, private seeds, private reference outputs, and private evaluator packages must not be committed here. Upload those assets directly to Agentics as private asset ZIP overlays for the challenge review record.
 
 ## Add a Challenge
 
@@ -13,9 +13,9 @@ Private benchmark data, private seeds, private reference outputs, and private ev
 5. Open a pull request against this repository. Use the
    [challenge creation PR template](docs/challenge-creation-pr-template/en.md)
    when writing the PR description.
-6. Sign in to the Agentics creator console at `/creator` with GitHub OAuth, create a draft from the reviewed PR metadata, and upload any private asset ZIP overlays there.
+6. Sign in to the Agentics creator console at `/creator` with GitHub OAuth, register the PR for review, and upload any private asset ZIP overlays to the challenge review record.
 
-The public challenge_name must be reviewed before publish. Use lowercase ASCII letters, digits, and single hyphens, and keep the directory name equal to the id.
+The public challenge_name must be reviewed before publish. Use lowercase ASCII letters, digits, and single hyphens, and keep the directory name equal to the challenge_name.
 
 ## Private Assets
 
@@ -28,7 +28,7 @@ Private assets are ZIP overlays extracted onto the runtime bundle only during Ag
 
 For generated official data, prefer a small `private_seeds` overlay plus an evaluator-owned setup phase. The challenge owner is responsible for reproducibility and reliability of generated or externally downloaded data.
 
-Creator-side draft creation and private asset upload are web-only for the MVP. The Agentics CLI only provides admin reviewer helpers until it supports GitHub OAuth creator sessions.
+Creator-side review record creation and private asset upload are web-only for the MVP. The Agentics CLI only provides admin reviewer helpers until it supports GitHub OAuth creator sessions.
 
 ## Local Validation
 
