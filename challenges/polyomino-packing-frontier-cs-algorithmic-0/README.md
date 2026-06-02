@@ -34,7 +34,7 @@ This challenge is migrated from Frontier-CS:
 - Original title: Pack the Polyominoes (Reflections Allowed)
 - Original shape: default algorithmic problem with a special judge, 70 official cases, and density scoring.
 
-The Agentics version uses `separated_evaluator`: submitted solutions only emit candidate placements, while the trusted evaluator owns validation and scoring. The source statement includes a `W=H` note, but the Frontier-CS checker accepts any positive rectangle; this migration follows the checker.
+The Agentics version uses `separated_evaluator`: submitted solutions only emit candidate placements, while the trusted evaluator owns validation and scoring. Frontier-CS accepts any positive rectangle dimensions; this migration follows that contract.
 
 ## Files
 
