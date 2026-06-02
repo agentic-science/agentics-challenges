@@ -93,6 +93,27 @@ def score_for(q: int, n: int) -> float:
     return 100.0 * (n + 1000 - q) / 1000.0
 
 
+def cases_with_runtime_values(metadata: dict[str, Any]) -> list[dict[str, Any]]:
+    cases = metadata["cases"]
+    policy = metadata.get("runtime_random")
+    if not isinstance(policy, dict):
+        return cases
+    if policy.get("kind") != "signed_rooted_tree":
+        raise ValueError("unsupported runtime_random kind")
+    rng = random.SystemRandom()
+    generated: list[dict[str, Any]] = []
+    for case in cases:
+        if not isinstance(case, dict):
+            raise ValueError("runtime_random cases must be objects")
+        n = int(case["n"])
+        if n <= 0:
+            raise ValueError("runtime_random case n must be positive")
+        next_case = dict(case)
+        next_case["values"] = [rng.choice([-1, 1]) for _ in range(n)]
+        generated.append(next_case)
+    return generated
+
+
 def build_parent(n: int, edges: list[list[int]], root: int) -> tuple[list[int], list[list[int]]]:
     graph=[[] for _ in range(n+1)]
     for u,v in edges:
@@ -118,7 +139,7 @@ def path_sums(n: int, graph: list[list[int]], root: int, values: list[int]) -> l
 def main() -> int:
     args=parse_args(); output=Path(args.output_path)
     try:
-        session=load_session(Path(args.session_file)); name=str(session["session_name"]); cases=session["metadata"]["cases"]
+        session=load_session(Path(args.session_file)); name=str(session["session_name"]); cases=cases_with_runtime_values(session["metadata"])
     except Exception as exc: return fail(output,args.mode,"unknown",f"invalid session: {exc}")
     print(len(cases), flush=True)
     total_q=0; solved=0; scores=[]; logs=[]

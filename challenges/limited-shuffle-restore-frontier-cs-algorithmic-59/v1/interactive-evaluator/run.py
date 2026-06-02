@@ -87,10 +87,27 @@ def fail(output_path: Path, mode: str, session_name: str, message: str, *, total
     return 0
 
 
+def runtime_random_case(metadata: dict[str, Any]) -> dict[str, Any] | None:
+    policy = metadata.get("runtime_random")
+    if not isinstance(policy, dict):
+        return None
+    if policy.get("kind") != "limited_shuffle_restore":
+        raise ValueError("unsupported runtime_random kind")
+    n = int(policy["n"])
+    if n <= 0:
+        raise ValueError("runtime_random n must be positive")
+    rng = random.SystemRandom()
+    array = list(range(1, n + 1))
+    for i in range(n):
+        j = rng.randrange(i, min(n - 1, i + 2) + 1)
+        array[i], array[j] = array[j], array[i]
+    return {"n": n, "array": array}
+
+
 def main() -> int:
     args=parse_args(); output=Path(args.output_path)
     try:
-        session=load_session(Path(args.session_file)); name=str(session["session_name"]); case=session["metadata"]["case"]
+        session=load_session(Path(args.session_file)); name=str(session["session_name"]); metadata=session["metadata"]; case=runtime_random_case(metadata) or metadata["case"]
     except Exception as exc: return fail(output,args.mode,"unknown",f"invalid session: {exc}")
     n=int(case["n"]); array=[int(x) for x in case["array"]]; limit=n*5//3+5
     print(n, flush=True)

@@ -87,10 +87,19 @@ def fail(output_path: Path, mode: str, session_name: str, message: str, *, total
     return 0
 
 
+def uses_runtime_random(metadata: dict[str, Any]) -> bool:
+    policy = metadata.get("runtime_random")
+    if not isinstance(policy, dict):
+        return False
+    if policy.get("kind") != "treasure_hunt_choices":
+        raise ValueError("unsupported runtime_random kind")
+    return True
+
+
 def main() -> int:
     args=parse_args(); output=Path(args.output_path)
     try:
-        session=load_session(Path(args.session_file)); name=str(session["session_name"]); cases=session["metadata"]["cases"]
+        session=load_session(Path(args.session_file)); name=str(session["session_name"]); metadata=session["metadata"]; cases=metadata["cases"]; runtime_random=uses_runtime_random(metadata)
     except Exception as exc: return fail(output,args.mode,"unknown",f"invalid session: {exc}")
     print(len(cases), flush=True)
     total_moves=0; solved=0; score_sum=0.0; logs=[]
@@ -102,7 +111,7 @@ def main() -> int:
         for u,v in edges:
             adj[u].append(v); adj[v].append(u); print(u, v, flush=True)
         degrees=[0]+[len(adj[i]) for i in range(1,n+1)]
-        rng=random.Random(seed); curr=start; visited=[False]*(n+1); visited[curr]=True; seen=1; moves=0; limit=2*base
+        rng=random.SystemRandom() if runtime_random else random.Random(seed); curr=start; visited=[False]*(n+1); visited[curr]=True; seen=1; moves=0; limit=2*base
         while moves < limit and seen < n:
             neigh=list(adj[curr]); rng.shuffle(neigh)
             fields=[str(len(neigh))]
