@@ -30,6 +30,7 @@
 - [ ] 已声明 separated-evaluator、interactive-evaluator 或 coexecuted-evaluator `result_file`
 - [ ] 如果使用 `piped_stdio`，已设置 `acknowledge_stdio_protocol_framing: true`，并已说明 stdin/stdout message protocol
 - [ ] 任何 target 设置 `validation_enabled: true` 时，已声明 validation source
+- [ ] 任何 target 设置 `validation_enabled: true` 时，已显式设置 `validation_submission_limit`
 - [ ] `private_benchmark_enabled: true` 时，已声明 official source
 - [ ] Metric schema 已声明 primary metric、direction、visibility 和 tie-breakers
 - [ ] Resource profiles 已定义 time、memory、CPU、disk 和 network policy

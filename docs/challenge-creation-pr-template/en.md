@@ -31,6 +31,7 @@ challenge proposal.
 - [ ] Separated-evaluator, interactive-evaluator, or coexecuted-evaluator `result_file` is declared
 - [ ] If using `piped_stdio`, `acknowledge_stdio_protocol_framing: true` is set and the stdin/stdout message protocol is documented
 - [ ] Validation source is declared when any target has `validation_enabled: true`
+- [ ] `validation_submission_limit` is explicitly set when any target has `validation_enabled: true`
 - [ ] Official source is declared when `private_benchmark_enabled: true`
 - [ ] Metric schema declares the primary metric, direction, visibility, and tie-breakers
 - [ ] Resource profiles define time, memory, CPU, disk, and network policy

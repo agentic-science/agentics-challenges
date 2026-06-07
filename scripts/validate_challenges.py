@@ -125,6 +125,11 @@ def validate_bundle(
     )
 
     if any(target.get("validation_enabled") for target in spec["targets"]):
+        validation_limit = spec.get("validation_submission_limit")
+        if not isinstance(validation_limit, int) or validation_limit <= 0:
+            raise ValidationError(
+                f"{bundle_root}: validation_submission_limit must be a positive integer when any target has validation_enabled true"
+            )
         if mode == "separated_evaluator" and "validation_runs" in execution:
             runs_path = required_safe_path(execution, "validation_runs")
             ci = manifest.get("ci", {})
