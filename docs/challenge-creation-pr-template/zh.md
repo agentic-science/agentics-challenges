@@ -42,7 +42,7 @@
 - [ ] `agentics.challenge.json` 声明了每个 required private asset
 - [ ] 每个 private asset 都显式设置了 `required: true` 或 `required: false`
 - [ ] 已列出 required runtime paths，例如 `private-benchmark/runs.json` 或 `private-benchmark/config.json`
-- [ ] Private assets 会通过 Agentics creator console 上传，不会提交到 GitHub
+- [ ] Private assets 会通过 `agentics challenge-creator review-record upload-private-asset` 上传，不会提交到 GitHub
 - [ ] ZIP overlays 使用 safe relative paths、unique entries，且不包含 symlinks
 
 ## Security And Runner Review
@@ -71,7 +71,7 @@
 **PR URL:**
 **Commit SHA:**
 **Challenge path:** `challenges/<challenge-name>`
-**Review record ID:** <!-- after creator console review record creation -->
+**Review record ID:** <!-- after `agentics challenge-creator review-record create` -->
 **Private assets uploaded:** <!-- names, kinds, and contents summary -->
 
 ## Creator Notes

@@ -43,7 +43,7 @@ challenge proposal.
 - [ ] `agentics.challenge.json` declares every required private asset
 - [ ] Each private asset has explicit `required: true` or `required: false`
 - [ ] Required runtime paths are listed, for example `private-benchmark/runs.json` or `private-benchmark/config.json`
-- [ ] Private assets will be uploaded through the Agentics creator console, not committed to GitHub
+- [ ] Private assets will be uploaded with `agentics challenge-creator review-record upload-private-asset`, not committed to GitHub
 - [ ] ZIP overlays use safe relative paths, unique entries, and no symlinks
 
 ## Security And Runner Review
@@ -72,7 +72,7 @@ challenge proposal.
 **PR URL:**
 **Commit SHA:**
 **Challenge path:** `challenges/<challenge-name>`
-**Review record ID:** <!-- after creator console review record creation -->
+**Review record ID:** <!-- after `agentics challenge-creator review-record create` -->
 **Private assets uploaded:** <!-- names, kinds, and contents summary -->
 
 ## Creator Notes
