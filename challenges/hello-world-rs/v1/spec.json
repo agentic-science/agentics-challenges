@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "challenge_name": "hello-world-rs",
+  "challenge_title": "Hello World Rust",
+  "summary": {
+    "en": "Build a tiny Rust program that reads a name from a file and writes the expected greeting.",
+    "zh": "构建一个小型 Rust 程序，从文件读取名字并写出预期问候语。"
+  },
+  "keywords": [
+    "rust",
+    "cargo",
+    "hello-world"
+  ],
+  "solution": {
+    "protocol": "zip_project",
+    "manifest_file": "agentics.solution.json"
+  },
+  "targets": [
+    {
+      "name": "linux-arm64-cpu",
+      "docker_platform": "linux/arm64",
+      "accelerator": null,
+      "validation_enabled": true,
+      "resource_profile": {
+        "name": "agentics-cpu-rust-small",
+        "solution_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "evaluator_image": {
+          "source": "registry",
+          "reference": "ghcr.io/agentic-science/agentics-linux-arm64-cpu:ubuntu26.04-v0.2.5@sha256:7ba1dbfb4de62ce7c8716fbdf6fa9e840004cc2d231ac9c0adfd655cd275a537"
+        },
+        "solution": {
+          "setup": {
+            "timeout_sec": 30,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "build": {
+            "timeout_sec": 180,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 2048,
+            "network_access": "enabled"
+          }
+        },
+        "evaluator": {
+          "setup": {
+            "timeout_sec": 30,
+            "memory_limit_mb": 1024,
+            "cpu_limit_millis": 1000,
+            "disk_limit_mb": 512,
+            "network_access": "disabled"
+          },
+          "run": {
+            "timeout_sec": 120,
+            "memory_limit_mb": 2048,
+            "cpu_limit_millis": 2000,
+            "disk_limit_mb": 2048,
+            "network_access": "disabled"
+          }
+        },
+        "resource_description": "Small ARM64 CPU profile for Cargo hello-world submissions.",
+        "hardware_metadata": {
+          "kind": "cpu"
+        }
+      }
+    }
+  ],
+  "starts_at": "2026-06-01T00:00:00Z",
+  "eligibility": {
+    "type": "open"
+  },
+  "validation_submission_limit": 10,
+  "visibility": {
+    "leaderboard": "public_live",
+    "score_distribution": "public_live",
+    "result_detail": "submitter_live_public_live"
+  },
+  "solution_publication": "public",
+  "execution": {
+    "mode": "coexecuted_benchmark",
+    "coexecuted_evaluator": {
+      "command": [
+        "python",
+        "coexecuted-evaluator/run.py"
+      ],
+      "result_file": "result.json"
+    },
+    "acknowledge_danger": true
+  },
+  "datasets": {
+    "public_dir": "public",
+    "public_policy": "full",
+    "private_benchmark_policy": "score_only",
+    "private_benchmark_enabled": true
+  },
+  "metric_schema": {
+    "metrics": [
+      {
+        "name": "size_product",
+        "label": "Size Product",
+        "unit": "bytes^2",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "artifact_uncompressed_bytes multiplied by compiled_binary_bytes."
+      },
+      {
+        "name": "artifact_uncompressed_bytes",
+        "label": "Artifact Uncompressed Bytes",
+        "unit": "bytes",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Expanded size of the submitted ZIP project."
+      },
+      {
+        "name": "binary_bytes",
+        "label": "Binary Bytes",
+        "unit": "bytes",
+        "direction": "minimize",
+        "visibility": "public",
+        "metric_description": "Size of the pre-built release binary used by cargo run."
+      }
+    ],
+    "ranking": {
+      "primary_metric_name": "size_product",
+      "tie_breaker_metric_names": [
+        "artifact_uncompressed_bytes",
+        "binary_bytes"
+      ]
+    }
+  }
+}
