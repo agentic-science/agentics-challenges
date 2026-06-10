@@ -204,7 +204,6 @@ def write_result(output_path: Path, mode: str, metadata: dict[str, Any], binary:
     payload: dict[str, Any] = {
         "status": "passed",
         "mode": mode,
-        "rank_score": -float(size_product),
         "aggregate_metrics": [
             {"metric_name": "size_product", "value": float(size_product)},
             {"metric_name": "artifact_uncompressed_bytes", "value": float(artifact_uncompressed_bytes)},

@@ -228,7 +228,6 @@ def main() -> int:
     payload: dict[str, Any] = {
         "status": "passed" if summary["total"] > 0 else "failed",
         "mode": args.mode,
-        "rank_score": summary["score"],
         "aggregate_metrics": [
             {"metric_name": "score", "value": summary["score"]},
             {"metric_name": "valid_cases", "value": summary["valid_cases"]},

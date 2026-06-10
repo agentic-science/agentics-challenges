@@ -174,7 +174,6 @@ def main() -> int:
             payload = {
                 "status": "failed",
                 "mode": args.mode,
-                "rank_score": 0.0,
                 "aggregate_metrics": [
                     {"metric_name": "score", "value": 0.0},
                     {"metric_name": "accepted_cases", "value": 0},
@@ -198,7 +197,6 @@ def main() -> int:
     payload: dict[str, Any] = {
         "status": "passed" if passed else "failed",
         "mode": args.mode,
-        "rank_score": summary["score"],
         "aggregate_metrics": [
             {"metric_name": "score", "value": summary["score"]},
             {"metric_name": "accepted_cases", "value": summary["accepted_cases"]},

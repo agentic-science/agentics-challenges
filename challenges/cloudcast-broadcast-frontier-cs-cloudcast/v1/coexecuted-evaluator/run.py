@@ -20,7 +20,7 @@ def finite(x):
 def cap(s): return [l.strip()[:500] for l in s.splitlines() if l.strip()][:12]
 def write(out,mode,raw,logs):
     score=max(0,min(100,finite(raw.get('score',0)))); passed=('error' not in raw and finite(raw.get('runs_successfully',1))>0); key='validation_summary' if mode=='validation' else 'official_summary'; msg=str(raw.get('error','ok'))[:500]
-    p={'status':'passed' if passed else 'failed','mode':mode,'rank_score':score,'aggregate_metrics':[{'metric_name':'score','value':score},{'metric_name':'total_cost','value':finite(raw.get('total_cost',0))},{'metric_name':'total_transfer_time','value':finite(raw.get('total_transfer_time',0))},{'metric_name':'successful_runs','value':finite(raw.get('successful_runs',1 if passed else 0))}],key:{'score':score,'passed':1 if passed else 0,'total':1},'logs':(logs+([] if msg=='ok' else [msg]))[:12]}
+    p={'status':'passed' if passed else 'failed','mode':mode,'aggregate_metrics':[{'metric_name':'score','value':score},{'metric_name':'total_cost','value':finite(raw.get('total_cost',0))},{'metric_name':'total_transfer_time','value':finite(raw.get('total_transfer_time',0))},{'metric_name':'successful_runs','value':finite(raw.get('successful_runs',1 if passed else 0))}],key:{'score':score,'passed':1 if passed else 0,'total':1},'logs':(logs+([] if msg=='ok' else [msg]))[:12]}
     if mode=='validation': p['public_results']=[{'case_name':'public-smoke','status':'passed' if passed else 'failed','score':score,'message':msg}]
     Path(out).write_text(json.dumps(p,indent=2,sort_keys=True))
 def run(a):

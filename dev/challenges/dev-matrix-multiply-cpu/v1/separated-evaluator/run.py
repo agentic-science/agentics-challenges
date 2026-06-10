@@ -76,11 +76,9 @@ def main() -> int:
     total = len(runs)
     correctness = 0.0 if total == 0 else passed / total
     summary = {"score": correctness, "passed": passed, "total": total}
-    rank_score = -total_wall_time_ms if passed == total else -FAILED_RANK_BASE - total_wall_time_ms
     payload: dict[str, Any] = {
         "status": "passed" if passed == total else "failed",
         "mode": args.mode,
-        "rank_score": rank_score,
         "aggregate_metrics": [
             {"metric_name": "correctness", "value": correctness},
             {"metric_name": "total_wall_time_ms", "value": total_wall_time_ms},

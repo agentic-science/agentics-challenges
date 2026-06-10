@@ -349,7 +349,6 @@ def write_agentics_result(output_path: Path, mode: str, result: dict[str, Any], 
     payload: dict[str, Any] = {
         "status": "passed" if passed else "failed",
         "mode": mode,
-        "rank_score": score,
         "aggregate_metrics": metrics,
         summary_key: {"score": score, "passed": 1 if passed else 0, "total": 1},
         "logs": [truncate(item) for item in logs[:4]] if mode == "validation" else [],

@@ -97,7 +97,6 @@ def write_result(output_path: Path, mode: str, session_name: str, case_results: 
     payload: dict[str, Any] = {
         "status": status,
         "mode": mode,
-        "rank_score": score,
         "aggregate_metrics": [
             {"metric_name": "score", "value": score},
             {"metric_name": "source_ratio", "value": source_ratio},

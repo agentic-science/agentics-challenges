@@ -69,7 +69,6 @@ def write_result(
     result: dict[str, Any] = {
         "status": status,
         "mode": mode,
-        "rank_score": score,
         "aggregate_metrics": [
             {"metric_name": "score", "value": score},
             {"metric_name": "correctness", "value": correctness},

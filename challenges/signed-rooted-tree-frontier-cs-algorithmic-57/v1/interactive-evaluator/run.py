@@ -62,7 +62,6 @@ def write_result(output_path: Path, mode: str, session_name: str, *, status: str
     result: dict[str, Any] = {
         "status": status,
         "mode": mode,
-        "rank_score": score,
         "aggregate_metrics": [
             {"metric_name": "score", "value": score},
             {"metric_name": "correctness", "value": correctness},
