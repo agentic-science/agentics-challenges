@@ -38,8 +38,8 @@ For each migrated challenge:
   including source path, original title or category, and evaluator assumptions
   that affect scoring.
 - [ ] Verify the Agentics execution mode matches the original task shape:
-  `separated_evaluator` for batch evaluation, `interactive_evaluator` for
-  protocol tasks, and `coexecuted_evaluator` for shared-process benchmark tasks.
+  `separated_evaluator` for batch evaluation, `piped_stdio` for protocol tasks,
+  and `coexecuted_benchmark` for shared-process benchmark tasks.
 - [ ] Compare the original participant interface with the Agentics solution
   contract in `spec.json`, `statement.md`, and evaluator code.
 - [ ] Check input and output formats, including indexing conventions, JSON/text
@@ -65,7 +65,7 @@ For each migrated challenge:
 - [ ] For CUDA or Python ML challenges, verify dependency setup follows the
   intended setup-phase contract, including uv-based PyTorch or Triton setup when
   applicable.
-- [ ] For `coexecuted_evaluator`, verify `acknowledge_danger: true`, no
+- [ ] For `coexecuted_benchmark`, verify `acknowledge_danger: true`, no
   solution run profile, no secrets in the shared container, and clear statement
   of the weaker trust boundary.
 - [ ] Check that public metrics and official metrics expose only intended

@@ -54,6 +54,7 @@ challenge proposal.
 - [ ] If using `coexecuted_benchmark`, `acknowledge_danger: true` is set
 - [ ] If using `coexecuted_benchmark`, `resource_profile.solution.run` is omitted
 - [ ] If using `coexecuted_benchmark`, no secrets are present because participant code and private official data share the coexecuted-evaluator container
+- [ ] If the evaluator uses submitted artifact metadata, it reads `/metadata/submission.json`; `/metadata` is not treated as challenge input and is not visible to participant run containers
 
 ## Validation Evidence
 

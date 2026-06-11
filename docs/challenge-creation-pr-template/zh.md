@@ -53,6 +53,7 @@
 - [ ] 如果使用 `coexecuted_benchmark`，已设置 `acknowledge_danger: true`
 - [ ] 如果使用 `coexecuted_benchmark`，已省略 `resource_profile.solution.run`
 - [ ] 如果使用 `coexecuted_benchmark`，不包含 secrets，因为 participant code 和 private official data 会共享 coexecuted-evaluator container
+- [ ] 如果 evaluator 使用 submitted artifact metadata，它读取 `/metadata/submission.json`；`/metadata` 不是 challenge input，participant run containers 也看不到它
 
 ## Validation Evidence
 
