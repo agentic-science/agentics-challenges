@@ -30,6 +30,28 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def run_case_metadata(run: dict[str, Any]) -> dict[str, Any]:
+    metadata = run.get("metadata")
+    if not isinstance(metadata, dict):
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata must be an object")
+    return metadata
+
+
+def run_case_has(run: dict[str, Any], key: str) -> bool:
+    return key in run_case_metadata(run)
+
+
+def run_case_get(run: dict[str, Any], key: str, default: Any = None) -> Any:
+    return run_case_metadata(run).get(key, default)
+
+
+def run_case_required(run: dict[str, Any], key: str) -> Any:
+    metadata = run_case_metadata(run)
+    if key not in metadata:
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata is missing {key}")
+    return metadata[key]
+
+
 def run_metadata(path: Path) -> dict[str, Any]:
     if not path.is_file():
         return {"exit_code": 1, "timed_out": False, "wall_time_ms": 0}
@@ -104,7 +126,7 @@ def score_run(run: dict[str, Any], challenge_dir: Path, solution_runs_dir: Path,
     if not stdout_path.is_file():
         return {**base, "status": "error", "score": 0.0, "ratio": 0.0, "message": "missing stdout.txt"}, f"{run_name}: missing stdout.txt"
     input_text = str(run.get("stdin_text", ""))
-    answer_text = (challenge_dir / run["answer_path"]).read_text(encoding="utf-8")
+    answer_text = (challenge_dir / str(run_case_required(run, "answer_path"))).read_text(encoding="utf-8")
     output_text = stdout_path.read_text(encoding="utf-8", errors="replace")
     try:
         code, message = run_checker(checker_bin, input_text, output_text, answer_text, work_dir, run_name)

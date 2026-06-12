@@ -21,6 +21,28 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def run_case_metadata(run: dict[str, Any]) -> dict[str, Any]:
+    metadata = run.get("metadata")
+    if not isinstance(metadata, dict):
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata must be an object")
+    return metadata
+
+
+def run_case_has(run: dict[str, Any], key: str) -> bool:
+    return key in run_case_metadata(run)
+
+
+def run_case_get(run: dict[str, Any], key: str, default: Any = None) -> Any:
+    return run_case_metadata(run).get(key, default)
+
+
+def run_case_required(run: dict[str, Any], key: str) -> Any:
+    metadata = run_case_metadata(run)
+    if key not in metadata:
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata is missing {key}")
+    return metadata[key]
+
+
 def load_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
@@ -337,10 +359,10 @@ def score_run(run: dict[str, Any], challenge_dir: Path, solution_runs_dir: Path)
     if not output_path.is_file():
         return {**base, "status": "error", "score": 0.0, "message": "missing output/answer.txt"}, [f"{run_name}: missing output/answer.txt"]
     try:
-        input_text = load_text(challenge_dir / run["input_path"])
-        answer_text = load_text(challenge_dir / run["answer_path"])
+        input_text = load_text(challenge_dir / str(run_case_required(run, "input_path")))
+        answer_text = load_text(challenge_dir / str(run_case_required(run, "answer_path")))
         output_text = load_text(output_path)
-        ratio, details, message = VALIDATORS[run["task_type"]](input_text, answer_text, output_text)
+        ratio, details, message = VALIDATORS[str(run_case_required(run, "task_type"))](input_text, answer_text, output_text)
         score = score_from_ratio(ratio)
         return {**base, "status": "passed", "score": score, "ratio": round(clamp01(ratio), 8), "message": message, **details}, [f"{run_name}: {message}; score={score}"]
     except Exception as error:

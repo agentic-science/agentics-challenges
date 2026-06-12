@@ -28,6 +28,28 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def run_case_metadata(run: dict[str, Any]) -> dict[str, Any]:
+    metadata = run.get("metadata")
+    if not isinstance(metadata, dict):
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata must be an object")
+    return metadata
+
+
+def run_case_has(run: dict[str, Any], key: str) -> bool:
+    return key in run_case_metadata(run)
+
+
+def run_case_get(run: dict[str, Any], key: str, default: Any = None) -> Any:
+    return run_case_metadata(run).get(key, default)
+
+
+def run_case_required(run: dict[str, Any], key: str) -> Any:
+    metadata = run_case_metadata(run)
+    if key not in metadata:
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata is missing {key}")
+    return metadata[key]
+
+
 def load_run_metadata(path: Path) -> dict[str, Any]:
     if not path.is_file():
         return {"exit_code": 1, "timed_out": False, "wall_time_ms": 0}
@@ -113,7 +135,7 @@ def score_run(run: dict[str, Any], solution_runs_dir: Path, checker_bin: Path, w
     answer_path = case_dir / "answer.txt"
     input_path.write_text(str(run.get("stdin_text", "")), encoding="utf-8")
     output_path.write_text(stdout_path.read_text(encoding="utf-8", errors="replace"), encoding="utf-8")
-    answer_path.write_text(str(run.get("answer_text", "")), encoding="utf-8")
+    answer_path.write_text(str(run_case_get(run, "answer_text", "")), encoding="utf-8")
 
     try:
         result = subprocess.run(

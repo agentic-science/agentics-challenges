@@ -28,6 +28,28 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def run_case_metadata(run: dict[str, Any]) -> dict[str, Any]:
+    metadata = run.get("metadata")
+    if not isinstance(metadata, dict):
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata must be an object")
+    return metadata
+
+
+def run_case_has(run: dict[str, Any], key: str) -> bool:
+    return key in run_case_metadata(run)
+
+
+def run_case_get(run: dict[str, Any], key: str, default: Any = None) -> Any:
+    return run_case_metadata(run).get(key, default)
+
+
+def run_case_required(run: dict[str, Any], key: str) -> Any:
+    metadata = run_case_metadata(run)
+    if key not in metadata:
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata is missing {key}")
+    return metadata[key]
+
+
 def run_metadata(path: Path) -> dict[str, Any]:
     if not path.is_file():
         return {"exit_code": 1, "timed_out": False, "wall_time_ms": 0}
@@ -65,12 +87,12 @@ def checker_binary(challenge_dir: Path) -> Path:
 
 
 def materialize_answer(run: dict[str, Any], challenge_dir: Path, temp_dir: Path) -> Path:
-    if "answer_text" in run:
+    if run_case_has(run, "answer_text"):
         answer_path = temp_dir / "answer.txt"
-        answer_path.write_text(str(run["answer_text"]), encoding="utf-8")
+        answer_path.write_text(str(run_case_required(run, "answer_text")), encoding="utf-8")
         return answer_path
-    if "answer_path" in run:
-        return challenge_dir / str(run["answer_path"])
+    if run_case_has(run, "answer_path"):
+        return challenge_dir / str(run_case_required(run, "answer_path"))
     answer_path = temp_dir / "answer.txt"
     answer_path.write_text("\n", encoding="utf-8")
     return answer_path

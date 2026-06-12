@@ -45,10 +45,14 @@ def clamp01(value: float) -> float:
 
 
 def text_from_run(run: dict[str, Any], challenge_dir: Path, text_key: str, path_key: str) -> str:
+    metadata = run.get("metadata")
+    metadata = metadata if isinstance(metadata, dict) else {}
     value = run.get(text_key)
+    if not isinstance(value, str):
+        value = metadata.get(text_key)
     if isinstance(value, str):
         return value
-    path = run.get(path_key)
+    path = metadata.get(path_key)
     if isinstance(path, str):
         return (challenge_dir / path).read_text(encoding="utf-8")
     return ""

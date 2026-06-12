@@ -24,6 +24,20 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def run_case_metadata(run: dict[str, Any]) -> dict[str, Any]:
+    metadata = run.get("metadata")
+    if not isinstance(metadata, dict):
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata must be an object")
+    return metadata
+
+
+def run_case_required(run: dict[str, Any], key: str) -> Any:
+    metadata = run_case_metadata(run)
+    if key not in metadata:
+        raise ValueError(f"run {run.get('run_name', '<unknown>')} metadata is missing {key}")
+    return metadata[key]
+
+
 def load_run_metadata(path: Path) -> dict[str, Any]:
     if not path.is_file():
         return {"exit_code": 1, "timed_out": False, "wall_time_ms": 0}
@@ -157,8 +171,8 @@ def score_run(run: dict[str, Any], solution_runs_dir: Path) -> tuple[dict[str, A
         if used_volume_ul > MAX_VOLUME_UL:
             raise ValueError(f"total volume {used_volume_ul} exceeds {MAX_VOLUME_UL} ul")
 
-        baseline_value = int(run["baseline_value"])
-        best_value = int(run["best_value"])
+        baseline_value = int(run_case_required(run, "baseline_value"))
+        best_value = int(run_case_required(run, "best_value"))
         score = round(100.0 * score_ratio(total_value, baseline_value, best_value), 6)
         result = {
             "case_name": run_name,
