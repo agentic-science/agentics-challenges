@@ -1,8 +1,14 @@
 {
   "session_name": "public-smoke",
   "input_files": [
-    {"path": "cases/public.in", "content": "1 4\n"},
-    {"path": "cases/public.ans", "content": "2 4 1 3\n"}
+    {
+      "path": "cases/public.in",
+      "content": "1 4\n"
+    },
+    {
+      "path": "cases/public.ans",
+      "content": "2 4 1 3\n"
+    }
   ],
   "metadata": {
     "source_problem_id": 3,

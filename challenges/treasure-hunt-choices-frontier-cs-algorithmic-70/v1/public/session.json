@@ -20,5 +20,6 @@
         "shuffle_seed": 1
       }
     ]
-  }
+  },
+  "input_files": null
 }

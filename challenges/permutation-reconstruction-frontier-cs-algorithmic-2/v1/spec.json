@@ -6,7 +6,11 @@
     "en": "Interactively recover a hidden permutation using match-count queries.",
     "zh": "通过匹配数量查询，交互式恢复隐藏排列。"
   },
-  "keywords": ["interactive", "permutation", "algorithmic"],
+  "keywords": [
+    "interactive",
+    "permutation",
+    "algorithmic"
+  ],
   "solution": {
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
@@ -68,13 +72,21 @@
         },
         "resource_description": "ARM64 CPU profile for one bounded interactive permutation session.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
   ],
   "starts_at": "2026-01-01T00:00:00Z",
-  "eligibility": { "type": "open" },
+  "eligibility": {
+    "type": "open"
+  },
   "validation_submission_limit": 2,
   "visibility": {
     "leaderboard": "public_live",
@@ -86,11 +98,16 @@
     "mode": "piped_stdio",
     "acknowledge_stdio_protocol_framing": true,
     "interactive_evaluator": {
-      "command": ["python", "interactive-evaluator/run.py"],
+      "command": [
+        "python",
+        "interactive-evaluator/run.py"
+      ],
       "result_file": "result.json"
     },
     "validation_session": "public/session.json",
-    "official_session": "private-benchmark/session.json"
+    "official_session": "private-benchmark/session.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -106,14 +123,16 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Correctness and query-efficiency score on a 0-100 scale."
+        "metric_description": "Correctness and query-efficiency score on a 0-100 scale.",
+        "unit": null
       },
       {
         "name": "correctness",
         "label": "Correctness",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "1 when the final permutation is correct, otherwise 0."
+        "metric_description": "1 when the final permutation is correct, otherwise 0.",
+        "unit": null
       },
       {
         "name": "query_count",
@@ -134,7 +153,12 @@
     ],
     "ranking": {
       "primary_metric_name": "score",
-      "tie_breaker_metric_names": ["query_count", "protocol_errors"]
+      "tie_breaker_metric_names": [
+        "query_count",
+        "protocol_errors"
+      ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

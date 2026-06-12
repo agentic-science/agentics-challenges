@@ -12,9 +12,13 @@
       "output_files": [
         "answer.txt"
       ],
-      "task_type": "distinct_xor_set",
-      "input_path": "public/cases/public-smoke.in",
-      "answer_path": "public/answers/public-smoke.ans"
+      "stdin_json": null,
+      "stdin_text": null,
+      "metadata": {
+        "task_type": "distinct_xor_set",
+        "input_path": "public/cases/public-smoke.in",
+        "answer_path": "public/answers/public-smoke.ans"
+      }
     }
   ]
 }

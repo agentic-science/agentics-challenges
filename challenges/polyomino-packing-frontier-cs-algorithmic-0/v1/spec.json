@@ -6,7 +6,11 @@
     "en": "Place reflected and rotated polyominoes in a rectangle while minimizing occupied area.",
     "zh": "将可翻转、可旋转的多连块放入矩形中，并尽量最小化占用面积。"
   },
-  "keywords": ["packing", "polyomino", "optimization"],
+  "keywords": [
+    "packing",
+    "polyomino",
+    "optimization"
+  ],
   "solution": {
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
@@ -68,13 +72,21 @@
         },
         "resource_description": "ARM64 CPU profile for polyomino placement validation.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
   ],
   "starts_at": "2026-01-01T00:00:00Z",
-  "eligibility": { "type": "open" },
+  "eligibility": {
+    "type": "open"
+  },
   "validation_submission_limit": 2,
   "visibility": {
     "leaderboard": "public_live",
@@ -85,11 +97,16 @@
   "execution": {
     "mode": "separated_evaluator",
     "separated_evaluator": {
-      "command": ["python", "separated-evaluator/run.py"],
+      "command": [
+        "python",
+        "separated-evaluator/run.py"
+      ],
       "result_file": "result.json"
     },
     "validation_runs": "public/runs.json",
-    "official_runs": "private-benchmark/runs.json"
+    "official_runs": "private-benchmark/runs.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -105,7 +122,8 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average density score, computed as 100 * total_cells / rectangle area."
+        "metric_description": "Average density score, computed as 100 * total_cells / rectangle area.",
+        "unit": null
       },
       {
         "name": "valid_cases",
@@ -134,7 +152,12 @@
     ],
     "ranking": {
       "primary_metric_name": "score",
-      "tie_breaker_metric_names": ["valid_cases", "total_area"]
+      "tie_breaker_metric_names": [
+        "valid_cases",
+        "total_area"
+      ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

@@ -45,7 +45,8 @@
             "cpu_limit_millis": 1000,
             "disk_limit_mb": 1024,
             "network_access": "disabled"
-          }
+          },
+          "run": null
         },
         "evaluator": {
           "setup": {
@@ -65,7 +66,13 @@
         },
         "resource_description": "ARM64 CPU profile for the Frontier-CS SQL parser coverage benchmark.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -120,42 +127,48 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Source coverage score with efficiency bonus."
+        "metric_description": "Source coverage score with efficiency bonus.",
+        "unit": null
       },
       {
         "name": "runs_successfully",
         "label": "Runs Successfully",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Whether the evaluator loaded and ran the submitted generator."
+        "metric_description": "Whether the evaluator loaded and ran the submitted generator.",
+        "unit": null
       },
       {
         "name": "line_coverage",
         "label": "Line Coverage",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Line coverage percentage over parser.py, tokenizer.py, and ast_nodes.py."
+        "metric_description": "Line coverage percentage over parser.py, tokenizer.py, and ast_nodes.py.",
+        "unit": null
       },
       {
         "name": "branch_coverage",
         "label": "Branch Coverage",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Branch coverage percentage over the measured SQL engine files."
+        "metric_description": "Branch coverage percentage over the measured SQL engine files.",
+        "unit": null
       },
       {
         "name": "coverage_score",
         "label": "Coverage Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Non-linear weighted coverage contribution."
+        "metric_description": "Non-linear weighted coverage contribution.",
+        "unit": null
       },
       {
         "name": "efficiency_bonus",
         "label": "Efficiency Bonus",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Source bonus for using fewer SQL statements."
+        "metric_description": "Source bonus for using fewer SQL statements.",
+        "unit": null
       },
       {
         "name": "successful_parses",
@@ -181,5 +194,7 @@
         "branch_coverage"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

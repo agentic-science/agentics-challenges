@@ -72,7 +72,13 @@
         },
         "resource_description": "ARM64 CPU profile for bounded interactive Frontier-CS migrations.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -99,7 +105,9 @@
       "result_file": "result.json"
     },
     "validation_session": "public/session.json",
-    "official_session": "private-benchmark/session.json"
+    "official_session": "private-benchmark/session.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -115,14 +123,16 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Correctness and query-efficiency score on a 0-100 scale."
+        "metric_description": "Correctness and query-efficiency score on a 0-100 scale.",
+        "unit": null
       },
       {
         "name": "correctness",
         "label": "Correctness",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Number of cases solved correctly."
+        "metric_description": "Number of cases solved correctly.",
+        "unit": null
       },
       {
         "name": "query_count",
@@ -149,5 +159,7 @@
         "protocol_errors"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

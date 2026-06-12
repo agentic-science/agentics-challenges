@@ -6,7 +6,11 @@
     "en": "Recover a hidden circular disk by probing line-segment intersection lengths.",
     "zh": "通过线段探测返回的相交长度恢复隐藏圆盘。"
   },
-  "keywords": ["interactive", "geometry", "hidden-state"],
+  "keywords": [
+    "interactive",
+    "geometry",
+    "hidden-state"
+  ],
   "solution": {
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
@@ -68,7 +72,13 @@
         },
         "resource_description": "ARM64 CPU profile for a trusted Frontier-CS Testlib interactive session.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -88,11 +98,16 @@
     "mode": "piped_stdio",
     "acknowledge_stdio_protocol_framing": true,
     "interactive_evaluator": {
-      "command": ["python", "interactive-evaluator/run.py"],
+      "command": [
+        "python",
+        "interactive-evaluator/run.py"
+      ],
       "result_file": "result.json"
     },
     "validation_session": "public/session.json",
-    "official_session": "private-benchmark/session.json"
+    "official_session": "private-benchmark/session.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -108,14 +123,16 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Frontier-CS interactor ratio scaled to a 0-100 score."
+        "metric_description": "Frontier-CS interactor ratio scaled to a 0-100 score.",
+        "unit": null
       },
       {
         "name": "source_ratio",
         "label": "Source Ratio",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Raw ratio reported by the Frontier-CS Testlib interactor."
+        "metric_description": "Raw ratio reported by the Frontier-CS Testlib interactor.",
+        "unit": null
       },
       {
         "name": "case_count",
@@ -136,7 +153,12 @@
     ],
     "ranking": {
       "primary_metric_name": "score",
-      "tie_breaker_metric_names": ["protocol_errors", "case_count"]
+      "tie_breaker_metric_names": [
+        "protocol_errors",
+        "case_count"
+      ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

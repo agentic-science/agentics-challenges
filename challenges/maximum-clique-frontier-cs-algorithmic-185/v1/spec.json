@@ -4,7 +4,7 @@
   "challenge_title": "Maximum Clique",
   "summary": {
     "en": "Select a large clique in an undirected graph.",
-    "zh": "\u5728\u65e0\u5411\u56fe\u4e2d\u9009\u62e9\u5c3d\u53ef\u80fd\u5927\u7684\u56e2\u3002"
+    "zh": "在无向图中选择尽可能大的团。"
   },
   "keywords": [
     "graph",
@@ -72,7 +72,13 @@
         },
         "resource_description": "ARM64 CPU profile for Frontier-CS file-based optimization checks.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -98,7 +104,9 @@
       "result_file": "result.json"
     },
     "validation_runs": "public/runs.json",
-    "official_runs": "private-benchmark/runs.json"
+    "official_runs": "private-benchmark/runs.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -114,7 +122,8 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average normalized Frontier-CS score on a 0-100 scale."
+        "metric_description": "Average normalized Frontier-CS score on a 0-100 scale.",
+        "unit": null
       },
       {
         "name": "valid_cases",
@@ -139,5 +148,7 @@
         "valid_cases"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

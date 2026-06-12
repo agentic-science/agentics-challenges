@@ -4,10 +4,15 @@
       "run_name": "public-smoke",
       "interface": "stdio",
       "stdin_text": "2\n1 1\n2 2\n",
-      "answer_text": "\n",
-      "input_path": "public/cases/public-smoke.in",
-      "answer_path": "public/answers/public-smoke.ans",
-      "expected_output_source_path": "public/answers/public-smoke.out"
+      "stdin_json": null,
+      "input_files": null,
+      "output_files": null,
+      "metadata": {
+        "answer_text": "\n",
+        "input_path": "public/cases/public-smoke.in",
+        "answer_path": "public/answers/public-smoke.ans",
+        "expected_output_source_path": "public/answers/public-smoke.out"
+      }
     }
   ]
 }

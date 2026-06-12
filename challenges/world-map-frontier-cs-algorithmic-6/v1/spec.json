@@ -6,7 +6,11 @@
     "en": "Draw a square grid map whose color adjacencies exactly realize a country graph while minimizing K/N.",
     "zh": "绘制一个方形网格地图，使颜色相邻关系精确表示国家图，并尽量最小化 K/N。"
   },
-  "keywords": ["graph", "grid", "optimization"],
+  "keywords": [
+    "graph",
+    "grid",
+    "optimization"
+  ],
   "solution": {
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
@@ -68,13 +72,21 @@
         },
         "resource_description": "ARM64 CPU profile for grid-map graph validation.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
   ],
   "starts_at": "2026-01-01T00:00:00Z",
-  "eligibility": { "type": "open" },
+  "eligibility": {
+    "type": "open"
+  },
   "validation_submission_limit": 2,
   "visibility": {
     "leaderboard": "public_live",
@@ -85,11 +97,16 @@
   "execution": {
     "mode": "separated_evaluator",
     "separated_evaluator": {
-      "command": ["python", "separated-evaluator/run.py"],
+      "command": [
+        "python",
+        "separated-evaluator/run.py"
+      ],
       "result_file": "result.json"
     },
     "validation_runs": "public/runs.json",
-    "official_runs": "private-benchmark/runs.json"
+    "official_runs": "private-benchmark/runs.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -105,7 +122,8 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average bounded Frontier-CS ratio score on a 0-100 scale."
+        "metric_description": "Average bounded Frontier-CS ratio score on a 0-100 scale.",
+        "unit": null
       },
       {
         "name": "valid_cases",
@@ -120,7 +138,8 @@
         "label": "Average K/N",
         "direction": "minimize",
         "visibility": "public",
-        "metric_description": "Average K/N ratio across evaluated cases; lower is better."
+        "metric_description": "Average K/N ratio across evaluated cases; lower is better.",
+        "unit": null
       },
       {
         "name": "total_cells",
@@ -133,7 +152,12 @@
     ],
     "ranking": {
       "primary_metric_name": "score",
-      "tie_breaker_metric_names": ["valid_cases", "average_ratio"]
+      "tie_breaker_metric_names": [
+        "valid_cases",
+        "average_ratio"
+      ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

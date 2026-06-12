@@ -45,7 +45,8 @@
             "cpu_limit_millis": 2000,
             "disk_limit_mb": 2048,
             "network_access": "disabled"
-          }
+          },
+          "run": null
         },
         "evaluator": {
           "setup": {
@@ -70,7 +71,8 @@
           "gpu_count": 1,
           "cuda_variant": "cu130",
           "cuda_version": "13.0",
-          "driver_minimum": "580.142"
+          "driver_minimum": "580.142",
+          "gpu_memory_gb": null
         }
       }
     }
@@ -125,49 +127,56 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Source score after strict correctness gating, capped to 0-100."
+        "metric_description": "Source score after strict correctness gating, capped to 0-100.",
+        "unit": null
       },
       {
         "name": "score_unbounded",
         "label": "Unbounded Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Linear source performance score before capping."
+        "metric_description": "Linear source performance score before capping.",
+        "unit": null
       },
       {
         "name": "runs_successfully",
         "label": "Runs Successfully",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Whether the evaluator loaded the submitted implementation."
+        "metric_description": "Whether the evaluator loaded the submitted implementation.",
+        "unit": null
       },
       {
         "name": "correctness",
         "label": "Correctness",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Whether every benchmark shape passed source allclose checks."
+        "metric_description": "Whether every benchmark shape passed source allclose checks.",
+        "unit": null
       },
       {
         "name": "geometric_mean_speedup",
         "label": "Geometric Mean Speedup",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Geometric mean speedup over the source GPU baseline."
+        "metric_description": "Geometric mean speedup over the source GPU baseline.",
+        "unit": null
       },
       {
         "name": "arithmetic_mean_speedup",
         "label": "Arithmetic Mean Speedup",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Source arithmetic speedup field."
+        "metric_description": "Source arithmetic speedup field.",
+        "unit": null
       },
       {
         "name": "median_speedup",
         "label": "Median Speedup",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Source median speedup field."
+        "metric_description": "Source median speedup field.",
+        "unit": null
       },
       {
         "name": "passed_tests",
@@ -193,5 +202,7 @@
         "geometric_mean_speedup"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

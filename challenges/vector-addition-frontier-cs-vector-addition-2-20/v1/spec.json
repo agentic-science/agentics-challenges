@@ -6,7 +6,11 @@
     "en": "Optimize a Triton vector-addition kernel for 2^20 CUDA elements.",
     "zh": "Optimize a Triton vector-addition kernel for 2^20 CUDA elements."
   },
-  "keywords": ["cuda", "vector", "triton"],
+  "keywords": [
+    "cuda",
+    "vector",
+    "triton"
+  ],
   "solution": {
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
@@ -41,7 +45,8 @@
             "cpu_limit_millis": 2000,
             "disk_limit_mb": 2048,
             "network_access": "disabled"
-          }
+          },
+          "run": null
         },
         "evaluator": {
           "setup": {
@@ -66,13 +71,16 @@
           "gpu_count": 1,
           "cuda_variant": "cu130",
           "cuda_version": "13.0",
-          "driver_minimum": "580.142"
+          "driver_minimum": "580.142",
+          "gpu_memory_gb": null
         }
       }
     }
   ],
   "starts_at": "2026-01-01T00:00:00Z",
-  "eligibility": { "type": "open" },
+  "eligibility": {
+    "type": "open"
+  },
   "validation_submission_limit": 2,
   "visibility": {
     "leaderboard": "public_live",
@@ -83,15 +91,24 @@
   "execution": {
     "mode": "coexecuted_benchmark",
     "coexecuted_evaluator": {
-      "command": ["python", "coexecuted-evaluator/run.py"],
+      "command": [
+        "python",
+        "coexecuted-evaluator/run.py"
+      ],
       "result_file": "result.json"
     },
     "validation_setup": {
-      "command": ["python", "coexecuted-evaluator/setup.py"],
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
       "reproducibility_notes": "Creates a uv-managed project environment under /setup using uv sync; no uv pip interface is used."
     },
     "official_evaluation_setup": {
-      "command": ["python", "coexecuted-evaluator/setup.py"],
+      "command": [
+        "python",
+        "coexecuted-evaluator/setup.py"
+      ],
       "reproducibility_notes": "Creates the same uv-managed project environment for official evaluation; private benchmark data is not used for dependency resolution."
     },
     "acknowledge_danger": true
@@ -110,40 +127,50 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Score"
+        "metric_description": "Score",
+        "unit": null
       },
       {
         "name": "score_unbounded",
         "label": "Unbounded Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Unbounded Score"
+        "metric_description": "Unbounded Score",
+        "unit": null
       },
       {
         "name": "correctness",
         "label": "Correctness",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Correctness"
+        "metric_description": "Correctness",
+        "unit": null
       },
       {
         "name": "geometric_mean_speedup",
         "label": "Geometric Mean Speedup",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Geometric Mean Speedup"
+        "metric_description": "Geometric Mean Speedup",
+        "unit": null
       },
       {
         "name": "passed_tests",
         "label": "Passed Tests",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Passed Tests"
+        "metric_description": "Passed Tests",
+        "unit": null
       }
     ],
     "ranking": {
       "primary_metric_name": "score",
-      "tie_breaker_metric_names": ["score_unbounded", "correctness"]
+      "tie_breaker_metric_names": [
+        "score_unbounded",
+        "correctness"
+      ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

@@ -6,7 +6,11 @@
     "en": "Choose item counts for a two-constraint packing instance and maximize total treasure value.",
     "zh": "为双约束装箱实例选择物品数量，并最大化宝物总价值。"
   },
-  "keywords": ["optimization", "knapsack", "json"],
+  "keywords": [
+    "optimization",
+    "knapsack",
+    "json"
+  ],
   "solution": {
     "protocol": "zip_project",
     "manifest_file": "agentics.solution.json"
@@ -68,13 +72,21 @@
         },
         "resource_description": "ARM64 CPU profile for JSON packing instances.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
   ],
   "starts_at": "2026-01-01T00:00:00Z",
-  "eligibility": { "type": "open" },
+  "eligibility": {
+    "type": "open"
+  },
   "validation_submission_limit": 2,
   "visibility": {
     "leaderboard": "public_live",
@@ -85,11 +97,16 @@
   "execution": {
     "mode": "separated_evaluator",
     "separated_evaluator": {
-      "command": ["python", "separated-evaluator/run.py"],
+      "command": [
+        "python",
+        "separated-evaluator/run.py"
+      ],
       "result_file": "result.json"
     },
     "validation_runs": "public/runs.json",
-    "official_runs": "private-benchmark/runs.json"
+    "official_runs": "private-benchmark/runs.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -105,7 +122,8 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average normalized value score on a 0-100 scale."
+        "metric_description": "Average normalized value score on a 0-100 scale.",
+        "unit": null
       },
       {
         "name": "valid_cases",
@@ -120,7 +138,8 @@
         "label": "Total Value",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Sum of participant item values across evaluated cases."
+        "metric_description": "Sum of participant item values across evaluated cases.",
+        "unit": null
       },
       {
         "name": "used_mass_mg",
@@ -141,7 +160,12 @@
     ],
     "ranking": {
       "primary_metric_name": "score",
-      "tie_breaker_metric_names": ["valid_cases", "total_value"]
+      "tie_breaker_metric_names": [
+        "valid_cases",
+        "total_value"
+      ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

@@ -72,7 +72,13 @@
         },
         "resource_description": "ARM64 CPU profile for a trusted Frontier-CS Testlib interactive session.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -99,7 +105,9 @@
       "result_file": "result.json"
     },
     "validation_session": "public/session.json",
-    "official_session": "private-benchmark/session.json"
+    "official_session": "private-benchmark/session.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -115,14 +123,16 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Frontier-CS interactor ratio scaled to a 0-100 score."
+        "metric_description": "Frontier-CS interactor ratio scaled to a 0-100 score.",
+        "unit": null
       },
       {
         "name": "source_ratio",
         "label": "Source Ratio",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Raw ratio reported by the Frontier-CS Testlib interactor."
+        "metric_description": "Raw ratio reported by the Frontier-CS Testlib interactor.",
+        "unit": null
       },
       {
         "name": "case_count",
@@ -156,5 +166,7 @@
         "max_query_m"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

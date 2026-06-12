@@ -72,16 +72,15 @@ agentics challenge-creator review-record status <review-record-id>
 Run:
 
 ```sh
-python3 scripts/validate_challenges.py
+agentics challenge-creator check .
 ```
 
-This CI check verifies public manifests, public validation run manifests, public `source_path` files, and obvious private-data leaks. Agentics server-side validation remains the authoritative publish gate.
+This CLI check uses the same Rust contract validation path as the Agentics review workflow. It verifies proposal manifests, public bundle specs, public validation run/session manifests, required-nullable source fields, public `source_path` files, challenge directory/name agreement, and obvious private-data leaks. Agentics server-side validation remains the authoritative publish gate.
 
 ## Test Solutions
 
 Public smoke-test solutions live under `test-solutions/<challenge-name>/`.
-Each directory is a standalone `zip_project` solution workspace for the
-challenge with the same handle.
+Each directory is a standalone `zip_project` solution workspace for the challenge with the same handle.
 
 ## Thanks
 
@@ -89,10 +88,6 @@ The initial 247 challenges were seeded by porting the non-security problems of [
 
 ## License
 
-Unless a file says otherwise, this repository is licensed under the GNU Affero
-General Public License v3.0. See [LICENSE](LICENSE).
+Unless a file says otherwise, this repository is licensed under the GNU Affero General Public License v3.0. See [LICENSE](LICENSE).
 
-Some seeded challenge material was derived from
-[FrontierCS](https://github.com/FrontierCS/Frontier-CS), which is licensed under
-the MIT License. Keep source attribution in challenge notes when a challenge is
-ported or adapted from an upstream benchmark.
+Some seeded challenge material was derived from [FrontierCS](https://github.com/FrontierCS/Frontier-CS), which is licensed under the MIT License. Keep source attribution in challenge notes when a challenge is ported or adapted from an upstream benchmark.

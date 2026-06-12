@@ -46,7 +46,8 @@
             "cpu_limit_millis": 1000,
             "disk_limit_mb": 1024,
             "network_access": "disabled"
-          }
+          },
+          "run": null
         },
         "evaluator": {
           "setup": {
@@ -66,7 +67,13 @@
         },
         "resource_description": "ARM64 CPU profile for coexecuted Frontier-CS simulation benchmarks.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -121,7 +128,8 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "100 / (1 + total_cost)."
+        "metric_description": "100 / (1 + total_cost).",
+        "unit": null
       },
       {
         "name": "total_cost",
@@ -144,7 +152,8 @@
         "label": "Successful Runs",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Configurations evaluated successfully."
+        "metric_description": "Configurations evaluated successfully.",
+        "unit": null
       }
     ],
     "ranking": {
@@ -154,5 +163,7 @@
         "total_transfer_time"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

@@ -4,7 +4,7 @@
   "challenge_title": "Distinct XOR Set",
   "summary": {
     "en": "Choose a subset whose unordered pairwise XOR values are all distinct.",
-    "zh": "\u9009\u62e9\u4e00\u4e2a\u96c6\u5408\uff0c\u4f7f\u6240\u6709\u65e0\u5e8f\u70b9\u5bf9\u7684 XOR \u503c\u4e92\u4e0d\u76f8\u540c\u3002"
+    "zh": "选择一个集合，使所有无序点对的 XOR 值互不相同。"
   },
   "keywords": [
     "constructive",
@@ -72,7 +72,13 @@
         },
         "resource_description": "ARM64 CPU profile for Frontier-CS file-based optimization checks.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -98,7 +104,9 @@
       "result_file": "result.json"
     },
     "validation_runs": "public/runs.json",
-    "official_runs": "private-benchmark/runs.json"
+    "official_runs": "private-benchmark/runs.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -114,7 +122,8 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average normalized Frontier-CS score on a 0-100 scale."
+        "metric_description": "Average normalized Frontier-CS score on a 0-100 scale.",
+        "unit": null
       },
       {
         "name": "valid_cases",
@@ -139,5 +148,7 @@
         "valid_cases"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

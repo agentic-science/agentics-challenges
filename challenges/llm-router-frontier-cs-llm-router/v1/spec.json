@@ -45,7 +45,8 @@
             "cpu_limit_millis": 1000,
             "disk_limit_mb": 1024,
             "network_access": "disabled"
-          }
+          },
+          "run": null
         },
         "evaluator": {
           "setup": {
@@ -65,7 +66,13 @@
         },
         "resource_description": "ARM64 CPU profile for the Frontier-CS LLM router benchmark.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -120,21 +127,24 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Source normalized accuracy-minus-cost score."
+        "metric_description": "Source normalized accuracy-minus-cost score.",
+        "unit": null
       },
       {
         "name": "score_unbounded",
         "label": "Unbounded Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Raw source score before any platform interpretation."
+        "metric_description": "Raw source score before any platform interpretation.",
+        "unit": null
       },
       {
         "name": "runs_successfully",
         "label": "Runs Successfully",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Whether the source evaluator loaded and ran the submitted router."
+        "metric_description": "Whether the source evaluator loaded and ran the submitted router.",
+        "unit": null
       },
       {
         "name": "total_queries",
@@ -149,28 +159,32 @@
         "label": "Accuracy",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Fraction of prompts answered correctly by the selected tiers."
+        "metric_description": "Fraction of prompts answered correctly by the selected tiers.",
+        "unit": null
       },
       {
         "name": "avg_cost",
         "label": "Average Cost",
         "direction": "minimize",
         "visibility": "public",
-        "metric_description": "Mean source inference cost of selected tiers."
+        "metric_description": "Mean source inference cost of selected tiers.",
+        "unit": null
       },
       {
         "name": "raw_score",
         "label": "Raw Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Accuracy minus lambda times average cost."
+        "metric_description": "Accuracy minus lambda times average cost.",
+        "unit": null
       },
       {
         "name": "oracle_raw_score",
         "label": "Oracle Raw Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Raw score of the source oracle router over the evaluated rows."
+        "metric_description": "Raw score of the source oracle router over the evaluated rows.",
+        "unit": null
       }
     ],
     "ranking": {
@@ -180,5 +194,7 @@
         "avg_cost"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

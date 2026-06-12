@@ -72,7 +72,13 @@
         },
         "resource_description": "ARM64 CPU profile for directed graph path validation.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -98,13 +104,16 @@
       "result_file": "result.json"
     },
     "validation_runs": "public/validation-runs.json",
-    "official_runs": "public/official-runs.json"
+    "official_runs": "public/official-runs.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
     "public_policy": "full",
     "private_benchmark_policy": "score_only",
-    "private_benchmark_enabled": false
+    "private_benchmark_enabled": false,
+    "private_benchmark_dir": null
   },
   "metric_schema": {
     "metrics": [
@@ -113,7 +122,8 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average threshold score on a 0-100 scale."
+        "metric_description": "Average threshold score on a 0-100 scale.",
+        "unit": null
       },
       {
         "name": "valid_cases",
@@ -139,5 +149,7 @@
         "total_path_length"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }

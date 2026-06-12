@@ -12,9 +12,13 @@
       "output_files": [
         "output.bin"
       ],
-      "expected_output_source_path": "public/expected/public_square.bin",
-      "tolerance_abs": 0.001,
-      "tolerance_rel": 0.0001
+      "stdin_json": null,
+      "stdin_text": null,
+      "metadata": {
+        "expected_output_source_path": "public/expected/public_square.bin",
+        "tolerance_abs": 0.001,
+        "tolerance_rel": 0.0001
+      }
     },
     {
       "run_name": "public_rectangular",
@@ -28,9 +32,13 @@
       "output_files": [
         "output.bin"
       ],
-      "expected_output_source_path": "public/expected/public_rectangular.bin",
-      "tolerance_abs": 0.001,
-      "tolerance_rel": 0.0001
+      "stdin_json": null,
+      "stdin_text": null,
+      "metadata": {
+        "expected_output_source_path": "public/expected/public_rectangular.bin",
+        "tolerance_abs": 0.001,
+        "tolerance_rel": 0.0001
+      }
     }
   ]
 }

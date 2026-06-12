@@ -4,7 +4,7 @@
   "challenge_title": "Knight Tour Path",
   "summary": {
     "en": "Construct a long non-revisiting knight path from a requested start square.",
-    "zh": "\u4ece\u7ed9\u5b9a\u8d77\u70b9\u6784\u9020\u5c3d\u53ef\u80fd\u957f\u4e14\u4e0d\u91cd\u590d\u7684\u9a91\u58eb\u8def\u5f84\u3002"
+    "zh": "从给定起点构造尽可能长且不重复的骑士路径。"
   },
   "keywords": [
     "pathfinding",
@@ -72,7 +72,13 @@
         },
         "resource_description": "ARM64 CPU profile for Frontier-CS file-based optimization checks.",
         "hardware_metadata": {
-          "kind": "cpu"
+          "kind": "cpu",
+          "gpu_model": null,
+          "gpu_count": null,
+          "gpu_memory_gb": null,
+          "cuda_variant": null,
+          "cuda_version": null,
+          "driver_minimum": null
         }
       }
     }
@@ -98,7 +104,9 @@
       "result_file": "result.json"
     },
     "validation_runs": "public/runs.json",
-    "official_runs": "private-benchmark/runs.json"
+    "official_runs": "private-benchmark/runs.json",
+    "validation_setup": null,
+    "official_evaluation_setup": null
   },
   "datasets": {
     "public_dir": "public",
@@ -114,7 +122,8 @@
         "label": "Score",
         "direction": "maximize",
         "visibility": "public",
-        "metric_description": "Average normalized Frontier-CS score on a 0-100 scale."
+        "metric_description": "Average normalized Frontier-CS score on a 0-100 scale.",
+        "unit": null
       },
       {
         "name": "valid_cases",
@@ -139,5 +148,7 @@
         "valid_cases"
       ]
     }
-  }
+  },
+  "closes_at": null,
+  "official_submission_limit": null
 }
