@@ -6,6 +6,14 @@ PYTHON_INSTALL_DIR = "uv-python"
 PYTHON_REQUEST = "3.12"
 PYPROJECT = '[project]\nname = "mixed_gemm_frontier_cs_mixed_gemm"\nversion = "0.1.0"\nrequires-python = ">=3.12,<3.13"\ndependencies = [\n  "torch>=2.11.0,<2.12.0",\n  "triton>=3.5.0,<4",\n  "numpy>=1.26",\n  "tqdm>=4.64",\n]\n\n[tool.uv]\npackage = false\n\n[tool.uv.sources]\ntorch = [\n  { index = "pytorch-cu130", marker = "sys_platform == \'linux\'" },\n]\n\n[[tool.uv.index]]\nname = "pytorch-cu130"\nurl = "https://download.pytorch.org/whl/cu130"\nexplicit = true\n'
 
+def find_managed_python(setup_dir: Path, env: dict[str, str]) -> Path:
+    install_dir = setup_dir / PYTHON_INSTALL_DIR
+    subprocess.run(["uv", "python", "install", PYTHON_REQUEST, "--install-dir", str(install_dir)], check=True, env=env, timeout=900)
+    candidates = sorted(install_dir.glob("*/bin/python"))
+    if not candidates:
+        raise RuntimeError(f"uv did not install a managed Python under {install_dir}")
+    return candidates[0]
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Set up evaluator env")
     parser.add_argument("--challenge-dir", required=True)
@@ -21,7 +29,7 @@ def main() -> int:
     env["UV_CACHE_DIR"] = str(setup_dir / "uv-cache")
     env["UV_LINK_MODE"] = "copy"
     env["UV_PROJECT_ENVIRONMENT"] = str(project_dir / ".venv")
-    python = Path(sys.executable)
+    python = find_managed_python(setup_dir, env)
     subprocess.run(["uv", "sync", "--project", str(project_dir), "--python", str(python), "--no-dev", "--no-install-project"], check=True, env=env, timeout=1200)
     (project_dir / "agentics-env.json").write_text(json.dumps({"mode": args.mode, "target": args.target}, indent=2), encoding="utf-8")
     shutil.rmtree(setup_dir / "uv-cache", ignore_errors=True)

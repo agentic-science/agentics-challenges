@@ -16,9 +16,18 @@ name="pytorch-cu130"
 url="https://download.pytorch.org/whl/cu130"
 explicit=true
 """
+
+def find_managed_python(setup_dir: Path, env: dict[str, str]) -> Path:
+    install_dir = setup_dir / PYTHON_INSTALL_DIR
+    subprocess.run(["uv", "python", "install", PYTHON_REQUEST, "--install-dir", str(install_dir)], check=True, env=env, timeout=900)
+    candidates = sorted(install_dir.glob("*/bin/python"))
+    if not candidates:
+        raise RuntimeError(f"uv did not install a managed Python under {install_dir}")
+    return candidates[0]
+
 def main():
     p=argparse.ArgumentParser(); p.add_argument("--challenge-dir",required=True); p.add_argument("--setup-dir",required=True); p.add_argument("--mode",required=True); p.add_argument("--target",required=True); a=p.parse_args(); sd=Path(a.setup_dir); pd=sd/ENV_PROJECT_DIR; pd.mkdir(parents=True,exist_ok=True); (pd/"pyproject.toml").write_text(PYPROJECT)
     env=os.environ.copy(); env["UV_CACHE_DIR"]=str(sd/"uv-cache"); env["UV_LINK_MODE"]="copy"; env["UV_PROJECT_ENVIRONMENT"]=str(pd/".venv")
-    py=Path(sys.executable)
+    py=find_managed_python(sd, env)
     subprocess.run(["uv","sync","--project",str(pd),"--python",str(py),"--no-dev","--no-install-project"],check=True,env=env,timeout=900); r=subprocess.run([str(pd/".venv/bin/python"),"-c","import json,torch,triton; print(json.dumps({'python_ok':True,'torch':torch.__version__,'triton':triton.__version__,'cuda_available':bool(torch.cuda.is_available())}))"],check=True,capture_output=True,text=True,timeout=60); (pd/"agentics-env.json").write_text(r.stdout); shutil.rmtree(sd/"uv-cache",ignore_errors=True); return 0
 if __name__=="__main__": raise SystemExit(main())

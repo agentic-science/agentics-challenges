@@ -35,6 +35,13 @@ url = "https://download.pytorch.org/whl/cu130"
 explicit = true
 """
 
+def find_managed_python(setup_dir: Path, env: dict[str, str]) -> Path:
+    install_dir = setup_dir / PYTHON_INSTALL_DIR
+    subprocess.run(["uv", "python", "install", PYTHON_REQUEST, "--install-dir", str(install_dir)], check=True, env=env, timeout=900)
+    candidates = sorted(install_dir.glob("*/bin/python"))
+    if not candidates:
+        raise RuntimeError(f"uv did not install a managed Python under {install_dir}")
+    return candidates[0]
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Set up the Mamba2 scan evaluator environment")
@@ -52,7 +59,7 @@ def main() -> int:
     env["UV_CACHE_DIR"] = str(setup_dir / "uv-cache")
     env["UV_LINK_MODE"] = "copy"
     env["UV_PROJECT_ENVIRONMENT"] = str(project_dir / ".venv")
-    python = Path(sys.executable)
+    python = find_managed_python(setup_dir, env)
     subprocess.run(
         ["uv", "sync", "--project", str(project_dir), "--python", str(python), "--no-dev", "--no-install-project"],
         check=True,
