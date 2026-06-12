@@ -1,3 +1,3 @@
-# Smoke solution for gdpa-attention-kernel-frontier-cs-gdpa-attn
+# GDPA Attention Kernel Baseline Solution
 
-Returns a plain PyTorch implementation of the required `gdpa_attn` function.
+Provides a plain PyTorch implementation of the required `gdpa_attn` function.

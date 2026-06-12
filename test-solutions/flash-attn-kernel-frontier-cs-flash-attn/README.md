@@ -1,3 +1,3 @@
-# Smoke solution for flash-attn-kernel-frontier-cs-flash-attn
+# Flash Attention Kernel Baseline Solution
 
-Returns a plain PyTorch implementation of the required `flash_attn` function.
+Provides a plain PyTorch implementation of the required `flash_attn` function.

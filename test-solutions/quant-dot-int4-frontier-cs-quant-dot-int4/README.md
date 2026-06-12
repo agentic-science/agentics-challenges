@@ -1,3 +1,3 @@
-# quant-dot-int4-frontier-cs-quant-dot-int4 Smoke Solution
+# Quant Dot INT4 Baseline Solution
 
-Cheap public-validation smoke solution.
+Straightforward baseline implementation for public validation.

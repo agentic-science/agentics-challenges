@@ -1,3 +1,3 @@
-# Smoke solution for fused-linear-jsd-kernel-frontier-cs-fused-linear-jsd
+# Fused Linear JSD Kernel Baseline Solution
 
-Returns a plain PyTorch implementation of the required `fused_linear_jsd` function.
+Provides a plain PyTorch implementation of the required `fused_linear_jsd` function.

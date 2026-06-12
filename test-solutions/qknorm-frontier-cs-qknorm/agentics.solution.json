@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap smoke solution for qknorm-frontier-cs-qknorm.",
+  "note": "FlashInfer RMSNorm baseline for qknorm-frontier-cs-qknorm.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

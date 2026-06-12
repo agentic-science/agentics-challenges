@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for decoding-attn-kernel-frontier-cs-decoding-attn.",
+  "note": "Simple PyTorch baseline for decoding-attn-kernel-frontier-cs-decoding-attn.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

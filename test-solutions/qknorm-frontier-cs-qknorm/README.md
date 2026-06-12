@@ -1,3 +1,3 @@
-# qknorm-frontier-cs-qknorm Smoke Solution
+# QKNorm Baseline Solution
 
-Cheap public-validation smoke solution.
+Straightforward baseline implementation for public validation.

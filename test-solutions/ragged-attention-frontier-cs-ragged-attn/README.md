@@ -1,3 +1,3 @@
-# ragged-attention-frontier-cs-ragged-attn Smoke Solution
+# Ragged Attention Baseline Solution
 
-Cheap public-validation smoke solution.
+Straightforward baseline implementation for public validation.

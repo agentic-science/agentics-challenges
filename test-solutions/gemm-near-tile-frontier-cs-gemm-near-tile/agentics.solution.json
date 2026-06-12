@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for gemm-near-tile-frontier-cs-gemm-near-tile.",
+  "note": "Simple baseline for gemm-near-tile-frontier-cs-gemm-near-tile.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

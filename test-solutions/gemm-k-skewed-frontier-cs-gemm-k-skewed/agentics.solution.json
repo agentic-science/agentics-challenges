@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for gemm-k-skewed-frontier-cs-gemm-k-skewed.",
+  "note": "Simple baseline for gemm-k-skewed-frontier-cs-gemm-k-skewed.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

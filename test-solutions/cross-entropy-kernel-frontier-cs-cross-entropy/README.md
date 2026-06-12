@@ -1,1 +1,1 @@
-# Smoke solution for cross-entropy-kernel-frontier-cs-cross-entropy
+# Cross Entropy Kernel Baseline Solution

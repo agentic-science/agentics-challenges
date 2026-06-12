@@ -1,3 +1,3 @@
-# vector-addition-frontier-cs-vector-addition-2-20 Smoke Solution
+# Vector Addition 2^20 Baseline Solution
 
-Simple Triton vector-add kernel for public validation.
+Simple Triton vector-add kernel for public validation and official runs.

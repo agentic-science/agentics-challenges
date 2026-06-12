@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for flash-attn-kernel-frontier-cs-flash-attn.",
+  "note": "Plain PyTorch baseline for flash-attn-kernel-frontier-cs-flash-attn.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

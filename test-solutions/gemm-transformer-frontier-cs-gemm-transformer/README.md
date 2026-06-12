@@ -1,3 +1,3 @@
-# gemm-transformer-frontier-cs-gemm-transformer Smoke Solution
+# GEMM Transformer Baseline Solution
 
-Cheap public-validation smoke solution.
+Straightforward baseline implementation for public validation.

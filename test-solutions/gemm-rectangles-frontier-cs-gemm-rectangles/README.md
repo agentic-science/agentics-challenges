@@ -1,1 +1,1 @@
-# Smoke solution for gemm-rectangles-frontier-cs-gemm-rectangles
+# GEMM Rectangles Baseline Solution

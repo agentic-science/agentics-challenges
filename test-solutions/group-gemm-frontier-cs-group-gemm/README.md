@@ -1,3 +1,3 @@
-# group-gemm-frontier-cs-group-gemm Smoke Solution
+# Group GEMM Baseline Solution
 
-Cheap public-validation smoke solution.
+Straightforward baseline implementation for public validation.

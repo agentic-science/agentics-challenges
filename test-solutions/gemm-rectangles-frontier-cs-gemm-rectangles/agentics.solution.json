@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for gemm-rectangles-frontier-cs-gemm-rectangles.",
+  "note": "Simple baseline for gemm-rectangles-frontier-cs-gemm-rectangles.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",
