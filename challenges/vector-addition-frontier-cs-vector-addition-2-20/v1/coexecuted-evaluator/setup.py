@@ -1,5 +1,5 @@
 from __future__ import annotations
-import argparse, json, os, shutil, subprocess
+import argparse, json, os, shutil, subprocess, sys
 from pathlib import Path
 ENV_PROJECT_DIR = "evaluator-env"
 PYTHON_INSTALL_DIR = "uv-python"
@@ -21,19 +21,11 @@ def main() -> int:
     env["UV_CACHE_DIR"] = str(setup_dir / "uv-cache")
     env["UV_LINK_MODE"] = "copy"
     env["UV_PROJECT_ENVIRONMENT"] = str(project_dir / ".venv")
-    env["UV_PYTHON_INSTALL_DIR"] = str(setup_dir / PYTHON_INSTALL_DIR)
-    subprocess.run(["uv", "python", "install", PYTHON_REQUEST], check=True, env=env, timeout=180)
-    managed = find_managed_python(env)
-    subprocess.run(["uv", "sync", "--project", str(project_dir), "--python", str(managed), "--no-dev", "--no-install-project"], check=True, env=env, timeout=1200)
+    python = Path(sys.executable)
+    subprocess.run(["uv", "sync", "--project", str(project_dir), "--python", str(python), "--no-dev", "--no-install-project"], check=True, env=env, timeout=1200)
     (project_dir / "agentics-env.json").write_text(json.dumps({"mode": args.mode, "target": args.target}, indent=2), encoding="utf-8")
     shutil.rmtree(setup_dir / "uv-cache", ignore_errors=True)
     return 0
 
-def find_managed_python(env: dict[str, str]) -> Path:
-    result = subprocess.run(["uv", "python", "find", PYTHON_REQUEST, "--managed-python", "--resolve-links"], check=True, capture_output=True, text=True, env=env, timeout=60)
-    path = Path(result.stdout.strip())
-    if not path.is_file():
-        raise RuntimeError(f"managed Python not found at {path}")
-    return path
 if __name__ == "__main__":
     raise SystemExit(main())

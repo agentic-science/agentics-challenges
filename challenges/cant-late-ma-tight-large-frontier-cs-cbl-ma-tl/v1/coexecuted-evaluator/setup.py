@@ -5,6 +5,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 ENV_PROJECT_DIR = "frontier-cs-cpu-env"
@@ -42,19 +43,9 @@ def main() -> int:
     env["UV_CACHE_DIR"] = str(setup_dir / "uv-cache")
     env["UV_LINK_MODE"] = "copy"
     env["UV_PROJECT_ENVIRONMENT"] = str(project_dir / ".venv")
-    env["UV_PYTHON_INSTALL_DIR"] = str(setup_dir / PYTHON_INSTALL_DIR)
-    subprocess.run(["uv", "python", "install", PYTHON_REQUEST], check=True, env=env, timeout=120)
-    result = subprocess.run(
-        ["uv", "python", "find", PYTHON_REQUEST, "--managed-python", "--resolve-links"],
-        check=True,
-        capture_output=True,
-        text=True,
-        env=env,
-        timeout=30,
-    )
-    managed_python = Path(result.stdout.strip())
+    python = Path(sys.executable)
     subprocess.run(
-        ["uv", "sync", "--project", str(project_dir), "--python", str(managed_python), "--no-dev", "--no-install-project"],
+        ["uv", "sync", "--project", str(project_dir), "--python", str(python), "--no-dev", "--no-install-project"],
         check=True,
         env=env,
         timeout=900,
