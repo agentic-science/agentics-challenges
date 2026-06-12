@@ -1,3 +1,5 @@
-# Sphere Packing in a Cube Public Smoke Solution
+# Sphere Packing in a Cube Baseline
 
-This solution is intentionally tiny and only targets the committed public validation fixture. It does not contain private official cases or answers and is not intended to be competitive on the private benchmark.
+Deterministic public-data-only baseline for `cube-sphere-packing-frontier-cs-algorithmic-48`.
+
+The runner builds several constructive lattice candidates, including cubic, face-centered, body-centered, and the two-point diagonal construction, then emits the candidate with the best conservative radius estimate. It does not use private official cases or answers.

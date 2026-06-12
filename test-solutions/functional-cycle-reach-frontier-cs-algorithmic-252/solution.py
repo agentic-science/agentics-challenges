@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import sys
-from collections import deque
 
 
 def read_int() -> int | None:
@@ -38,35 +37,32 @@ def discover_successor(room: int, n: int) -> int:
 
 
 def solve_case(n: int) -> None:
-    successor = [0] * (n + 1)
-    for room in range(1, n + 1):
-        successor[room] = discover_successor(room, n)
-
     path: list[int] = []
     seen_at = [None] * (n + 1)
     current = 1
     while seen_at[current] is None:
         seen_at[current] = len(path)
         path.append(current)
-        current = successor[current]
+        current = discover_successor(current, n)
 
     cycle = set(path[seen_at[current] :])
-    reverse_edges = [[] for _ in range(n + 1)]
+    known_answer = set(path)
+
+    if len(cycle) <= n - len(cycle):
+        probe_set = sorted(cycle)
+        include_when = 1
+    else:
+        probe_set = [room for room in range(1, n + 1) if room not in cycle]
+        include_when = 0
+
+    answer = sorted(known_answer)
     for room in range(1, n + 1):
-        reverse_edges[successor[room]].append(room)
+        if room in known_answer:
+            continue
+        if query(room, n, probe_set) == include_when:
+            answer.append(room)
 
-    reachable = [False] * (n + 1)
-    queue: deque[int] = deque(cycle)
-    for room in cycle:
-        reachable[room] = True
-    while queue:
-        room = queue.popleft()
-        for previous in reverse_edges[room]:
-            if not reachable[previous]:
-                reachable[previous] = True
-                queue.append(previous)
-
-    answer = [room for room in range(1, n + 1) if reachable[room]]
+    answer.sort()
     print(f"! {len(answer)} " + " ".join(map(str, answer)), flush=True)
 
 

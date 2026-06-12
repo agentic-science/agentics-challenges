@@ -39,22 +39,22 @@ def solve_case(n: int, edges: list[tuple[int, int]]) -> None:
         graph[u].append(v)
         graph[v].append(u)
 
-    current = [0] + [ask([node]) for node in range(1, n + 1)]
-    total = sum(current)
+    sums = [0] + [ask([node]) for node in range(1, n + 1)]
+    total = sum(sums)
     all_nodes = list(range(1, n + 1))
-    candidates = [node for node in all_nodes if abs(current[node]) == 1] or all_nodes
+    candidates = [node for node in all_nodes if abs(sums[node]) == 1] or all_nodes
     root = candidates[0]
+    toggled: list[int] = []
 
     for node in candidates:
         toggle(node)
+        toggled.append(node)
         new_total = ask(all_nodes)
         if abs(new_total - total) == 2 * n:
             root = node
-            total = new_total
             break
         total = new_total
 
-    sums = [0] + [ask([node]) for node in range(1, n + 1)]
     parent = parents_from(root, graph)
     values = [0] * (n + 1)
     values[root] = 1 if sums[root] > 0 else -1
@@ -65,6 +65,9 @@ def solve_case(n: int, edges: list[tuple[int, int]]) -> None:
                 diff = sums[nxt] - sums[node]
                 values[nxt] = 1 if diff > 0 else -1
                 order.append(nxt)
+
+    for node in toggled:
+        values[node] = -values[node]
 
     print("! " + " ".join(str(values[node]) for node in range(1, n + 1)), flush=True)
 

@@ -1,6 +1,5 @@
-# Hamiltonian Path Smoke Solution
+# Hamiltonian Path Baseline
 
-Valid minimal smoke solution for `hamiltonian-path-frontier-cs-algorithmic-5`.
+Deterministic public-data-only baseline for `hamiltonian-path-frontier-cs-algorithmic-5`.
 
-The runner reads the graph and always emits the one-vertex path `1`, which is a
-valid no-repeat path for every positive-size case.
+The runner parses the graph, emits an exact longest path for DAG inputs, and otherwise tries several bounded greedy forward/backward path extensions plus simple insertion repair. It always falls back to a one-vertex valid path when no edge extension is found.

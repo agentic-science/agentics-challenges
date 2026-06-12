@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for functional-cycle-reach-frontier-cs-algorithmic-252; intentionally finishes or fails fast.",
+  "note": "Exact interactive baseline for functional-cycle-reach-frontier-cs-algorithmic-252 using path-cycle discovery and long-jump membership queries.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

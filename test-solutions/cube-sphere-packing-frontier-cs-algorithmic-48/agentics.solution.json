@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Public smoke solution for Sphere Packing in a Cube.",
+  "note": "Deterministic lattice baseline for Sphere Packing in a Cube.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,3 +1,5 @@
-# Signed Rooted Tree Smoke Solution
+# Signed Rooted Tree Baseline
 
-Solves the tiny public interactive validation session.
+Interactive baseline for `signed-rooted-tree-frontier-cs-algorithmic-57`.
+
+The runner queries singleton path sums, uses root-candidate toggles to identify the root, reconstructs signs from path-sum differences, and adjusts for the toggled nodes before answering.

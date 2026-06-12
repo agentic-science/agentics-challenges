@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "One-vertex public smoke solution for the Frontier-CS Hamiltonian path migration.",
+  "note": "Deterministic DAG and greedy-path baseline for the Frontier-CS Hamiltonian path migration.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",
