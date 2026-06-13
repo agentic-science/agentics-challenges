@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 set -eu
-exec python3 -u solution.py
+exec timeout --kill-after=1s 50s python3 -u solution.py
