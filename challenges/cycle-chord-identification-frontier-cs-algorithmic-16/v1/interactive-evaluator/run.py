@@ -200,6 +200,9 @@ def main() -> int:
         session_name = str(session["session_name"])
         metadata = session["metadata"]
         cases = metadata["cases"]
+        case_timeout_sec = float(metadata.get("case_timeout_sec", 20.0))
+        if case_timeout_sec <= 0.0:
+            raise ValueError("metadata.case_timeout_sec must be positive")
     except Exception as exc:
         failure_result(output_path, args.mode, "unknown", f"invalid session: {exc}")
         signal_session_end()
@@ -241,19 +244,39 @@ def main() -> int:
             report_path = tmp_dir / f"report-{index}.txt"
             tout_path = tmp_dir / f"tout-{index}.txt"
             cmd = [str(binary), str(input_path), str(tout_path), str(answer_path), str(report_path)]
-            completed = subprocess.run(
-                cmd,
-                stdin=sys.stdin.buffer,
-                stdout=sys.stdout.buffer,
-                stderr=subprocess.PIPE,
-                text=False,
-            )
+            try:
+                completed = subprocess.run(
+                    cmd,
+                    stdin=sys.stdin.buffer,
+                    stdout=sys.stdout.buffer,
+                    stderr=subprocess.PIPE,
+                    text=False,
+                    timeout=case_timeout_sec,
+                )
+            except subprocess.TimeoutExpired:
+                message = f"interactor timed out after {case_timeout_sec:g} seconds"
+                logs.append(f"{case_name}: {message}")
+                case_results.append(
+                    {
+                        "case_name": case_name,
+                        "score": 0.0,
+                        "source_ratio": 0.0,
+                        "query_count": 0.0,
+                        "protocol_error": True,
+                        "message": message,
+                        "exit_code": 124,
+                    }
+                )
+                break
             stderr = completed.stderr.decode("utf-8", errors="replace") if completed.stderr else ""
             report_text = report_path.read_text(encoding="utf-8", errors="replace") if report_path.exists() else ""
             tout_text = tout_path.read_text(encoding="utf-8", errors="replace") if tout_path.exists() else ""
             ratio, numeric_report, message = parse_score(report_text)
             score = round(max(0.0, ratio) * 100.0, 6)
             protocol_error = not numeric_report
+            if completed.returncode != 0 and not report_text.strip():
+                protocol_error = True
+                message = f"interactor exited with status {completed.returncode}: {message}"
             combined = "\n".join(part for part in (report_text, stderr, tout_text) if part)
             query_count = extract_query_count(combined, tout_text)
             if stderr:
