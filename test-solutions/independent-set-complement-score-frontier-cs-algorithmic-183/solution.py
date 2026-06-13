@@ -14,28 +14,41 @@ def write_output(text: str) -> None:
     out.write_text(text, encoding="utf-8")
 
 
+def greedy_independent_set(n: int, edges: list[tuple[int, int]]) -> list[int]:
+    adjacency: list[set[int]] = [set() for _ in range(n)]
+    for u, v in edges:
+        if u == v:
+            continue
+        a = u - 1
+        b = v - 1
+        if 0 <= a < n and 0 <= b < n:
+            adjacency[a].add(b)
+            adjacency[b].add(a)
+
+    selected = [0] * n
+    blocked = bytearray(n)
+    order = sorted(range(n), key=lambda vertex: (len(adjacency[vertex]), vertex))
+    for vertex in order:
+        if blocked[vertex]:
+            continue
+        selected[vertex] = 1
+        blocked[vertex] = 1
+        for neighbor in adjacency[vertex]:
+            blocked[neighbor] = 1
+    return selected
+
+
 def main() -> int:
-    data = read_input().split()
-    kind = 'all_zero_bits'
-    if kind == "zero_path":
-        write_output("0\n")
-    elif kind == "zero_grid":
-        write_output("\n".join(["0" * 14 for _ in range(8)]) + "\n")
-    elif kind == "zero_set":
-        write_output("0\n")
-    elif kind == "sphere_zeroes":
-        n = int(data[0]) if data else 2
-        write_output("0\n" + "".join("0 0 0\n" for _ in range(n)))
-    elif kind in {"all_ones", "all_zero_bits", "color_by_index", "group_by_index"}:
-        n = int(data[0]) if data else 1
-        if kind == "all_ones":
-            write_output("".join("1\n" for _ in range(n)))
-        elif kind == "all_zero_bits":
-            write_output("".join("0\n" for _ in range(n)))
-        else:
-            write_output("".join(f"{i}\n" for i in range(1, n + 1)))
-    else:
-        raise RuntimeError(f"unknown solution kind: {kind}")
+    data = [int(token) for token in read_input().split()]
+    if len(data) < 2:
+        write_output("")
+        return 0
+
+    n, m = data[0], data[1]
+    raw_edges = data[2:]
+    edges = [(raw_edges[2 * i], raw_edges[2 * i + 1]) for i in range(min(m, len(raw_edges) // 2))]
+    solution = greedy_independent_set(n, edges)
+    write_output("\n".join(str(value) for value in solution) + "\n")
     return 0
 
 

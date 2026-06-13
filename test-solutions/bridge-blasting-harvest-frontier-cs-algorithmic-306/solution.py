@@ -318,14 +318,110 @@ def solve_306() -> None:
     if not data:
         return
     n, e = data[0], data[1]
-    pos = 2 + 5 * e
+    eu = [0] * (e + 1)
+    ev = [0] * (e + 1)
+    install = [0] * (e + 1)
+    blast = [0] * (e + 1)
+    limit = [0] * (e + 1)
+    adj: list[list[tuple[int, int]]] = [[] for _ in range(n + 1)]
+    pos = 2
+    for eid in range(1, e + 1):
+        u, v, a, b, c = data[pos], data[pos + 1], data[pos + 2], data[pos + 3], data[pos + 4]
+        pos += 5
+        eu[eid] = u
+        ev[eid] = v
+        install[eid] = a
+        blast[eid] = b
+        limit[eid] = c
+        adj[u].append((v, eid))
+        adj[v].append((u, eid))
+
+    sys.setrecursionlimit(max(1_000_000, n * 3))
+    tin = [0] * (n + 1)
+    low = [0] * (n + 1)
+    parent = [0] * (n + 1)
+    parent_edge = [0] * (n + 1)
+    children: list[list[int]] = [[] for _ in range(n + 1)]
+    is_bridge = [False] * (e + 1)
+    timer = 0
+
+    def dfs(u: int, peid: int) -> None:
+        nonlocal timer
+        timer += 1
+        tin[u] = low[u] = timer
+        for v, eid in adj[u]:
+            if eid == peid:
+                continue
+            if tin[v]:
+                low[u] = min(low[u], tin[v])
+                continue
+            parent[v] = u
+            parent_edge[v] = eid
+            children[u].append(v)
+            dfs(v, eid)
+            low[u] = min(low[u], low[v])
+            if low[v] > tin[u]:
+                is_bridge[eid] = True
+
+    dfs(1, 0)
+
+    top_bridge = [0] * (n + 1)
+    stack = [1]
+    while stack:
+        u = stack.pop()
+        for v in children[u]:
+            eid = parent_edge[v]
+            top_bridge[v] = eid if is_bridge[eid] else top_bridge[u]
+            stack.append(v)
+
     m = data[pos]
     pos += 1
-    for _ in range(m):
+    day_limit = [0] * m
+    day_values: list[dict[int, int]] = []
+    bridge_day_values: dict[int, list[tuple[int, int]]] = {}
+    for day in range(m):
         r = data[pos]
-        pos += 2 + 2 * r
-    out = ["0"]
-    out.extend("0" for _ in range(m))
+        day_limit[day] = data[pos + 1]
+        pos += 2
+        values: dict[int, int] = {}
+        for _ in range(r):
+            island = data[pos]
+            value = data[pos + 1]
+            pos += 2
+            eid = top_bridge[island]
+            if eid:
+                values[eid] = values.get(eid, 0) + value
+        day_values.append(values)
+        for eid, value in values.items():
+            bridge_day_values.setdefault(eid, []).append((value, day))
+
+    allowed_days: dict[int, set[int]] = {}
+    rigged: list[int] = []
+    for eid, values in bridge_day_values.items():
+        profitable = sorted(
+            ((value - blast[eid], value, day) for value, day in values if value > blast[eid]),
+            reverse=True,
+        )
+        chosen = profitable[:limit[eid]]
+        if sum(net for net, _value, _day in chosen) > install[eid]:
+            rigged.append(eid)
+            allowed_days[eid] = {day for _net, _value, day in chosen}
+
+    rigged.sort()
+    out = [str(len(rigged)), " ".join(map(str, rigged))]
+    det_count = {eid: 0 for eid in rigged}
+    for day, values in enumerate(day_values):
+        candidates: list[tuple[int, int]] = []
+        for eid, value in values.items():
+            if eid in allowed_days and day in allowed_days[eid] and det_count[eid] < limit[eid]:
+                candidates.append((value - blast[eid], eid))
+        candidates.sort(reverse=True)
+        chosen_ids: list[int] = []
+        for _net, eid in candidates[:day_limit[day]]:
+            det_count[eid] += 1
+            chosen_ids.append(eid)
+        chosen_ids.sort()
+        out.append(str(len(chosen_ids)) + (" " + " ".join(map(str, chosen_ids)) if chosen_ids else ""))
     sys.stdout.write("\n".join(out) + "\n")
 
 

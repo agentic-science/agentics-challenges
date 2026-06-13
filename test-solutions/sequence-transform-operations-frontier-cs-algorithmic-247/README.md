@@ -1,3 +1,6 @@
-# Sequence Transform Operations Smoke Solution
+# Sequence Transform Operations Baseline
 
-A simple public smoke solution for `sequence-transform-operations-frontier-cs-algorithmic-247`. It reads stdin and writes stdout.
+Implements a constructive equal-sum baseline.
+For `N >= 3`, it first applies direct operations that greedily reduce distance to the target, then uses a four-operation identity translation to move one remaining unit at a time from positions with surplus to positions with deficit.
+For `N = 2`, it handles the only nontrivial operation directly.
+The sequence is valid for reachable cases but is not intended to be operation-optimal.

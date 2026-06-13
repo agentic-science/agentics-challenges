@@ -1,3 +1,3 @@
-# Communication Robot Network Smoke Solution
+# Communication Robot Network Greedy Baseline
 
-Reads stdin and writes a conservative candidate answer to stdout for `communication-robot-network-frontier-cs-algorithmic-211`.
+Builds a minimum-spanning-tree style network over robots and optional relays, prunes unused relay leaves, and falls back to the robot-only tree when relays are not beneficial.

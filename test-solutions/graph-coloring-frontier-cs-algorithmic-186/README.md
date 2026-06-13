@@ -1,3 +1,3 @@
-# Graph Coloring Smoke Solution
+# Graph Coloring Baseline Solution
 
-A deliberately simple valid-output smoke solution for `graph-coloring-frontier-cs-algorithmic-186`.
+A DSATUR greedy coloring baseline for `graph-coloring-frontier-cs-algorithmic-186`, followed by a few color-reduction passes.

@@ -38,8 +38,19 @@ int main() {
         }
         if (!foundAsymmetric) {
             if (!pool.empty()) {
-                // the remaining player in pool is the Impostor
-                cout << "! " << pool[0] << endl;
+                // The Impostor is either the untouched spare or the unpaired
+                // player. Compare one of them with a paired player known not
+                // to be the Impostor.
+                int leftover = pool[0];
+                int ref = 2;
+                int xr, rx;
+                cout << "? " << leftover << " " << ref << endl;
+                cout.flush();
+                cin >> xr;
+                cout << "? " << ref << " " << leftover << endl;
+                cout.flush();
+                cin >> rx;
+                cout << "! " << (xr != rx ? leftover : spare) << endl;
                 cout.flush();
             } else {
                 // pool empty, Impostor is spare

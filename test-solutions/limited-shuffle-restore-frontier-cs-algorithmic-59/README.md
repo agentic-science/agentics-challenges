@@ -1,3 +1,3 @@
-# Limited Shuffle Restore Smoke Solution
+# Limited Shuffle Restore Baseline Solution
 
-Solves the tiny public interactive validation session.
+Maintains hidden positions in increasing value order from right to left. It sorts the last three positions, then inserts three earlier positions at a time with a small decision tree that fits the source query limit.

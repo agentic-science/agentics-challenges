@@ -2,6 +2,7 @@
   "protocol": "zip_project",
   "protocol_version": 1,
   "commands": {
+    "build": "build.sh",
     "run": "run.sh"
   }
 }

@@ -1,3 +1,5 @@
-# Permutation Segment Geemu Smoke Solution
+# Permutation Segment Geemu Baseline
 
-This is a deliberately small interactive baseline for `permutation-segment-geemu-frontier-cs-algorithmic-52`. It asks all interval segment counts for tiny public cases and brute-forces a consistent permutation.
+Reconstructs the hidden value-adjacency path with interval segment-count queries.
+Each query reveals the number of value-adjacency edges inside a position interval, and a divide-and-conquer search recovers all path edges without swaps.
+The final labeling may be reversed, which the source interactor accepts.

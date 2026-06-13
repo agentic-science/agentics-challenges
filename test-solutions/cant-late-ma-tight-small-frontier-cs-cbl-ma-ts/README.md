@@ -1,1 +1,3 @@
-# Smoke solution for cant-late-ma-tight-small-frontier-cs-cbl-ma-ts
+# Deadline-aware baseline for cant-late-ma-tight-small-frontier-cs-cbl-ma-ts
+
+This baseline reads the runtime simulator spec, uses available spot capacity while the deadline has enough slack, and switches to on-demand when another restart would threaten completion.

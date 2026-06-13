@@ -1,3 +1,3 @@
-# Brush Stroke Area Smoke Solution
+# Brush Stroke Area Baseline Solution
 
-A public smoke solution for `brush-stroke-area-frontier-cs-algorithmic-133`.
+A baseline solution for `brush-stroke-area-frontier-cs-algorithmic-133`.

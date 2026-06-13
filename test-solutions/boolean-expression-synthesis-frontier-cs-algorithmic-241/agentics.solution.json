@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple stdin/stdout smoke solution for boolean-expression-synthesis-frontier-cs-algorithmic-241.",
+  "note": "Simple stdin/stdout baseline solution for boolean-expression-synthesis-frontier-cs-algorithmic-241.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap smoke solution for symreg-mccormick-frontier-cs-symreg-mccormick.",
+  "note": "Cheap baseline solution for symreg-mccormick-frontier-cs-symreg-mccormick.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

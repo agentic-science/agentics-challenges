@@ -1,3 +1,3 @@
-# Binary Square-Count Substrings Smoke Solution
+# Binary Square-Count Substrings Baseline Solution
 
-A simple public smoke solution for `binary-square-substrings-frontier-cs-algorithmic-228`. It reads stdin and writes stdout.
+A simple baseline solution for `binary-square-substrings-frontier-cs-algorithmic-228`. It reads stdin and writes stdout.

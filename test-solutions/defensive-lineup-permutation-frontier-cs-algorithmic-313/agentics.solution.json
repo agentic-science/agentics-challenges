@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple stdin/stdout smoke solution for defensive-lineup-permutation-frontier-cs-algorithmic-313.",
+  "note": "Candidate-selection baseline for defensive-lineup-permutation-frontier-cs-algorithmic-313.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

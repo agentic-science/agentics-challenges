@@ -1,3 +1,3 @@
-# symreg-ripple-frontier-cs-symreg-ripple Smoke Solution
+# symreg-ripple-frontier-cs-symreg-ripple Baseline Solution
 
-Cheap public-validation smoke solution.
+Symbolic expression baseline for public validation and official evaluation.

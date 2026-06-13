@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Honest exhaustive small-graph smoke solution for hidden-bipartite-graph-frontier-cs-algorithmic-106.",
+  "note": "Subset-query BFS-layer baseline for hidden-bipartite-graph-frontier-cs-algorithmic-106.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

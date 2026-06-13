@@ -1,3 +1,3 @@
-# Delivery Route Selection Smoke Solution
+# Delivery Route Selection Baseline Solution
 
-A public smoke solution for `delivery-route-selection-frontier-cs-algorithmic-152`.
+A nearest-neighbor and local-improvement route baseline for `delivery-route-selection-frontier-cs-algorithmic-152`.

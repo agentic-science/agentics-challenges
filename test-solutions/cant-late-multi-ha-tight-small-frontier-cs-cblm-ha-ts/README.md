@@ -1,1 +1,3 @@
-# Smoke solution for cant-late-multi-ha-tight-small-frontier-cs-cblm-ha-ts
+# Deadline-aware multi-region spot baseline for cant-late-multi-ha-tight-small-frontier-cs-cblm-ha-ts
+
+This baseline reads the evaluator-provided deadline and restart overhead, uses spot instances when any currently available region can provide them, and falls back to on-demand when the remaining deadline slack becomes too tight for another restart.

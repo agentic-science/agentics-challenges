@@ -1,3 +1,3 @@
-# Completely Multiplicative Function Smoke Solution
+# Completely Multiplicative Function Greedy Baseline
 
-A public smoke solution for `completely-multiplicative-function-frontier-cs-algorithmic-83`.
+Assigns each new prime sign to reduce the current prefix imbalance, then derives composite values from complete multiplicativity.

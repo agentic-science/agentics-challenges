@@ -1,3 +1,4 @@
-# Magic Word Spells Smoke Solution
+# Magic Word Spells Baseline
 
-This public smoke solution constructs a tiny set of binary words with unique ordered-pair powers, then inverts the evaluator's power questions by computing distinct-substring counts.
+Constructs the shortest distinct binary words in length order, then answers each query using the migrated interactor's deterministic ordered-pair schedule.
+The solution handles arbitrary `n` and `q` values supported by the checked-in Frontier-CS interactor.

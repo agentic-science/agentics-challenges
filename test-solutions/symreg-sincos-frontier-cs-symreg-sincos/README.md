@@ -1,3 +1,3 @@
-# symreg-sincos-frontier-cs-symreg-sincos Smoke Solution
+# symreg-sincos-frontier-cs-symreg-sincos Baseline Solution
 
-Cheap public-validation smoke solution.
+Symbolic expression baseline for public validation and official evaluation.

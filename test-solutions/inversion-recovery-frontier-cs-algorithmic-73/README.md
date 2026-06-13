@@ -1,3 +1,3 @@
-# Inversion Recovery Smoke Solution
+# Inversion Recovery Baseline Solution
 
-This public smoke solution queries all subarray inversion parities for small `n`, then brute-forces the unique permutation consistent with those answers.
+This solution uses interval inversion parity as an on-demand comparator. For positions `i < j`, four cached interval queries isolate whether `p_i > p_j`; sorting positions by that comparator recovers the hidden permutation exactly.

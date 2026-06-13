@@ -1,3 +1,3 @@
-# Clique Cover Smoke Solution
+# Clique Cover Greedy Baseline
 
-A deliberately simple valid-output smoke solution for `clique-cover-frontier-cs-algorithmic-187`.
+Uses deterministic DSATUR coloring on the complement graph, then moves vertices into lower compatible colors when possible.

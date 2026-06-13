@@ -1,3 +1,3 @@
-# Spectrum-Friendly Beacon String Smoke Solution
+# Spectrum-Friendly Beacon String Baseline Solution
 
-A simple public smoke solution for `beacon-string-arrangement-frontier-cs-algorithmic-302`. It reads stdin and writes stdout.
+A simple baseline solution for `beacon-string-arrangement-frontier-cs-algorithmic-302`. It reads stdin and writes stdout.

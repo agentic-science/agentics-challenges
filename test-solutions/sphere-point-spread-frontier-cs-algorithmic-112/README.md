@@ -1,3 +1,3 @@
-# Sphere Point Spread Smoke Solution
+# Sphere Point Spread Baseline
 
-A deliberately simple valid-output smoke solution for `sphere-point-spread-frontier-cs-algorithmic-112`.
+Places points on a shrunken Fibonacci sphere, with exact minimum-distance reporting from the generated coordinates. Small cases use simple symmetric configurations.

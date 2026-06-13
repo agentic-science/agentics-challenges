@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for digit-grid-prefix-frontier-cs-algorithmic-110.",
+  "note": "Generated-grid local-search baseline for digit-grid-prefix-frontier-cs-algorithmic-110.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

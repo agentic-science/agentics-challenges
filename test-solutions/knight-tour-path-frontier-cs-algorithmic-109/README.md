@@ -1,3 +1,4 @@
-# Knight Tour Path Smoke Solution
+# Knight Tour Path Baseline
 
-A deliberately simple valid-output smoke solution for `knight-tour-path-frontier-cs-algorithmic-109`.
+Uses Warnsdorff's rule to construct a long non-revisiting knight path from the requested start square.
+The path is generated from the input board only and may stop before a full tour if the heuristic reaches a dead end.

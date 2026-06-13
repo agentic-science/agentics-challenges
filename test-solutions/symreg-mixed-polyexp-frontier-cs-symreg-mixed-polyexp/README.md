@@ -1,3 +1,3 @@
-# symreg-mixed-polyexp-frontier-cs-symreg-mixed-polyexp Smoke Solution
+# symreg-mixed-polyexp-frontier-cs-symreg-mixed-polyexp Baseline Solution
 
-Cheap public-validation smoke solution.
+Symbolic expression baseline for public validation and official evaluation.

@@ -13,17 +13,19 @@ int main() {
     vector<signed char> val(n + 1, 1);
     val[1] = 1;
 
+    long long prefix_sum = 1;
     for (int i = 2; i <= n; ++i) {
         if (lp[i] == 0) {
             lp[i] = i;
             primes.push_back(i);
-            val[i] = -1; // Liouville: f(p) = -1
+            val[i] = prefix_sum > 0 ? -1 : 1;
         }
+        prefix_sum += val[i];
         for (int p : primes) {
             long long j = 1LL * i * p;
             if (j > n) break;
             lp[j] = p;
-            val[j] = val[i] * val[p]; // completely multiplicative
+            val[j] = val[i] * val[p];
             if (i % p == 0) break;
         }
     }

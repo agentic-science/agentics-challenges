@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap smoke solution for imagenet-200k-frontier-cs-imagenet-200k.",
+  "note": "Cheap baseline solution for imagenet-200k-frontier-cs-imagenet-200k.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

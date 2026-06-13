@@ -1,3 +1,3 @@
-# symreg-peaks-frontier-cs-symreg-peaks Smoke Solution
+# symreg-peaks-frontier-cs-symreg-peaks Baseline Solution
 
-Cheap public-validation smoke solution.
+Symbolic expression baseline for public validation and official evaluation.

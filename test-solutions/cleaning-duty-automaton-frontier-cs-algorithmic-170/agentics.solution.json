@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple public smoke solution for cleaning-duty-automaton-frontier-cs-algorithmic-170.",
+  "note": "Simple baseline solution for cleaning-duty-automaton-frontier-cs-algorithmic-170.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

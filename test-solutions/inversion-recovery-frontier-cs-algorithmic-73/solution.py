@@ -1,40 +1,60 @@
 from __future__ import annotations
 
-import itertools
+import functools
 import sys
 
 
-def ask(l: int, r: int) -> int:
-    print(f"0 {l} {r}", flush=True)
-    line = sys.stdin.readline()
-    if line == "":
-        raise EOFError("interactive evaluator closed before replying")
-    return int(line.strip())
+class InversionOracle:
+    def __init__(self) -> None:
+        self.cache: dict[tuple[int, int], int] = {}
 
+    def parity(self, left: int, right: int) -> int:
+        if left >= right:
+            return 0
+        key = (left, right)
+        cached = self.cache.get(key)
+        if cached is not None:
+            return cached
 
-def inversion_parity(values: tuple[int, ...], left: int, right: int) -> int:
-    parity = 0
-    for i in range(left, right):
-        for j in range(i + 1, right + 1):
-            parity ^= int(values[i] > values[j])
-    return parity
+        print(f"0 {left} {right}", flush=True)
+        line = sys.stdin.readline()
+        if line == "":
+            raise EOFError("interactive evaluator closed before replying")
+        value = int(line.strip())
+        self.cache[key] = value
+        return value
+
+    def greater(self, i: int, j: int) -> bool:
+        if i == j:
+            return False
+        if i < j:
+            bit = (
+                self.parity(i, j)
+                ^ self.parity(i + 1, j)
+                ^ self.parity(i, j - 1)
+                ^ self.parity(i + 1, j - 1)
+            )
+            return bit == 1
+
+        return not self.greater(j, i)
 
 
 def solve_case(n: int) -> None:
-    if n > 8:
-        print("1 " + " ".join(str(value) for value in range(1, n + 1)), flush=True)
-        return
+    oracle = InversionOracle()
 
-    answers: dict[tuple[int, int], int] = {}
-    for left in range(1, n + 1):
-        for right in range(left + 1, n + 1):
-            answers[(left - 1, right - 1)] = ask(left, right)
+    def compare(i: int, j: int) -> int:
+        if oracle.greater(i, j):
+            return 1
+        return -1
 
-    for perm in itertools.permutations(range(1, n + 1)):
-        if all(inversion_parity(perm, left, right) == parity for (left, right), parity in answers.items()):
-            print("1 " + " ".join(str(value) for value in perm), flush=True)
-            return
-    print("1 " + " ".join(str(value) for value in range(1, n + 1)), flush=True)
+    positions = list(range(1, n + 1))
+    positions.sort(key=functools.cmp_to_key(compare))
+
+    values = [0] * (n + 1)
+    for rank, position in enumerate(positions, start=1):
+        values[position] = rank
+
+    print("1 " + " ".join(str(values[position]) for position in range(1, n + 1)), flush=True)
 
 
 def main() -> None:

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap smoke solution for symreg-sincos-frontier-cs-symreg-sincos.",
+  "note": "Cheap baseline solution for symreg-sincos-frontier-cs-symreg-sincos.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

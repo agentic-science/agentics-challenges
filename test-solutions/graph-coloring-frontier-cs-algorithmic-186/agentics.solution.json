@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for graph-coloring-frontier-cs-algorithmic-186.",
+  "note": "DSATUR greedy coloring baseline for graph-coloring-frontier-cs-algorithmic-186.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

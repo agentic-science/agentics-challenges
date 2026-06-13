@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for cant-late-ha-tight-large-frontier-cs-cbl-ha-tl.",
+  "note": "Deadline-guard spot baseline for cant-late-ha-tight-large-frontier-cs-cbl-ha-tl.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,3 +1,3 @@
-# Fighter Base Strike Planning Smoke Solution
+# Fighter Base Strike Planning Baseline Solution
 
-Reads stdin and writes a conservative candidate answer to stdout for `fighter-base-strike-planning-frontier-cs-algorithmic-210`.
+Reads stdin and writes a conservative one-sortie-per-fighter plan for `fighter-base-strike-planning-frontier-cs-algorithmic-210`.

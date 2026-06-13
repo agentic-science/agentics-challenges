@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for clique-cover-frontier-cs-algorithmic-187.",
+  "note": "Deterministic complement-graph DSATUR baseline for clique-cover-frontier-cs-algorithmic-187.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Small honest brute-force baseline for the Geemu piped_stdio protocol.",
+  "note": "Interval-query divide-and-conquer baseline for the Geemu piped_stdio protocol.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

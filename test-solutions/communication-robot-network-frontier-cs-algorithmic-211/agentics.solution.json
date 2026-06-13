@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple public smoke solution for communication-robot-network-frontier-cs-algorithmic-211.",
+  "note": "Relay-aware MST-style baseline for communication-robot-network-frontier-cs-algorithmic-211.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -113,52 +113,162 @@ def solve_239() -> None:
     sys.stdout.write("\n".join(out) + "\n")
 
 
-def expr_and(parts: list[str]) -> str:
-    cur = parts[0]
-    for part in parts[1:]:
-        cur = f"({cur}&{part})"
-    return cur
+def balanced_expr(parts: list[str], op: str) -> str:
+    if not parts:
+        return 'T' if op == '&' else 'F'
+    cur = parts
+    while len(cur) > 1:
+        nxt: list[str] = []
+        for i in range(0, len(cur), 2):
+            if i + 1 == len(cur):
+                nxt.append(cur[i])
+            else:
+                nxt.append(f"({cur[i]}{op}{cur[i + 1]})")
+        cur = nxt
+    return cur[0]
 
 
-def expr_or(parts: list[str]) -> str:
-    cur = parts[0]
-    for part in parts[1:]:
-        cur = f"({cur}|{part})"
-    return cur
+def mask_and(mask: int, names: list[str]) -> str:
+    parts = [names[bit] for bit in range(len(names)) if (mask >> bit) & 1]
+    return balanced_expr(parts, '&')
+
+
+def mask_or(mask: int, names: list[str]) -> str:
+    parts = [names[bit] for bit in range(len(names)) if ((mask >> bit) & 1) == 0]
+    return balanced_expr(parts, '|')
+
+
+def dnf_terms(n: int, table: str) -> list[int]:
+    terms: list[int] = []
+    for mask, value in enumerate(table):
+        if value != '1':
+            continue
+        minimal = True
+        bits = mask
+        while bits:
+            bit = bits & -bits
+            if table[mask ^ bit] == '1':
+                minimal = False
+                break
+            bits ^= bit
+        if minimal:
+            terms.append(mask)
+    return terms
+
+
+def cnf_clauses(n: int, table: str) -> list[int]:
+    clauses: list[int] = []
+    full = (1 << n) - 1
+    for mask, value in enumerate(table):
+        if value != '0':
+            continue
+        maximal = True
+        missing = full ^ mask
+        bits = missing
+        while bits:
+            bit = bits & -bits
+            if table[mask | bit] == '0':
+                maximal = False
+                break
+            bits ^= bit
+        if maximal:
+            clauses.append(mask)
+    return clauses
+
+
+def dnf_cost(terms: list[int]) -> int:
+    if not terms:
+        return 0
+    return sum(max(mask.bit_count() - 1, 0) for mask in terms) + len(terms) - 1
+
+
+def cnf_cost(clauses: list[int], n: int) -> int:
+    if not clauses:
+        return 0
+    return sum(max(n - mask.bit_count() - 1, 0) for mask in clauses) + len(clauses) - 1
+
+
+def is_monotone(n: int, table: str) -> bool:
+    for bit in range(n):
+        step = 1 << bit
+        for mask, value in enumerate(table):
+            if mask & step or value == '0':
+                continue
+            if table[mask | step] == '0':
+                return False
+    return True
+
+
+def split_table(n: int, table: str, var: int) -> tuple[str, str]:
+    half = 1 << (n - 1)
+    low_mask = (1 << var) - 1
+    zero: list[str] = []
+    one: list[str] = []
+    for local in range(half):
+        low = local & low_mask
+        high = local >> var
+        base = low | (high << (var + 1))
+        zero.append(table[base])
+        one.append(table[base | (1 << var)])
+    return ''.join(zero), ''.join(one)
+
+
+def base_expr(n: int, table: str, names: list[str]) -> tuple[int, str]:
+    if '1' not in table:
+        return 0, 'F'
+    if '0' not in table:
+        return 0, 'T'
+    terms = dnf_terms(n, table)
+    clauses = cnf_clauses(n, table)
+    d_cost = dnf_cost(terms)
+    c_cost = cnf_cost(clauses, n)
+    if d_cost <= c_cost:
+        return d_cost, balanced_expr([mask_and(mask, names) for mask in terms], '|')
+    return c_cost, balanced_expr([mask_or(mask, names) for mask in clauses], '&')
 
 
 def synth_expr(n: int, table: str) -> tuple[bool, str]:
-    if set(table) == {'0'}:
+    if '1' not in table:
         return True, 'F'
-    if set(table) == {'1'}:
+    if '0' not in table:
         return True, 'T'
-    for var in range(n):
-        pattern = ''.join('1' if (mask >> var) & 1 else '0' for mask in range(1 << n))
-        if table == pattern:
-            return True, chr(ord('a') + var)
-    if n > 5:
+    if not is_monotone(n, table):
         return False, ''
-    for mask in range(1 << n):
-        if table[mask] != '1':
-            continue
-        for bit in range(n):
-            if (mask & (1 << bit)) == 0 and table[mask | (1 << bit)] == '0':
-                return False, ''
-    terms: list[str] = []
-    for mask in range(1 << n):
-        if table[mask] != '1':
-            continue
-        minimal = True
-        sub = mask
-        while sub:
-            sub = (sub - 1) & mask
-            if sub != mask and table[sub] == '1':
-                minimal = False
-                break
-        if minimal:
-            vars_ = [chr(ord('a') + bit) for bit in range(n) if (mask >> bit) & 1]
-            terms.append(expr_and(vars_) if vars_ else 'T')
-    return True, expr_or(terms)
+
+    names = [chr(ord('a') + bit) for bit in range(n)]
+    best_cost, best_expr = base_expr(n, table, names)
+    for var in range(n):
+        zero, one = split_table(n, table, var)
+        sub_names = names[:var] + names[var + 1:]
+        cost0, expr0 = base_expr(n - 1, zero, sub_names)
+        cost1, expr1 = base_expr(n - 1, one, sub_names)
+        var_expr = names[var]
+
+        if zero == one:
+            cost = cost0
+            expr = expr0
+        elif '1' not in zero:
+            if '0' not in one:
+                cost = 0
+                expr = var_expr
+            else:
+                cost = cost1 + 1
+                expr = f"({var_expr}&{expr1})"
+        elif '0' not in one:
+            cost = cost0 + 1
+            expr = f"({expr0}|{var_expr})"
+        elif '1' not in one:
+            cost = cost0
+            expr = expr0
+        else:
+            cost = cost0 + cost1 + 2
+            expr = f"(({var_expr}&{expr1})|{expr0})"
+
+        if cost < best_cost:
+            best_cost = cost
+            best_expr = expr
+
+    return True, best_expr
 
 
 def solve_241() -> None:

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple public smoke solution for skating-rink-route-frontier-cs-algorithmic-171.",
+  "note": "Adjacent-move baseline for skating-rink-route-frontier-cs-algorithmic-171.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

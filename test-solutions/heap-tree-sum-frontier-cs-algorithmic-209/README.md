@@ -1,3 +1,3 @@
-# Smoke solution for heap-tree-sum-frontier-cs-algorithmic-209
+# Baseline solution for heap-tree-sum-frontier-cs-algorithmic-209
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+Uses depth-grouped aggregate distance sums. For source-sized cases it queries distances `1`, `2`, `h`, and sometimes `h + 1` for each hidden permutation index, then applies a closed-form layer-sum identity for the total tree weight.

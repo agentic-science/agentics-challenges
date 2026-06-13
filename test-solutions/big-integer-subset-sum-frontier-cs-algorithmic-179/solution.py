@@ -1,190 +1,142 @@
 from __future__ import annotations
 
+import bisect
 import sys
-from collections import Counter
-
-KIND = "big_subset"
 
 
-def ints(text: str) -> list[int]:
-    return [int(tok) for tok in text.split()]
+EXACT_N_LIMIT = 34
+BEAM_WIDTH = 512
 
 
-def solve_three_coloring(data: list[int]) -> str:
-    n = data[0] if data else 1
-    return " ".join(str((i % 3) + 1) for i in range(n)) + "\n"
+def enumerate_half(values: list[int], offset: int) -> list[tuple[int, int]]:
+    states: list[tuple[int, int]] = [(0, 0)]
+    for i, value in enumerate(values):
+        bit = 1 << (offset + i)
+        states += [(total + value, mask | bit) for total, mask in states]
+    states.sort(key=lambda item: item[0])
+    return states
 
 
-def solve_sat(data: list[int]) -> str:
-    n = data[0] if data else 1
-    return " ".join("1" for _ in range(n)) + "\n"
+def exact_nearest(values: list[int], target: int) -> int:
+    mid = len(values) // 2
+    left = enumerate_half(values[:mid], 0)
+    right = enumerate_half(values[mid:], mid)
+    right_sums = [total for total, _ in right]
+
+    best_sum = 0
+    best_mask = 0
+    best_diff = abs(target)
+
+    def consider(total: int, mask: int) -> None:
+        nonlocal best_sum, best_mask, best_diff
+        diff = abs(target - total)
+        if diff < best_diff or (diff == best_diff and total <= target < best_sum):
+            best_sum = total
+            best_mask = mask
+            best_diff = diff
+
+    for left_sum, left_mask in left:
+        pos = bisect.bisect_left(right_sums, target - left_sum)
+        for j in (pos - 1, pos, pos + 1):
+            if 0 <= j < len(right):
+                right_sum, right_mask = right[j]
+                consider(left_sum + right_sum, left_mask | right_mask)
+    return best_mask
 
 
-def solve_identity_permutation(data: list[int]) -> str:
-    n = data[0] if data else 1
-    return " ".join(str(i) for i in range(1, n + 1)) + "\n"
+def greedy_masks(values: list[int], target: int) -> list[int]:
+    order_desc = sorted(range(len(values)), key=lambda i: values[i], reverse=True)
+    order_asc = list(reversed(order_desc))
+    masks: list[int] = []
+
+    for order, allow_overshoot in ((order_desc, False), (order_asc, False), (order_desc, True)):
+        total = 0
+        mask = 0
+        for idx in order:
+            candidate = total + values[idx]
+            if allow_overshoot:
+                if abs(target - candidate) < abs(target - total):
+                    total = candidate
+                    mask |= 1 << idx
+            elif candidate <= target:
+                total = candidate
+                mask |= 1 << idx
+        masks.append(mask)
+    return masks
 
 
-def solve_maxcut(data: list[int]) -> str:
-    n = data[0] if data else 1
-    return " ".join(str(i % 2) for i in range(n)) + "\n"
+def beam_search(values: list[int], target: int) -> int:
+    order = sorted(range(len(values)), key=lambda i: values[i], reverse=True)
+    states: list[tuple[int, int]] = [(0, 0)]
+    best_total = 0
+    best_mask = 0
+    best_diff = abs(target)
 
+    def consider(total: int, mask: int) -> None:
+        nonlocal best_total, best_mask, best_diff
+        diff = abs(target - total)
+        if diff < best_diff or (diff == best_diff and total <= target < best_total):
+            best_total = total
+            best_mask = mask
+            best_diff = diff
 
-def solve_lcs(lines: list[str]) -> str:
-    if len(lines) < 2:
-        return "\n"
-    s1, s2 = lines[0].strip(), lines[1].strip()
-    counts = Counter(s2)
-    out = []
-    for ch in s1:
-        if counts[ch] > 0:
-            out.append(ch)
-            counts[ch] -= 1
-    return "".join(out) + "\n"
+    for idx in order:
+        value = values[idx]
+        bit = 1 << idx
+        expanded = states + [(total + value, mask | bit) for total, mask in states]
+        expanded.sort(key=lambda item: abs(target - item[0]))
 
-
-def solve_edit_lcs(lines: list[str]) -> str:
-    if len(lines) < 2:
-        return "\n"
-    s1, s2 = lines[0].strip(), lines[1].strip()
-    i = j = 0
-    ops = []
-    while i < len(s1) and j < len(s2):
-        if s1[i] == s2[j]:
-            ops.append("M")
-            i += 1
-            j += 1
-        elif s2[j] in s1[i + 1:]:
-            ops.append("D")
-            i += 1
-        elif s1[i] in s2[j + 1:]:
-            ops.append("I")
-            j += 1
-        else:
-            ops.append("M")
-            i += 1
-            j += 1
-    ops.extend("D" for _ in range(i, len(s1)))
-    ops.extend("I" for _ in range(j, len(s2)))
-    return "".join(ops) + "\n"
-
-
-def solve_efficient_sort(data: list[int]) -> str:
-    if not data:
-        return "0\n0\n"
-    pos = 0
-    n = data[pos]
-    pos += 1
-    arr = data[pos:pos + n]
-    pos += n
-    m = data[pos] if pos < len(data) else 0
-    pos += 1
-    planned = [(data[pos + 2 * i], data[pos + 2 * i + 1]) for i in range(m) if pos + 2 * i + 1 < len(data)]
-    current = list(arr)
-    if current == list(range(n)):
-        return "0\n0\n"
-    my_swaps: list[tuple[int, int]] = []
-    total_cost = 0
-    for r, (x, y) in enumerate(planned):
-        current[x], current[y] = current[y], current[x]
-        if current == list(range(n)):
-            my_swaps.append((0, 0))
-            R = r + 1
-            V = R * total_cost
-            return str(R) + "\n" + "".join(f"{a} {b}\n" for a, b in my_swaps) + f"{V}\n"
-        idx = next((i for i, value in enumerate(current) if value != i), None)
-        if idx is None:
-            my_swaps.append((0, 0))
-            continue
-        j = current.index(idx)
-        current[idx], current[j] = current[j], current[idx]
-        my_swaps.append((idx, j))
-        total_cost += abs(idx - j)
-        if current == list(range(n)):
-            R = r + 1
-            V = R * total_cost
-            return str(R) + "\n" + "".join(f"{a} {b}\n" for a, b in my_swaps) + f"{V}\n"
-    return "0\n0\n"
-
-
-def solve_robot_network(lines: list[str]) -> str:
-    if not lines:
-        return "#\n#\n"
-    n, k = map(int, lines[0].split()[:2])
-    ids = []
-    for line in lines[1:1 + n + k]:
-        parts = line.split()
-        if parts and parts[-1] != "C":
-            ids.append(parts[0])
-    if len(ids) <= 1:
-        return "#\n#\n"
-    edges = "#".join(f"{ids[i]}-{ids[i + 1]}" for i in range(len(ids) - 1))
-    return f"#\n{edges}\n"
-
-
-def solve_table_cards(lines: list[str]) -> str:
-    if not lines:
-        return "0\n"
-    n = int(lines[0].split()[0])
-    hands = [Counter(map(int, line.split())) for line in lines[1:1 + n]]
-    if all(hands[i].get(i + 1, 0) == n for i in range(n)):
-        return "0\n"
-    return "0\n"
+        next_states: list[tuple[int, int]] = []
+        seen: set[int] = set()
+        for total, mask in expanded:
+            if total in seen:
+                continue
+            seen.add(total)
+            next_states.append((total, mask))
+            consider(total, mask)
+            if len(next_states) >= BEAM_WIDTH:
+                break
+        states = next_states
+    return best_mask
 
 
 def main() -> int:
-    text = sys.stdin.read()
-    lines = text.splitlines()
-    data = ints(text) if KIND not in {"lcs", "edit_lcs", "fighter", "robot_network", "table_cards"} else []
-    if KIND == "fish_polygon":
-        sys.stdout.write("4\n0 0\n2 0\n2 2\n0 2\n")
-    elif KIND == "rooted_forest":
-        n = data[0] if data else 1
-        sys.stdout.write("\n".join("-1" for _ in range(n)) + "\n")
-    elif KIND == "oni_shift":
-        sys.stdout.write("")
-    elif KIND == "cleaning":
-        n = data[0] if data else 1
-        sys.stdout.write("\n".join("0 0" for _ in range(n)) + "\n")
-    elif KIND == "skating":
-        sys.stdout.write("")
-    elif KIND == "three_coloring":
-        sys.stdout.write(solve_three_coloring(data))
-    elif KIND in {"max3sat", "max2sat"}:
-        sys.stdout.write(solve_sat(data))
-    elif KIND == "big_subset":
-        n = data[0] if data else 1
-        sys.stdout.write(" ".join("0" for _ in range(n)) + "\n")
-    elif KIND in {"graph_match", "qap"}:
-        sys.stdout.write(solve_identity_permutation(data))
-    elif KIND == "lcs":
-        sys.stdout.write(solve_lcs(lines))
-    elif KIND == "edit_lcs":
-        sys.stdout.write(solve_edit_lcs(lines))
-    elif KIND == "maxcut":
-        sys.stdout.write(solve_maxcut(data))
-    elif KIND == "paren_transform":
-        sys.stdout.write("0\n")
-    elif KIND == "efficient_sort":
-        sys.stdout.write(solve_efficient_sort(data))
-    elif KIND == "fighter":
-        sys.stdout.write("")
-    elif KIND == "robot_network":
-        sys.stdout.write(solve_robot_network(lines))
-    elif KIND == "grid_crossing":
-        if len(data) >= 8:
-            sx, sy = data[4], data[5]
-        else:
-            sx, sy = 1, 1
-        sys.stdout.write(f"YES\n1\n{sx} {sy}\n")
-    elif KIND == "seq_shift":
-        sys.stdout.write("1\n0\n")
-    elif KIND == "seq_reversal":
-        sys.stdout.write("1\n0\n")
-    elif KIND == "table_cards":
-        sys.stdout.write(solve_table_cards(lines))
+    tokens = sys.stdin.buffer.read().split()
+    if not tokens:
+        return 0
+    n = int(tokens[0])
+    target = int(tokens[1])
+    values = [int(token) for token in tokens[2:2 + n]]
+
+    candidate_masks = [0]
+    total_sum = sum(values)
+    if total_sum:
+        candidate_masks.append((1 << n) - 1)
+    for idx, value in enumerate(values):
+        if value:
+            candidate_masks.append(1 << idx)
+
+    if n <= EXACT_N_LIMIT:
+        candidate_masks.append(exact_nearest(values, target))
     else:
-        raise RuntimeError(f"unknown kind {KIND}")
+        candidate_masks.extend(greedy_masks(values, target))
+        candidate_masks.append(beam_search(values, target))
+
+    best_mask = 0
+    best_diff = abs(target)
+    for mask in candidate_masks:
+        total = 0
+        bits = mask
+        while bits:
+            low = bits & -bits
+            total += values[low.bit_length() - 1]
+            bits -= low
+        diff = abs(target - total)
+        if diff < best_diff:
+            best_diff = diff
+            best_mask = mask
+
+    sys.stdout.write(" ".join("1" if (best_mask >> i) & 1 else "0" for i in range(n)) + "\n")
     return 0
 
 

@@ -1,3 +1,3 @@
-# Hidden Bipartite Graph Smoke Solution
+# Hidden Bipartite Graph Baseline Solution
 
-This public smoke solution uses the documented interactive protocol. It reconstructs all edges with pair queries when `n <= 100`, then checks bipartiteness locally and prints a valid partition or odd cycle. It is meant for small validation sessions, not as a competitive private-benchmark strategy.
+This solution builds BFS layers with subset edge-count queries. It emits the even-layer side for bipartite graphs, or finds a same-layer edge and reconstructs an odd cycle through layer parents.

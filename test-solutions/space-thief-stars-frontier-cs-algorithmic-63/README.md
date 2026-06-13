@@ -1,3 +1,3 @@
-# Space Thief Stars Smoke Solution
+# Space Thief Stars Baseline
 
-This simple solver handles path-shaped public and source smoke graphs. It uses directed reachability flips to recover the hidden interval between the key and treasure stars.
+Handles canonical path graphs with logarithmic interval searches and falls back to a general C++ candidate-filtering strategy using randomized acyclic orientations. The fallback is a baseline for arbitrary connected graphs, not a proof-optimal interactive strategy.

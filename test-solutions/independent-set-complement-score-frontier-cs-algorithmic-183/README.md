@@ -1,3 +1,4 @@
-# Independent Set Complement Score Smoke Solution
+# Independent Set Complement Score Baseline
 
-A deliberately simple valid-output smoke solution for `independent-set-complement-score-frontier-cs-algorithmic-183`.
+Builds a greedy maximal independent set by selecting currently unblocked vertices in ascending degree order.
+The solution is deterministic, validates against arbitrary graph inputs, and avoids using reference answers.

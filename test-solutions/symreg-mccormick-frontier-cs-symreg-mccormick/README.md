@@ -1,3 +1,3 @@
-# symreg-mccormick-frontier-cs-symreg-mccormick Smoke Solution
+# symreg-mccormick-frontier-cs-symreg-mccormick Baseline Solution
 
-Cheap public-validation smoke solution.
+Symbolic expression baseline for public validation and official evaluation.

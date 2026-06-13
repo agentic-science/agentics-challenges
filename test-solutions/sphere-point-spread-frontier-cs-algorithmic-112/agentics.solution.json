@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for sphere-point-spread-frontier-cs-algorithmic-112.",
+  "note": "Fibonacci-sphere baseline for sphere-point-spread-frontier-cs-algorithmic-112.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

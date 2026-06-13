@@ -1,1 +1,3 @@
-# Smoke solution for cant-late-ha-tight-small-frontier-cs-cbl-ha-ts
+# Deadline-guard spot baseline for cant-late-ha-tight-small-frontier-cs-cbl-ha-ts
+
+This baseline uses spot capacity when it is currently available and deadline slack remains healthy. It waits through early spot outages, then locks to on-demand once remaining work plus restart overhead approaches the deadline. It does not inspect hidden traces or tune to public fixture answers.

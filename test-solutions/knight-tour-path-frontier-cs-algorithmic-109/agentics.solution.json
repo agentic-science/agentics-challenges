@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for knight-tour-path-frontier-cs-algorithmic-109.",
+  "note": "Warnsdorff-rule knight-path baseline for knight-tour-path-frontier-cs-algorithmic-109.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

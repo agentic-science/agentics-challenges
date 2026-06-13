@@ -1,3 +1,3 @@
-# Skating Rink Route Smoke Solution
+# Skating Rink Route Baseline
 
-Reads stdin and writes a conservative candidate answer to stdout for `skating-rink-route-frontier-cs-algorithmic-171`.
+Visits every target in order using adjacent moves only. The route is conservative, always generalizes to the original fixed `N = 20`, `M = 40` cases, and stays within the `2NM` action limit.

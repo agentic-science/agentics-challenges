@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap smoke solution for symreg-ripple-frontier-cs-symreg-ripple.",
+  "note": "Cheap baseline solution for symreg-ripple-frontier-cs-symreg-ripple.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

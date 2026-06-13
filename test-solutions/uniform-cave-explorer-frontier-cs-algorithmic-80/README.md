@@ -1,3 +1,3 @@
-# Uniform Cave Explorer Smoke Solution
+# Uniform Cave Explorer Baseline Solution
 
-Solves the tiny public interactive validation session.
+Uses a deterministic rotor walk: take the currently marked passage in each chamber, then advance that chamber's marker by one passage.

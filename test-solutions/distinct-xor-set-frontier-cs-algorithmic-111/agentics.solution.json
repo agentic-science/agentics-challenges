@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for distinct-xor-set-frontier-cs-algorithmic-111.",
+  "note": "Finite-field constructive baseline for distinct-xor-set-frontier-cs-algorithmic-111.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",
