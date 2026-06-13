@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import time
 
 MAX_COORD = 100000
 STEP = 128
@@ -35,7 +36,7 @@ def has_vertical_hit(x: int) -> bool:
     return vertical_length(x) > EPS
 
 
-def main() -> None:
+def solve_case() -> None:
     hit: int | None = None
     for x in range(0, MAX_COORD + 1, STEP):
         if has_vertical_hit(x):
@@ -85,8 +86,14 @@ def main() -> None:
 
     try:
         print(f"answer {cx} {cy} {r}", flush=True)
+        time.sleep(0.02)
     except BrokenPipeError:
         pass
+
+
+def main() -> None:
+    while True:
+        solve_case()
 
 
 if __name__ == "__main__":
