@@ -5,12 +5,23 @@ import sys
 
 
 def ask(bits: list[str]) -> int:
-    print("? " + "".join(bits), flush=True)
+    try:
+        print("? " + "".join(bits), flush=True)
+    except BrokenPipeError:
+        raise SystemExit(0) from None
     line = sys.stdin.readline()
     if not line:
-        raise EOFError
-    value = int(line.strip())
+        raise SystemExit(0)
+    token = line.strip()
+    if token in {"-1", "NEXT", "0 0"}:
+        raise SystemExit(0)
+    try:
+        value = int(token)
+    except ValueError:
+        raise SystemExit(0) from None
     if value == -1:
+        raise SystemExit(0)
+    if value not in (0, 1):
         raise SystemExit(0)
     return value
 
@@ -119,7 +130,10 @@ def solve_case(n: int, _r: int, wiring: list[tuple[int, int]]) -> None:
     for i, value in enumerate(gate_type):
         if value == "?":
             gate_type[i] = "&"
-    print("! " + "".join(gate_type), flush=True)
+    try:
+        print("! " + "".join(gate_type), flush=True)
+    except BrokenPipeError:
+        raise SystemExit(0) from None
 
 
 def main() -> int:
@@ -130,13 +144,27 @@ def main() -> int:
         header = header.strip()
         if not header:
             continue
-        n, r = map(int, header.split())
+        if header in {"-1", "0 0"}:
+            return 0
+        if header == "NEXT":
+            continue
+        parts = header.split()
+        if len(parts) != 2:
+            return 0
+        try:
+            n, r = map(int, parts)
+        except ValueError:
+            return 0
         wiring = []
         for _ in range(n):
             line = sys.stdin.readline()
             if not line:
                 return 0
-            wiring.append(tuple(map(int, line.split())))
+            try:
+                u, v = map(int, line.split())
+            except ValueError:
+                return 0
+            wiring.append((u, v))
         solve_case(n, r, wiring)
 
 

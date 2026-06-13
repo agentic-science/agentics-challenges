@@ -3,6 +3,11 @@ from __future__ import annotations
 import math
 import sys
 
+RATE_SAMPLES_PER_DECISION = 24
+RATE_SAMPLE_BUDGET = 120_000
+
+used_rate_samples = 0
+
 
 def read_line() -> str | None:
     line = sys.stdin.readline()
@@ -15,6 +20,8 @@ def read_line() -> str | None:
 
 
 def rate(samples: int) -> tuple[float, float]:
+    global used_rate_samples
+
     print(f"RATE {samples}", flush=True)
     line = read_line()
     if line is None:
@@ -22,7 +29,15 @@ def rate(samples: int) -> tuple[float, float]:
     parts = line.split()
     if not parts or parts[0] != "RATES":
         return 0.0, 0.0
+    used_rate_samples += samples
     return float(parts[1]), float(parts[2])
+
+
+def bounded_rate() -> tuple[float, float]:
+    remaining = RATE_SAMPLE_BUDGET - used_rate_samples
+    if remaining <= 0:
+        return 0.0, 0.0
+    return rate(min(RATE_SAMPLES_PER_DECISION, remaining))
 
 
 def choose_action(stack: int, pot: int, win: float, draw: float) -> str:
@@ -57,7 +72,7 @@ def play_session(first_line: str) -> str | None:
             _board = read_line()
             if _alice is None or _board is None:
                 return None
-            win, draw = rate(96)
+            win, draw = bounded_rate()
             print(choose_action(stack, pot, win, draw), flush=True)
 
     return read_line()

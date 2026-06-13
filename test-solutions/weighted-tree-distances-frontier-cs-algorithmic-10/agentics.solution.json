@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Full-distance reconstruction baseline for the Weighted Tree Distances piped_stdio protocol.",
+  "note": "Bounded weighted-tree reconstruction baseline with star fallback.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

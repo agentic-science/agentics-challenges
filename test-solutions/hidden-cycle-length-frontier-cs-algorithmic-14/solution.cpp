@@ -2,7 +2,8 @@
 using namespace std;
 
 namespace {
-constexpr int MAX_WALKS = 50000;
+constexpr int MAX_WALKS = 4096;
+constexpr int CASE_TIME_LIMIT_MS = 1500;
 
 long long walk(long long steps) {
     cout << "walk " << steps << endl;
@@ -18,6 +19,7 @@ void guess(long long length) {
 }
 
 bool solve_case(mt19937_64& rng) {
+    const auto deadline = chrono::steady_clock::now() + chrono::milliseconds(CASE_TIME_LIMIT_MS);
     unordered_map<long long, long long> seen;
     seen.reserve(MAX_WALKS * 2);
     seen.max_load_factor(0.7);
@@ -31,6 +33,9 @@ bool solve_case(mt19937_64& rng) {
 
     uniform_int_distribution<long long> dist(1, 1000000000LL);
     for (int i = 1; i < MAX_WALKS; ++i) {
+        if ((i & 127) == 0 && chrono::steady_clock::now() >= deadline) {
+            break;
+        }
         long long step = dist(rng);
         offset += step;
         label = walk(step);

@@ -1,77 +1,85 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+const long long SET_SIZE_LIMIT = 3000000LL;
+const long long MAX_EXACT_QUERIES = 60000LL;
+
+bool ask_on_path(int u, int v, int w) {
+    cout << "? 2 " << w << " " << u << " " << v << "\n" << flush;
+    int ans;
+    if (!(cin >> ans) || ans == -1) {
+        exit(0);
+    }
+    return ans == 1;
+}
+
+void print_star(int n) {
+    cout << "!\n";
+    for (int v = 2; v <= n; ++v) {
+        cout << 1 << " " << v << "\n";
+    }
+    cout << flush;
+}
+
+vector<pair<int, int>> solve_exact(int n) {
+    int root = 1;
+    vector<vector<char>> on_root_path(n + 1, vector<char>(n + 1, 0));
+    vector<int> depth(n + 1, 0);
+
+    on_root_path[root][root] = 1;
+    for (int v = 2; v <= n; ++v) {
+        int path_len = 2;
+        on_root_path[root][v] = 1;
+        on_root_path[v][v] = 1;
+        for (int w = 1; w <= n; ++w) {
+            if (w == root || w == v) {
+                continue;
+            }
+            if (ask_on_path(root, v, w)) {
+                on_root_path[w][v] = 1;
+                ++path_len;
+            }
+        }
+        depth[v] = path_len - 1;
+    }
+
+    vector<pair<int, int>> edges;
+    edges.reserve(max(0, n - 1));
+    for (int v = 2; v <= n; ++v) {
+        int parent = -1;
+        int parent_depth = depth[v] - 1;
+        for (int candidate = 1; candidate <= n; ++candidate) {
+            if (depth[candidate] == parent_depth && on_root_path[candidate][v]) {
+                parent = candidate;
+                break;
+            }
+        }
+        if (parent == -1) {
+            parent = root;
+        }
+        edges.emplace_back(parent, v);
+    }
+    return edges;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
     int n;
     while (cin >> n) {
-
-    int r = 1; // root
-
-    vector<vector<char>> M(n + 1, vector<char>(n + 1, 0));
-    vector<int> depth(n + 1, 0);
-
-    // Initialize for v = r
-    M[r][r] = 1;
-    for (int w = 1; w <= n; ++w) {
-        if (w != r) M[w][r] = 0;
-    }
-    depth[r] = 0;
-
-    // Queries to fill M[w][v] = 1 iff w lies on path(r, v)
-    for (int v = 1; v <= n; ++v) {
-        if (v == r) continue;
-        int len = 2; // counts r and v
-        M[r][v] = 1;
-        M[v][v] = 1;
-        for (int w = 1; w <= n; ++w) {
-            if (w == r || w == v) continue;
-            cout << "? 2 " << w << " " << r << " " << v << "\n" << flush;
-            int ans;
-            if (!(cin >> ans)) return 0;
-            if (ans == -1) return 0;
-            M[w][v] = (ans ? 1 : 0);
-            if (ans) ++len;
+        long long exact_queries = n >= 2 ? 1LL * (n - 1) * max(0, n - 2) : 0LL;
+        if (exact_queries > MAX_EXACT_QUERIES || exact_queries * 2 > SET_SIZE_LIMIT) {
+            print_star(n);
+            continue;
         }
-        depth[v] = len - 1;
-    }
 
-    // Reconstruct edges using depths and membership
-    vector<pair<int, int>> edges;
-    edges.reserve(n - 1);
-    for (int v = 1; v <= n; ++v) {
-        if (v == r) continue;
-        int targetDepth = depth[v] - 1;
-        int p = -1;
-        for (int x = 1; x <= n; ++x) {
-            if (depth[x] == targetDepth && M[x][v]) {
-                p = x;
-                break;
-            }
+        vector<pair<int, int>> edges = solve_exact(n);
+        cout << "!\n";
+        for (auto [u, v] : edges) {
+            cout << u << " " << v << "\n";
         }
-        if (p == -1) {
-            // Fallback: pick deepest ancestor on path(r, v) if exact depth not found
-            int best = -1, bestDepth = -1;
-            for (int x = 1; x <= n; ++x) {
-                if (depth[x] < depth[v] && M[x][v]) {
-                    if (depth[x] > bestDepth) {
-                        bestDepth = depth[x];
-                        best = x;
-                    }
-                }
-            }
-            p = best;
-        }
-        edges.emplace_back(p, v);
-    }
-
-    cout << "!\n";
-    for (auto &e : edges) {
-        cout << e.first << " " << e.second << "\n";
-    }
-    cout.flush();
+        cout << flush;
     }
 
     return 0;

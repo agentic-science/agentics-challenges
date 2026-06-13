@@ -1,145 +1,102 @@
 from __future__ import annotations
 
-from collections import defaultdict
-from functools import lru_cache
+from collections import deque
 import sys
 
 
-INF = 10**9
+MAX_K = 240
 
 
-def shortest_paths(n: int, edges: set[tuple[int, int]]) -> tuple[list[list[int]], list[list[int]]]:
-    dist = [[INF] * (n + 1) for _ in range(n + 1)]
-    nxt = [[0] * (n + 1) for _ in range(n + 1)]
+def connected_component(root: int, adjacency: list[set[int]], seen: set[int]) -> list[int]:
+    queue: deque[int] = deque([root])
+    seen.add(root)
+    component: list[int] = []
+    while queue:
+        vertex = queue.popleft()
+        component.append(vertex)
+        for neighbor in sorted(adjacency[vertex]):
+            if neighbor not in seen:
+                seen.add(neighbor)
+                queue.append(neighbor)
+    return component
+
+
+def build_tree(root: int, component: set[int], adjacency: list[set[int]]) -> dict[int, list[int]]:
+    tree = {vertex: [] for vertex in component}
+    parent = {root}
+    queue: deque[int] = deque([root])
+    while queue:
+        vertex = queue.popleft()
+        for neighbor in sorted(adjacency[vertex]):
+            if neighbor not in component or neighbor in parent:
+                continue
+            parent.add(neighbor)
+            tree[vertex].append(neighbor)
+            queue.append(neighbor)
+    return tree
+
+
+def construct_grid(n: int, edges: set[tuple[int, int]]) -> list[list[int]]:
+    if not edges:
+        return [[1]]
+
+    adjacency = [set() for _ in range(n + 1)]
+    for left, right in edges:
+        adjacency[left].add(right)
+        adjacency[right].add(left)
+
+    seen: set[int] = set()
+    components: list[list[int]] = []
     for vertex in range(1, n + 1):
-        dist[vertex][vertex] = 0
-        nxt[vertex][vertex] = vertex
-    for left, right in edges:
-        dist[left][right] = dist[right][left] = 1
-        nxt[left][right] = right
-        nxt[right][left] = left
-    for mid in range(1, n + 1):
-        for left in range(1, n + 1):
-            if dist[left][mid] >= INF:
-                continue
-            for right in range(1, n + 1):
-                candidate = dist[left][mid] + dist[mid][right]
-                if candidate < dist[left][right]:
-                    dist[left][right] = candidate
-                    nxt[left][right] = nxt[left][mid]
-    return dist, nxt
+        if adjacency[vertex] and vertex not in seen:
+            components.append(connected_component(vertex, adjacency, seen))
 
+    # A grid's visible color-adjacency graph is connected, so multiple edge-bearing
+    # components cannot be represented exactly. Use one component to keep output bounded.
+    component = max(components, key=len)
+    component_set = set(component)
+    root = min(component)
+    tree = build_tree(root, component_set, adjacency)
+    min_width = max(1, max(2 * len(adjacency[vertex]) + 1 for vertex in component))
 
-def restore_path(start: int, end: int, nxt: list[list[int]]) -> list[int]:
-    path = [start]
-    while start != end:
-        start = nxt[start][end]
-        if start == 0:
-            raise ValueError("graph is disconnected")
-        path.append(start)
-    return path
+    rows: list[tuple[int, list[int] | None]] = []
 
+    def add_constant(vertex: int) -> None:
+        if rows and rows[-1][1] is None and rows[-1][0] == vertex:
+            return
+        rows.append((vertex, None))
 
-def min_pairing(odd: tuple[int, ...], dist: list[list[int]]) -> tuple[int, list[tuple[int, int]]]:
-    @lru_cache(maxsize=None)
-    def solve(mask: int) -> tuple[int, tuple[tuple[int, int], ...]]:
-        if mask == 0:
-            return 0, ()
-        first_bit = mask & -mask
-        first = first_bit.bit_length() - 1
-        best_cost = INF
-        best_pairs: tuple[tuple[int, int], ...] = ()
-        remaining = mask ^ first_bit
-        scan = remaining
-        while scan:
-            bit = scan & -scan
-            second = bit.bit_length() - 1
-            cost, pairs = solve(remaining ^ bit)
-            cost += dist[odd[first]][odd[second]]
-            if cost < best_cost:
-                best_cost = cost
-                best_pairs = ((odd[first], odd[second]),) + pairs
-            scan ^= bit
-        return best_cost, best_pairs
+    def add_gadget(vertex: int) -> None:
+        row = [vertex]
+        for neighbor in sorted(adjacency[vertex]):
+            row.extend([neighbor, vertex])
+        rows.append((vertex, row))
 
-    cost, pairs = solve((1 << len(odd)) - 1)
-    return cost, list(pairs)
+    def dfs(vertex: int) -> None:
+        add_gadget(vertex)
+        add_constant(vertex)
+        for child in tree[vertex]:
+            add_constant(child)
+            dfs(child)
+            add_constant(vertex)
 
+    add_constant(root)
+    dfs(root)
 
-def duplicated_paths_for_open_trail(
-    n: int,
-    edges: set[tuple[int, int]],
-    dist: list[list[int]],
-    nxt: list[list[int]],
-) -> list[list[int]]:
-    degrees = [0] * (n + 1)
-    for left, right in edges:
-        degrees[left] += 1
-        degrees[right] += 1
-    odd = tuple(vertex for vertex in range(1, n + 1) if degrees[vertex] % 2 == 1)
-    if not odd:
-        return []
+    k = max(min_width, len(rows), 1)
+    if k > MAX_K:
+        return [[1]]
 
-    best_pairs: list[tuple[int, int]] | None = None
-    best_cost = INF
-    for keep_left in odd:
-        for keep_right in odd:
-            if keep_left >= keep_right:
-                continue
-            paired = tuple(vertex for vertex in odd if vertex not in {keep_left, keep_right})
-            cost, pairs = min_pairing(paired, dist)
-            if cost < best_cost:
-                best_cost = cost
-                best_pairs = pairs
+    while len(rows) < k:
+        rows.append((root, None))
 
-    if best_pairs is None:
-        best_pairs = []
-    return [restore_path(left, right, nxt) for left, right in best_pairs]
-
-
-def euler_walk(n: int, edges: set[tuple[int, int]], extra_paths: list[list[int]]) -> list[int]:
-    adjacency: dict[int, list[tuple[int, int]]] = defaultdict(list)
-    edge_id = 0
-
-    def add_edge(left: int, right: int) -> None:
-        nonlocal edge_id
-        adjacency[left].append((right, edge_id))
-        adjacency[right].append((left, edge_id))
-        edge_id += 1
-
-    for left, right in sorted(edges):
-        add_edge(left, right)
-    for path in extra_paths:
-        for left, right in zip(path, path[1:]):
-            add_edge(left, right)
-
-    start = next((vertex for vertex in range(1, n + 1) if len(adjacency[vertex]) % 2 == 1), 1)
-    used = [False] * edge_id
-    stack = [start]
-    walk: list[int] = []
-    while stack:
-        vertex = stack[-1]
-        while adjacency[vertex] and used[adjacency[vertex][-1][1]]:
-            adjacency[vertex].pop()
-        if adjacency[vertex]:
-            nxt_vertex, eid = adjacency[vertex].pop()
-            used[eid] = True
-            stack.append(nxt_vertex)
-        else:
-            walk.append(stack.pop())
-    walk.reverse()
-    return walk
-
-
-def construct_sequence(n: int, edges: set[tuple[int, int]]) -> list[int]:
-    if n == 1:
-        return [1]
-    dist, nxt = shortest_paths(n, edges)
-    extra_paths = duplicated_paths_for_open_trail(n, edges, dist, nxt)
-    sequence = euler_walk(n, edges, extra_paths)
-    if len(sequence) > 240:
-        raise ValueError("baseline construction exceeded K=240")
-    return sequence
+    grid: list[list[int]] = []
+    for base, partial in rows:
+        if partial is None:
+            grid.append([base] * k)
+            continue
+        grid.append(partial + [base] * (k - len(partial)))
+    return grid
 
 
 def main() -> int:
@@ -148,13 +105,12 @@ def main() -> int:
         return 1
     n, m = tokens[0], tokens[1]
     edges = {tuple(sorted((tokens[index], tokens[index + 1]))) for index in range(2, 2 + 2 * m, 2)}
-    sequence = construct_sequence(n, edges)
-    k = len(sequence)
+    grid = construct_grid(n, edges)
+    k = len(grid)
     print(k)
     print(" ".join([str(k)] * k))
-    row = " ".join(str(value) for value in sequence)
-    for _ in range(k):
-        print(row)
+    for row in grid:
+        print(" ".join(str(value) for value in row))
     return 0
 
 

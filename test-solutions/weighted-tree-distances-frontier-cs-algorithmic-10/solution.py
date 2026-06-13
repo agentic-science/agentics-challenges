@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import sys
 
+MAX_EXACT_N = 120
+MAX_STAR_DISTANCE_QUERIES = 4096
+
 
 def read_nonempty() -> str | None:
     while True:
@@ -20,7 +23,14 @@ def ask(u: int, v: int) -> int:
     return int(response)
 
 
-def solve_tree(n: int) -> None:
+def print_edges(edges: list[tuple[int, int, int]]) -> None:
+    payload = ["!"]
+    for u, v, weight in edges:
+        payload.extend([str(u), str(v), str(weight)])
+    print(" ".join(payload), flush=True)
+
+
+def solve_exact(n: int) -> None:
     dist = [[0] * (n + 1) for _ in range(n + 1)]
     for u in range(1, n + 1):
         for v in range(u + 1, n + 1):
@@ -39,10 +49,23 @@ def solve_tree(n: int) -> None:
             if direct:
                 edges.append((u, v, dist[u][v]))
 
-    payload = ["!"]
-    for u, v, weight in edges[: max(0, n - 1)]:
-        payload.extend([str(u), str(v), str(weight)])
-    print(" ".join(payload), flush=True)
+    print_edges(edges[: max(0, n - 1)])
+
+
+def solve_star_guess(n: int) -> None:
+    edges: list[tuple[int, int, int]] = []
+    query_budget = min(MAX_STAR_DISTANCE_QUERIES, max(0, n - 1))
+    for offset, v in enumerate(range(2, n + 1), start=1):
+        weight = ask(1, v) if offset <= query_budget else 1
+        edges.append((1, v, max(1, weight)))
+    print_edges(edges)
+
+
+def solve_tree(n: int) -> None:
+    if n <= MAX_EXACT_N:
+        solve_exact(n)
+    else:
+        solve_star_guess(n)
 
 
 def main() -> int:

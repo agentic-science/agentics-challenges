@@ -117,32 +117,6 @@ def greedy_path(
             used[head_choice] = 1
             path.appendleft(head_choice)
 
-    improved = True
-    while improved and len(path) < n:
-        improved = False
-        current = list(path)
-        for vertex in sorted(range(1, n + 1), key=lambda item: (-(len(outgoing[item]) + len(incoming[item])), item)):
-            if used[vertex]:
-                continue
-            if vertex in incoming[current[0]]:
-                path.appendleft(vertex)
-                used[vertex] = 1
-                improved = True
-                break
-            if vertex in outgoing[current[-1]]:
-                path.append(vertex)
-                used[vertex] = 1
-                improved = True
-                break
-            for index, (left, right) in enumerate(zip(current, current[1:]), start=1):
-                if vertex in outgoing[left] and right in outgoing[vertex]:
-                    path.insert(index, vertex)
-                    used[vertex] = 1
-                    improved = True
-                    break
-            if improved:
-                break
-
     return list(path)
 
 
@@ -152,9 +126,9 @@ def heuristic_path(n: int, outgoing: list[set[int]], incoming: list[set[int]]) -
         key=lambda vertex: (-(len(outgoing[vertex]) + len(incoming[vertex])), -len(outgoing[vertex]), vertex),
     )
     if n <= 300:
-        starts = vertex_order
+        starts = vertex_order[:24]
     else:
-        starts = vertex_order[:160] + list(range(1, min(n, 40) + 1))
+        starts = vertex_order[:24] + list(range(1, min(n, 8) + 1))
 
     best_path = [1]
     for start in dict.fromkeys(starts):

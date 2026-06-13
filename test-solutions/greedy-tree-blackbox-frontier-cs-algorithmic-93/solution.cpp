@@ -5,11 +5,24 @@
 #include <functional>
 
 int n;
+long long query_count = 0;
+long long emitted_items = 0;
+bool budget_exhausted = false;
+
+constexpr int EXACT_N_LIMIT = 700;
+constexpr long long QUERY_BUDGET = 42000;
+constexpr long long ITEM_BUDGET = 6000000;
 
 int do_query(const std::vector<int>& vec) {
     if (vec.empty()) {
         return 0;
     }
+    if (query_count + 1 > QUERY_BUDGET || emitted_items + (long long)vec.size() > ITEM_BUDGET) {
+        budget_exhausted = true;
+        return 0;
+    }
+    ++query_count;
+    emitted_items += (long long)vec.size();
     std::cout << "? " << vec.size();
     for (int x : vec) {
         std::cout << " " << x;
@@ -34,10 +47,35 @@ bool has_ancestor_in_roots(int u, const std::vector<int>& C) {
     return q1 == q2;
 }
 
+std::vector<int> fallback_parent_array(int n) {
+    std::vector<int> par(n + 1, 0);
+    for (int i = 2; i <= n; ++i) {
+        par[i] = 1;
+    }
+    return par;
+}
+
+void print_answer(const std::vector<int>& par) {
+    std::cout << "!";
+    for (int i = 1; i <= n; ++i) {
+        std::cout << " " << par[i];
+    }
+    std::cout << std::endl;
+}
+
 static bool solveCase() {
     int ty;
     if (!(std::cin >> n >> ty)) {
         return false;
+    }
+
+    query_count = 0;
+    emitted_items = 0;
+    budget_exhausted = false;
+    std::vector<int> fallback = fallback_parent_array(n);
+    if (n > EXACT_N_LIMIT) {
+        print_answer(fallback);
+        return true;
     }
 
     std::vector<std::pair<int, int>> d_values;
@@ -52,6 +90,10 @@ static bool solveCase() {
             }
         }
         int res = do_query(query_vec);
+        if (budget_exhausted) {
+            print_answer(fallback);
+            return true;
+        }
         d_values.push_back({n - res, i});
     }
 
@@ -85,16 +127,16 @@ static bool solveCase() {
             } else {
                 high = mid - 1;
             }
+            if (budget_exhausted) {
+                print_answer(fallback);
+                return true;
+            }
         }
 
         par[u] = sorted_nodes[parent_idx];
     }
 
-    std::cout << "!";
-    for (int i = 1; i <= n; ++i) {
-        std::cout << " " << par[i];
-    }
-    std::cout << std::endl;
+    print_answer(par);
     return true;
 }
 

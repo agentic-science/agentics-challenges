@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Distance-query centroid baseline for general trees.",
+  "note": "Bounded distance-query centroid baseline with large-tree fallback.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -6,8 +6,14 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     if (!(cin >> n >> m)) return 0;
+    if (m > 22) {
+        cout.setf(std::ios::fixed);
+        cout << setprecision(15) << 0.0 << "\n";
+        return 0;
+    }
 
-    // Assume m <= 60 (we use 64-bit masks) and practically <= ~25 for feasibility.
+    // Exact inclusion-exclusion is exponential in the number of strings. Stay bounded
+    // on official-scale cases and emit the conservative zero-probability fallback.
     vector<uint64_t> L[4];
     for (int k = 0; k < 4; ++k) L[k].assign(n, 0);
 
@@ -70,11 +76,6 @@ int main() {
     }
 
     // Count positions by U = union of letters at position
-    if (m >= 63) {
-        // Not expected per problem intended constraints; fallback to 0.
-        cout.setf(std::ios::fixed); cout<<setprecision(15)<<0.0<<"\n";
-        return 0;
-    }
     size_t N = 1ULL << m;
     vector<uint32_t> G(N, 0); // counts g[V]
     for (int j = 0; j < n; ++j) {

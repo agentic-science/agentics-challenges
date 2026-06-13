@@ -2,8 +2,12 @@
 using namespace std;
 
 struct Solver {
+    static constexpr int QUERY_LIMIT = 500;
+    static constexpr int EXTRACTION_RESERVE = 120;
+
     long long n;
     int q = 0;
+    bool budget_exhausted = false;
     mt19937_64 rng;
 
     Solver(long long n_, uint64_t seed) : n(n_), rng(seed) {}
@@ -21,9 +25,16 @@ struct Solver {
         return z + 1;
     }
 
+    bool canAsk(int reserve = 0) const {
+        return q + 1 + reserve <= QUERY_LIMIT;
+    }
+
     long long ask(long long x, long long y) {
+        if (!canAsk()) {
+            budget_exhausted = true;
+            return 0;
+        }
         ++q;
-        if (q > 500) exit(0);
         cout << "? " << x << " " << y << endl;
         cout.flush();
         long long d;
@@ -41,6 +52,11 @@ struct Solver {
 
     vector<long long> candidatesFrom(long long s, long long t, long long dst) {
         vector<long long> cand;
+        if (q + 2 > QUERY_LIMIT) {
+            budget_exhausted = true;
+            cand.push_back(s);
+            return cand;
+        }
         long long s1 = move(s, +1, 1);
         long long s2 = move(s, -1, 1);
         long long d1 = ask(s1, t);
@@ -57,13 +73,14 @@ struct Solver {
 
         for (int dir : dirs) {
             long long lo = 0, hi = dst;
-            while (lo < hi) {
+            while (lo < hi && canAsk()) {
                 long long mid = (lo + hi + 1) >> 1;
                 long long x = move(s, dir, mid);
                 long long dm = ask(x, t);
                 if (dm == dst - mid) lo = mid;
                 else hi = mid - 1;
             }
+            if (lo < hi) budget_exhausted = true;
             cand.push_back(move(s, dir, lo));
         }
 
@@ -80,6 +97,10 @@ struct Solver {
         if (a == b) return nullopt;
         long long cd = cycDist(n, a, b);
         if (cd <= 1) return nullopt;
+        if (!canAsk(EXTRACTION_RESERVE)) {
+            budget_exhausted = true;
+            return nullopt;
+        }
         long long d = ask(a, b);
         if (d < cd) return tuple<long long,long long,long long>(a, b, d);
         return nullopt;
@@ -115,7 +136,7 @@ struct Solver {
         };
 
         // Biased random pairs with large cyclic distances.
-        for (int it = 0; it < 160; it++) {
+        for (int it = 0; it < 160 && canAsk(EXTRACTION_RESERVE); it++) {
             long long a = randVertex();
             long long offL = max(2LL, n / 3);
             long long offR = max(offL, (2 * n) / 3);
@@ -131,16 +152,17 @@ struct Solver {
         while ((int)anchors.size() < 10) anchors.push_back(randVertex());
         anchors.resize(10);
 
-        for (int it = 0; it < 140; it++) {
+        for (int it = 0; it < 140 && canAsk(EXTRACTION_RESERVE); it++) {
             long long a = randVertex();
             for (int k = 0; k < (int)anchors.size(); k++) {
+                if (!canAsk(EXTRACTION_RESERVE)) break;
                 auto got = tryPair(a, anchors[k]);
                 if (got) return got;
             }
         }
 
         // Pure random pairs.
-        for (int it = 0; it < 200; it++) {
+        for (int it = 0; it < 200 && canAsk(EXTRACTION_RESERVE); it++) {
             long long a = randVertex();
             long long b = randVertex();
             if (a == b) continue;
@@ -160,6 +182,10 @@ struct Solver {
 
         auto checkCandidates = [&](const vector<long long>& U, const vector<long long>& V) -> optional<pair<long long,long long>> {
             for (long long u : U) for (long long v : V) {
+                if (!canAsk()) {
+                    budget_exhausted = true;
+                    return nullopt;
+                }
                 if (u == v) continue;
                 if (isAdjacent(u, v)) continue;
                 long long d = ask(u, v);
@@ -199,7 +225,7 @@ struct Solver {
         if (seeds.empty()) seeds.push_back(a);
 
         uniform_int_distribution<long long> distV(1, n);
-        for (int it = 0; it < 120; it++) {
+        for (int it = 0; it < 120 && canAsk(); it++) {
             long long u = seeds[it % (int)seeds.size()];
             long long x = distV(rng);
             if (x == u) continue;
@@ -212,11 +238,16 @@ struct Solver {
         return {1, 3 <= n ? 3 : 2};
     }
 
+    pair<long long,long long> fallbackChord() const {
+        if (n >= 4) return {1, 3};
+        return {1, min(2LL, n)};
+    }
+
     void solveOne() {
         auto got = findAffectedPair();
         if (!got) {
             // Very unlikely; attempt a couple more pairs.
-            for (int it = 0; it < 50 && !got; it++) {
+            for (int it = 0; it < 50 && !got && canAsk(EXTRACTION_RESERVE); it++) {
                 uniform_int_distribution<long long> distV(1, n);
                 long long a = distV(rng), b = distV(rng);
                 if (a == b) continue;
@@ -227,17 +258,18 @@ struct Solver {
             }
         }
 
-        long long a, b, d;
-        if (got) {
-            tie(a, b, d) = *got;
-        } else {
-            // As a last fallback, try fixed pair set.
-            a = 1;
-            b = (n >= 3 ? 3 : 2);
-            d = ask(a, b);
+        if (!got) {
+            auto [u, v] = fallbackChord();
+            answer(u, v);
+            return;
         }
 
+        long long a, b, d;
+        tie(a, b, d) = *got;
         auto [u, v] = extractChord(a, b, d);
+        if (budget_exhausted && !canAsk()) {
+            tie(u, v) = fallbackChord();
+        }
         answer(u, v);
     }
 };

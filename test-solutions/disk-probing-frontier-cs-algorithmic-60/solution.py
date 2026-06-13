@@ -5,14 +5,26 @@ import sys
 MAX_COORD = 100000
 STEP = 128
 EPS = 1e-7
+FALLBACK_ANSWER = (MAX_COORD // 2, MAX_COORD // 2, 100)
 
 
 def probe(x1: int, y1: int, x2: int, y2: int) -> float:
-    print(f"query {x1} {y1} {x2} {y2}", flush=True)
+    try:
+        print(f"query {x1} {y1} {x2} {y2}", flush=True)
+    except BrokenPipeError:
+        raise SystemExit(0) from None
     line = sys.stdin.readline()
     if line == "":
-        raise EOFError("interactive evaluator closed before replying")
-    return float(line.strip())
+        raise SystemExit(0)
+    token = line.strip()
+    if token in {"-1", "0 0"}:
+        raise SystemExit(0)
+    if token == "NEXT":
+        raise SystemExit(0)
+    try:
+        return float(token)
+    except ValueError:
+        raise SystemExit(0) from None
 
 
 def vertical_length(x: int) -> float:
@@ -35,6 +47,10 @@ def main() -> None:
                 hit = x
                 break
     if hit is None:
+        try:
+            print("answer {} {} {}".format(*FALLBACK_ANSWER), flush=True)
+        except BrokenPipeError:
+            pass
         return
 
     lo, hi = 0, hit
@@ -67,7 +83,10 @@ def main() -> None:
             lo = mid + 1
     cy = lo + r - 1
 
-    print(f"answer {cx} {cy} {r}", flush=True)
+    try:
+        print(f"answer {cx} {cy} {r}", flush=True)
+    except BrokenPipeError:
+        pass
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Interactive singleton-query baseline that reconstructs values index by index.",
+  "note": "Bounded singleton-query baseline with sampled fallback for large arrays.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

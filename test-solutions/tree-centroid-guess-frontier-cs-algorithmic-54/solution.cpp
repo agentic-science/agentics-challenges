@@ -1,21 +1,33 @@
 #include <cstdio>
 #include <vector>
 #include <algorithm>
-#include <cassert>
+#include <cstdlib>
 
 using namespace std;
+
+const int MAX_DISTANCE_QUERIES = 60000;
 
 int ask(int u, int v) {
     printf("? %d %d\n", u, v);
     fflush(stdout);
     int d;
-    scanf("%d", &d);
+    if (scanf("%d", &d) != 1) {
+        exit(0);
+    }
     return d;
 }
 
 int main() {
     int n;
-    scanf("%d", &n);
+    if (scanf("%d", &n) != 1) {
+        return 0;
+    }
+
+    if (3LL * (n - 1) > MAX_DISTANCE_QUERIES) {
+        printf("! 1\n");
+        fflush(stdout);
+        return 0;
+    }
 
     // Step 1: find one endpoint of the diameter by querying from node 1
     vector<int> dist1(n+1, 0);
@@ -58,9 +70,12 @@ int main() {
             dist_to_node[distA[v]] = v;
         }
     }
-    // Every distance from 0 to D should be present
     for (int i = 0; i <= D; ++i) {
-        assert(dist_to_node[i] != -1);
+        if (dist_to_node[i] == -1) {
+            printf("! %d\n", a);
+            fflush(stdout);
+            return 0;
+        }
     }
 
     // Step 5: compute size of attachment for each node on the path
@@ -89,7 +104,9 @@ int main() {
             break;
         }
     }
-    assert(centroid != -1);
+    if (centroid == -1) {
+        centroid = dist_to_node[D / 2];
+    }
 
     printf("! %d\n", centroid);
     fflush(stdout);

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Interactive path-membership baseline for Steiner tree reconstruction.",
+  "note": "Bounded path-membership baseline with star fallback for large trees.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",
