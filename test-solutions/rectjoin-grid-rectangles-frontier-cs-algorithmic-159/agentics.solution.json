@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for rectjoin-grid-rectangles-frontier-cs-algorithmic-159.",
+  "note": "Feasible no-rectangle baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

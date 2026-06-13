@@ -1,3 +1,3 @@
-# Tile Path Score Smoke Solution
+# Tile Path Score Baseline Solution
 
-A public smoke solution for `tile-path-score-frontier-cs-algorithmic-148`.
+A public baseline solution for `tile-path-score-frontier-cs-algorithmic-148`.

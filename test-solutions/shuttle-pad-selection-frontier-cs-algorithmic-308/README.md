@@ -1,3 +1,3 @@
-# Shuttle Pad Selection Smoke Solution
+# Shuttle Pad Selection Baseline Solution
 
-A simple public smoke solution for `shuttle-pad-selection-frontier-cs-algorithmic-308`. It reads stdin and writes stdout.
+A simple public baseline solution for `shuttle-pad-selection-frontier-cs-algorithmic-308`. It reads stdin and writes stdout.

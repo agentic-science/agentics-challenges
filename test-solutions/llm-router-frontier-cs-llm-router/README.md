@@ -1,3 +1,3 @@
-# LLM Router Smoke Solution
+# LLM Router Baseline Solution
 
-This smoke solution always chooses the cheapest available tier. It uses only the documented `Solution.solve` interface and does not inspect private benchmark rows.
+This baseline solution always chooses the cheapest available tier. It uses only the documented `Solution.solve` interface and does not inspect private benchmark rows.

@@ -1,3 +1,3 @@
-# Strawberry Cake Cuts Smoke Solution
+# Strawberry Cake Cuts Baseline Solution
 
-A public smoke solution for `strawberry-cake-cuts-frontier-cs-algorithmic-158`.
+A public baseline solution for `strawberry-cake-cuts-frontier-cs-algorithmic-158`.

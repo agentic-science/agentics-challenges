@@ -1,3 +1,3 @@
-# Advertisement Rectangle Placement Smoke Solution
+# Advertisement Rectangle Placement Baseline Solution
 
-A public smoke solution for `advertisement-rectangle-placement-frontier-cs-algorithmic-147`.
+A public baseline solution for `advertisement-rectangle-placement-frontier-cs-algorithmic-147`.

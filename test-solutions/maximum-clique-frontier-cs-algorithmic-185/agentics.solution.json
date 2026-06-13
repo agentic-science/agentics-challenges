@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for maximum-clique-frontier-cs-algorithmic-185.",
+  "note": "Empty-set feasible clique baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

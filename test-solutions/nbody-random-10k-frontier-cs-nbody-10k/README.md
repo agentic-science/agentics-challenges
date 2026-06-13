@@ -1,1 +1,1 @@
-# nbody-random-10k-frontier-cs-nbody-10k Smoke Solution
+# nbody-random-10k-frontier-cs-nbody-10k Baseline Solution

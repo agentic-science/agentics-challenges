@@ -3,5 +3,6 @@
   "protocol_version": 1,
   "commands": {
     "run": "run.sh"
-  }
+  },
+  "note": "Match-count permutation reconstruction baseline."
 }

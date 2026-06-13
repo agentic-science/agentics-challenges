@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple stdin/stdout smoke solution for resonator-emitter-layout-frontier-cs-algorithmic-310.",
+  "note": "Greedy cheapest-port emitter selection baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

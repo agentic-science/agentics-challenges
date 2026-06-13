@@ -1,3 +1,3 @@
-# DNA Matching Probability Smoke Solution
+# DNA Matching Probability Baseline Solution
 
-A public smoke solution for `dna-matching-probability-frontier-cs-algorithmic-121`.
+A public baseline solution for `dna-matching-probability-frontier-cs-algorithmic-121`.

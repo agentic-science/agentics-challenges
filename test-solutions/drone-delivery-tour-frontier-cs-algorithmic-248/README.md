@@ -1,3 +1,3 @@
-# Drone Delivery Tour Smoke Solution
+# Drone Delivery Tour Baseline Solution
 
-A simple public smoke solution for `drone-delivery-tour-frontier-cs-algorithmic-248`. It reads stdin and writes stdout.
+A simple public baseline solution for `drone-delivery-tour-frontier-cs-algorithmic-248`. It reads stdin and writes stdout.

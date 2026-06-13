@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for graph-color-transformation-frontier-cs-algorithmic-87.",
+  "note": "Distance-based color propagation baseline for graph-color-transformation-frontier-cs-algorithmic-87.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for vertex-cover-frontier-cs-algorithmic-182.",
+  "note": "All-vertices feasible baseline for vertex cover.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

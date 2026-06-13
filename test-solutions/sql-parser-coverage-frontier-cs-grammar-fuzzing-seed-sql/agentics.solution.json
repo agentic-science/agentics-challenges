@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple SQL statement seed baseline for sql-parser-coverage-frontier-cs-grammar-fuzzing-seed-sql.",
+  "note": "Hand-written SQL coverage seed baseline for the parser interface.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

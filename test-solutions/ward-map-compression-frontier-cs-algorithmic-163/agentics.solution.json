@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for ward-map-compression-frontier-cs-algorithmic-163.",
+  "note": "Identity ward-map compression baseline that emits the input coloring.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

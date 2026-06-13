@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Horizontal strip public smoke solution for the Frontier-CS polyomino packing migration.",
+  "note": "Horizontal strip-packing baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

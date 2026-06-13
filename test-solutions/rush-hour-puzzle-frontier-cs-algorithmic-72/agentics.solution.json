@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Public smoke solution derived from Frontier-CS source candidate gpt5.2.cpp.",
+  "note": "BFS state-search baseline for Rush Hour puzzle generation.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

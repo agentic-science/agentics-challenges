@@ -1,3 +1,3 @@
-# Tree Centroid Guess Smoke Solution
+# Tree Centroid Guess Baseline Solution
 
-This is a deliberately small interactive baseline for `tree-centroid-guess-frontier-cs-algorithmic-54`. It reconstructs tiny public trees from all-pairs distances and reports a centroid.
+This baseline reconstructs trees from distance queries when feasible and reports a centroid candidate.

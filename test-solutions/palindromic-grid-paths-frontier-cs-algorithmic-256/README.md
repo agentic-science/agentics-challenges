@@ -1,5 +1,3 @@
-# Smoke solution for palindromic-grid-paths-frontier-cs-algorithmic-256
+# Palindromic Grid Paths Baseline Solution
 
-Runs an exhaustive consistency baseline for the tiny public grid. It asks all
-valid public n=3 rectangle queries, then returns the first grid whose
-palindromic-path predicates match the observed answers.
+This baseline reconstructs grid parity through the documented interactive protocol and answers palindromic-path queries from the reconstructed grid.

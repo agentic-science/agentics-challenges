@@ -1,3 +1,3 @@
-# Kangaroo Tree Map Smoke Solution
+# Kangaroo Tree Map Baseline Solution
 
-A public smoke solution for `kangaroo-tree-map-frontier-cs-algorithmic-137`.
+A public baseline solution for `kangaroo-tree-map-frontier-cs-algorithmic-137`.

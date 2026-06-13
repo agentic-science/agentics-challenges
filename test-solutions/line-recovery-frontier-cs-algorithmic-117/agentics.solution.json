@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Single-line recovery baseline for line-recovery-frontier-cs-algorithmic-117.",
+  "note": "Kink-search line reconstruction baseline for line-recovery-frontier-cs-algorithmic-117.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

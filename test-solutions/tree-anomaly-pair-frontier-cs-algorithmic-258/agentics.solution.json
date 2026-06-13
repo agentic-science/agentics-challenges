@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Honest singleton-query baseline for tree-anomaly-pair-frontier-cs-algorithmic-258.",
+  "note": "Interactive tree anomaly endpoint baseline using layered queries.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

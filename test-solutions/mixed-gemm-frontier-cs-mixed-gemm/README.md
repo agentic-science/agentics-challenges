@@ -1,3 +1,3 @@
-# mixed-gemm-frontier-cs-mixed-gemm Smoke Solution
+# Mixed GEMM Baseline Solution
 
-Cheap public-validation smoke solution.
+This baseline uses PyTorch to compute the reference linear-GELU path through the documented solution interface.

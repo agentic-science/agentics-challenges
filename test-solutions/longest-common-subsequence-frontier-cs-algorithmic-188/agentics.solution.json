@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple public smoke solution for longest-common-subsequence-frontier-cs-algorithmic-188.",
+  "note": "Greedy common-character subsequence baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

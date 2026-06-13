@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Greedy public smoke solution for the Frontier-CS treasure packing migration.",
+  "note": "Greedy resource-normalized treasure packing baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

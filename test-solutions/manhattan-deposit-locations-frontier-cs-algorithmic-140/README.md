@@ -1,5 +1,3 @@
-# Smoke solution for manhattan-deposit-locations-frontier-cs-algorithmic-140
+# Manhattan Deposit Locations Baseline Solution
 
-Uses legitimate Manhattan probe waves for the one-deposit public smoke case and
-falls back to center guesses when the wave budget is too small for full
-triangulation.
+This baseline uses Manhattan probe waves to triangulate deposits, then falls back to center guesses when the budget is too small for full triangulation.

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for tv-network-broadcast-frontier-cs-algorithmic-161.",
+  "note": "MST-and-radius heuristic baseline for TV network broadcast.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

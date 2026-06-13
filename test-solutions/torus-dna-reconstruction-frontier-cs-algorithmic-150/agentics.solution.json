@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for torus-dna-reconstruction-frontier-cs-algorithmic-150.",
+  "note": "Incremental torus DNA placement heuristic.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

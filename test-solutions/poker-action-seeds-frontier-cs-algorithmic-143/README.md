@@ -1,3 +1,3 @@
-# Smoke solution for poker-action-seeds-frontier-cs-algorithmic-143
+# Poker Action Seeds Baseline Solution
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+This baseline uses the documented poker interaction protocol, samples action rates, and chooses conservative check or raise actions from the observed win and draw rates.

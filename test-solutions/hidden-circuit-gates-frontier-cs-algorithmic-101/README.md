@@ -1,3 +1,3 @@
-# Hidden Circuit Gates Test Solution
+# Hidden Circuit Gates Baseline Solution
 
-A simple honest baseline that uses the documented interactive protocol. It is intended for public smoke validation and does not read evaluator files or private data.
+This baseline uses the documented interactive protocol to reconstruct gate types with heavy-path queries. It does not read evaluator files or private data.

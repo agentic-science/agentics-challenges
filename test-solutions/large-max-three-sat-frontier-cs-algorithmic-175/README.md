@@ -1,3 +1,3 @@
-# Large Max 3-SAT Smoke Solution
+# Large Max 3-SAT Baseline Solution
 
 Reads stdin and writes a conservative candidate answer to stdout for `large-max-three-sat-frontier-cs-algorithmic-175`.

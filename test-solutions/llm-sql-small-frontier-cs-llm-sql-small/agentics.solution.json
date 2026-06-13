@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap smoke solution for llm-sql-small-frontier-cs-llm-sql-small.",
+  "note": "Identity column-order baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

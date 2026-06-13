@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for snake-path-minima-frontier-cs-algorithmic-233; intentionally finishes or fails fast.",
+  "note": "Interactive bounded-query minima baseline that samples path scores and returns the smallest values.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

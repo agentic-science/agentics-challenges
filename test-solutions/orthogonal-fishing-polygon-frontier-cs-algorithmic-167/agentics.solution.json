@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple public smoke solution for orthogonal-fishing-polygon-frontier-cs-algorithmic-167.",
+  "note": "Fixed feasible orthogonal polygon baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

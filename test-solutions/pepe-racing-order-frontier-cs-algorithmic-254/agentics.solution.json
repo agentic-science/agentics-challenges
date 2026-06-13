@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Public n=2 comparison baseline for pepe-racing-order-frontier-cs-algorithmic-254.",
+  "note": "Tournament-order reconstruction baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

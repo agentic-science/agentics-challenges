@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for sliding-tree-puzzle-frontier-cs-algorithmic-157.",
+  "note": "Short legal-move baseline around the blank tile.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

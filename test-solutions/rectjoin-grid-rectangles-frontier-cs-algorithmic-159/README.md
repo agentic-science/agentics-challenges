@@ -1,3 +1,3 @@
-# RectJoin Grid Rectangles Smoke Solution
+# RectJoin Grid Rectangles Baseline Solution
 
-A public smoke solution for `rectjoin-grid-rectangles-frontier-cs-algorithmic-159`.
+A public baseline solution for `rectjoin-grid-rectangles-frontier-cs-algorithmic-159`.

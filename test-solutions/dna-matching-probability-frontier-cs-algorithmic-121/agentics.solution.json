@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for dna-matching-probability-frontier-cs-algorithmic-121.",
+  "note": "Bitmask inclusion-exclusion probability solver for dna-matching-probability-frontier-cs-algorithmic-121.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

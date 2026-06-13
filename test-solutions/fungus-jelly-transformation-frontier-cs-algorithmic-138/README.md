@@ -1,3 +1,3 @@
-# Fungus Jelly Transformation Smoke Solution
+# Fungus Jelly Transformation Baseline Solution
 
-A public smoke solution for `fungus-jelly-transformation-frontier-cs-algorithmic-138`.
+A public baseline solution for `fungus-jelly-transformation-frontier-cs-algorithmic-138`.

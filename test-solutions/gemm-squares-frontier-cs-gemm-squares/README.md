@@ -1,3 +1,3 @@
-# gemm-squares-frontier-cs-gemm-squares Smoke Solution
+# GEMM Squares Baseline Solution
 
-Cheap public-validation smoke solution.
+This baseline uses PyTorch to compute the reference GELU matmul path through the documented solution interface.

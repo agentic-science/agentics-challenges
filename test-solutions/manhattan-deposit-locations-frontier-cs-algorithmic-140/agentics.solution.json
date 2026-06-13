@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Two-wave coordinate-sum matching baseline for manhattan-deposit-locations-frontier-cs-algorithmic-140.",
+  "note": "Two-wave Manhattan triangulation baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

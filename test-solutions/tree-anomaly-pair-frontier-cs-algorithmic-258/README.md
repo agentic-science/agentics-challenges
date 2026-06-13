@@ -1,4 +1,3 @@
-# Smoke solution for tree-anomaly-pair-frontier-cs-algorithmic-258
+# Tree Anomaly Pair Baseline Solution
 
-Uses the documented interactive protocol. It queries singleton latency sums,
-derives the hidden anomaly path, and reports the two path endpoints.
+This baseline queries singleton latency sums, derives the hidden anomaly path, and reports the two path endpoints.

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Legal adaptive enclosure baseline for pet-shelter-simulation-frontier-cs-algorithmic-154.",
+  "note": "Adaptive enclosure simulation baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

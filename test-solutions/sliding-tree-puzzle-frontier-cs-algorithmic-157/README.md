@@ -1,3 +1,3 @@
-# Sliding Tree Puzzle Smoke Solution
+# Sliding Tree Puzzle Baseline Solution
 
-A public smoke solution for `sliding-tree-puzzle-frontier-cs-algorithmic-157`.
+A public baseline solution for `sliding-tree-puzzle-frontier-cs-algorithmic-157`.

@@ -1,3 +1,3 @@
-# Smoke solution for induced-triple-graph-frontier-cs-algorithmic-120
+# Induced Triple Graph Baseline Solution
 
-Queries anchored triples and reconstructs the 100-vertex adjacency matrix from the induced-edge counts.
+This baseline queries anchored triples and reconstructs the adjacency matrix from induced-edge counts.

@@ -1,3 +1,3 @@
-# Hidden Tree Median Test Solution
+# Hidden Tree Median Baseline Solution
 
-A simple honest baseline that uses the documented interactive protocol. It is intended for public smoke validation and does not read evaluator files or private data.
+This baseline uses the documented median-query interaction protocol to reconstruct hidden tree structure. It does not read evaluator files or private data.

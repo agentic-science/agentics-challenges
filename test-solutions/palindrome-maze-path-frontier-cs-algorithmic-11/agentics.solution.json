@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Public smoke solution derived from Frontier-CS source candidate gpt5.2_1.cpp.",
+  "note": "General C++ baseline derived from Frontier-CS candidate code.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

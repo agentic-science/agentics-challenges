@@ -1,3 +1,3 @@
-# Smoke solution for hidden-pair-product-frontier-cs-algorithmic-134
+# Hidden Pair Product Baseline Solution
 
-Binary-searches the two hidden coordinates using the documented response semantics.
+This baseline binary-searches the two hidden coordinates using the documented response semantics.

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple stdin/stdout smoke solution for three-hop-shortcut-dag-frontier-cs-algorithmic-239.",
+  "note": "Bounded shortcut-generation baseline for small and medium DAG cases.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

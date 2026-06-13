@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Ordering-code pairing baseline with forced-match peeling and device-count verification for mineral-pairing-frontier-cs-algorithmic-125.",
+  "note": "Ordering-code pairing baseline with verification.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

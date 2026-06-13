@@ -1,3 +1,3 @@
-# Patrol Route Visibility Smoke Solution
+# Patrol Route Visibility Baseline Solution
 
-A public smoke solution for `patrol-route-visibility-frontier-cs-algorithmic-151`.
+A public baseline solution for `patrol-route-visibility-frontier-cs-algorithmic-151`.

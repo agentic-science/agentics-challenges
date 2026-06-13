@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Letter-prefix sweep baseline for the DiverC autofill protocol.",
+  "note": "Letter-prefix sweep baseline for diverc-autofill-words-frontier-cs-algorithmic-28.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

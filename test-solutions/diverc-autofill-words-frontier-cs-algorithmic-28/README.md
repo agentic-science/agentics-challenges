@@ -1,3 +1,3 @@
-# DiverC Letter Sweep Baseline
+# Diverc Autofill Words Baseline Solution
 
-Queries each one-letter prefix with `K = N` and returns the union of all words. It is simple and correct for the public smoke case, but intentionally not cost-optimal for official scoring.
+This baseline queries one-letter prefixes with `K = N` and returns the union of all observed words. It is intentionally simple and not cost-optimal, but it uses the documented protocol.

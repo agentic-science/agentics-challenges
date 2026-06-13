@@ -3,5 +3,6 @@
   "protocol_version": 1,
   "commands": {
     "run": "run.sh"
-  }
+  },
+  "note": "Write-test heuristic baseline for ink-pen-selection-frontier-cs-algorithmic-68."
 }

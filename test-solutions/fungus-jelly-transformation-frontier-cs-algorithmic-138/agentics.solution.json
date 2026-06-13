@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for fungus-jelly-transformation-frontier-cs-algorithmic-138.",
+  "note": "Greedy C++ jelly transformation baseline for fungus-jelly-transformation-frontier-cs-algorithmic-138.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

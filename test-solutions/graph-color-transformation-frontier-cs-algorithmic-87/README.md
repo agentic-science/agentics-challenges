@@ -1,3 +1,3 @@
-# Graph Color Transformation Smoke Solution
+# Graph Color Transformation Baseline Solution
 
-A public smoke solution for `graph-color-transformation-frontier-cs-algorithmic-87`.
+A public baseline solution for `graph-color-transformation-frontier-cs-algorithmic-87`.

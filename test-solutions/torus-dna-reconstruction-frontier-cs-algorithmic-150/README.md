@@ -1,3 +1,3 @@
-# Torus DNA Reconstruction Smoke Solution
+# Torus DNA Reconstruction Baseline Solution
 
-A public smoke solution for `torus-dna-reconstruction-frontier-cs-algorithmic-150`.
+A public baseline solution for `torus-dna-reconstruction-frontier-cs-algorithmic-150`.

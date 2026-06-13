@@ -1,4 +1,3 @@
-# Smoke solution for line-recovery-frontier-cs-algorithmic-117
+# Line Recovery Baseline Solution
 
-Queries a few symmetric points and exactly recovers the single-line public smoke
-case. Larger aggregate instances receive a protocol-valid zero-line fallback.
+This baseline uses kink-search distance queries to reconstruct line coefficients through the documented interactive protocol.

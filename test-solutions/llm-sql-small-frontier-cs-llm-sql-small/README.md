@@ -1,3 +1,3 @@
-# llm-sql-small-frontier-cs-llm-sql-small Smoke Solution
+# LLM SQL Small Baseline Solution
 
-Cheap public-validation smoke solution.
+This baseline returns the input dataframe unchanged through the documented `Solution.solve` interface. It is a simple identity baseline for comparison, not a private-data fixture.

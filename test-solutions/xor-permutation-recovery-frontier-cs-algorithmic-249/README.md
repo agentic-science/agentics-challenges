@@ -1,5 +1,3 @@
-# Smoke solution for xor-permutation-recovery-frontier-cs-algorithmic-249
+# XOR Permutation Recovery Baseline Solution
 
-Uses the documented OR-query protocol. It queries every pair, identifies the
-index whose pairwise OR sum is minimal as the zero value, and recovers the
-permutation from that row.
+This baseline uses the documented OR-query protocol, identifies the zero-valued index, and recovers the permutation values.

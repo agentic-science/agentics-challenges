@@ -1,3 +1,3 @@
-# TV Network Broadcast Smoke Solution
+# TV Network Broadcast Baseline Solution
 
-A public smoke solution for `tv-network-broadcast-frontier-cs-algorithmic-161`.
+A public baseline solution for `tv-network-broadcast-frontier-cs-algorithmic-161`.

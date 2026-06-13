@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Tiny public smoke solution for the Frontier-CS World Map migration.",
+  "note": "Graph-walk construction baseline using shortest paths, parity pairing, and an Euler walk.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

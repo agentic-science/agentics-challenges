@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Honest public-smoke baseline for steiner-tree-reconstruction-frontier-cs-algorithmic-89.",
+  "note": "Interactive path-membership baseline for Steiner tree reconstruction.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

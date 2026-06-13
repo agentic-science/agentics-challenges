@@ -1,3 +1,3 @@
-# Robust Forgotten Route Smoke Solution
+# Robust Forgotten Route Baseline Solution
 
-A public smoke solution for `robust-forgotten-route-frontier-cs-algorithmic-155`.
+A public baseline solution for `robust-forgotten-route-frontier-cs-algorithmic-155`.

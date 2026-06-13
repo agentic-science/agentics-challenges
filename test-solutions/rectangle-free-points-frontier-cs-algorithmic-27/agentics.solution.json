@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Row-or-column public smoke solution for the Frontier-CS rectangle-free points migration.",
+  "note": "Row-or-column rectangle-free point baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

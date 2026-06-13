@@ -1,3 +1,3 @@
-# Smoke solution for sorted-mode-array-frontier-cs-algorithmic-257
+# Sorted Mode Array Baseline Solution
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+This baseline queries each singleton interval through the documented interactive protocol and reconstructs the array values directly.

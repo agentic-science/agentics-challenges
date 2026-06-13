@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Public smoke solution derived from Frontier-CS source candidate gpt5.cpp.",
+  "note": "Skyline rectangle-packing baseline derived from Frontier-CS candidate code.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

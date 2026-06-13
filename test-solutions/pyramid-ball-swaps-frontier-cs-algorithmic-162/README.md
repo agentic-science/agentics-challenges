@@ -1,3 +1,3 @@
-# Pyramid Ball Swaps Smoke Solution
+# Pyramid Ball Swaps Baseline Solution
 
-A public smoke solution for `pyramid-ball-swaps-frontier-cs-algorithmic-162`.
+A public baseline solution for `pyramid-ball-swaps-frontier-cs-algorithmic-162`.

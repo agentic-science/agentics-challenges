@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple public smoke solution for max-two-sat-frontier-cs-algorithmic-193.",
+  "note": "All-true assignment baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

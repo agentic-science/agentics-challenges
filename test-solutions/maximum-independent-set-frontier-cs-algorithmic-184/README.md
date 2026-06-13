@@ -1,3 +1,3 @@
-# Maximum Independent Set Smoke Solution
+# Maximum Independent Set Baseline Solution
 
-A deliberately simple valid-output smoke solution for `maximum-independent-set-frontier-cs-algorithmic-184`.
+A simple valid-output baseline solution for `maximum-independent-set-frontier-cs-algorithmic-184`.

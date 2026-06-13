@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Geometry and simulation threshold baseline for online-mst-decisions-frontier-cs-algorithmic-153.",
+  "note": "Simulation-threshold online MST baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

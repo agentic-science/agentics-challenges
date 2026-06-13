@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Honest all-pairs OR baseline for xor-permutation-recovery-frontier-cs-algorithmic-249.",
+  "note": "Interactive OR-query baseline that searches for the zero index and reconstructs the permutation.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

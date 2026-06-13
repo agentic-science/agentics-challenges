@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Honest public-smoke baseline for hidden-circuit-gates-frontier-cs-algorithmic-101.",
+  "note": "Heavy-path gate-type reconstruction baseline for hidden-circuit-gates-frontier-cs-algorithmic-101.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

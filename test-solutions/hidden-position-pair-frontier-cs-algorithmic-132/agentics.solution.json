@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Sparse-code public smoke solution for hidden-position-pair-frontier-cs-algorithmic-132.",
+  "note": "Sparse-code hidden-pair decoder for hidden-position-pair-frontier-cs-algorithmic-132.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

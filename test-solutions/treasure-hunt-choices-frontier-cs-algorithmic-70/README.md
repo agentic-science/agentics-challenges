@@ -1,3 +1,3 @@
-# Treasure Hunt Choices Smoke Solution
+# Treasure Hunt Choices Baseline Solution
 
-Solves the tiny public interactive validation session.
+This baseline follows the documented treasure-hunt interaction protocol and prefers zero-marked choices when the interactor exposes them.

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Complete-DAG Grundy smoke solution for impartial-game-graph-frontier-cs-algorithmic-231.",
+  "note": "Complete-DAG Grundy identification baseline for impartial-game-graph-frontier-cs-algorithmic-231.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

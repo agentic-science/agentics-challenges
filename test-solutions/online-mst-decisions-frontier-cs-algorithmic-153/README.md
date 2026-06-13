@@ -1,4 +1,3 @@
-# Smoke solution for online-mst-decisions-frontier-cs-algorithmic-153
+# Online MST Decisions Baseline Solution
 
-Runs an online spanning-tree baseline. It reads the fixed graph, then accepts an
-edge exactly when it connects two currently separate DSU components.
+This baseline accepts an incoming edge exactly when it connects two currently separate DSU components.

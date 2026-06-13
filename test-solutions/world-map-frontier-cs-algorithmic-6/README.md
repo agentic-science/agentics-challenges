@@ -1,5 +1,3 @@
-# World Map Smoke Solution
+# World Map Baseline Solution
 
-This solution is intentionally tiny. It recognizes the public validation path graph with countries `1-2-3` and prints the sample-style `3 x 3` map.
-
-It is useful for repository smoke testing and dev/demo seeding, not as an official benchmark solver.
+This baseline constructs a graph walk from the input country graph using shortest paths, parity pairing, and an Euler walk. It is intended as an official-capable baseline rather than a public-case fixture.

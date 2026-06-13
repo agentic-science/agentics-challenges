@@ -1,3 +1,3 @@
-# Smoke solution for snake-path-minima-frontier-cs-algorithmic-233
+# Snake Path Minima Baseline Solution
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+This baseline samples path scores through the documented interactive protocol and reports the smallest observed values. It is intentionally bounded and uncompetitive, but it is not a token-flood fixture.

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "One-query-per-position operator recovery baseline for operator-sequence-recovery-frontier-cs-algorithmic-119.",
+  "note": "One-query-per-position operator recovery baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

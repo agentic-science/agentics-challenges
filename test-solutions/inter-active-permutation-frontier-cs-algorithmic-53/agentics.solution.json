@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Small honest brute-force baseline for the Inter Active piped_stdio protocol.",
+  "note": "Constant-code constraint-solving baseline for inter-active-permutation-frontier-cs-algorithmic-53.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

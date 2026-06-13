@@ -1,3 +1,3 @@
-# Toy Train Loop Rotation Smoke Solution
+# Toy Train Loop Rotation Baseline Solution
 
-A public smoke solution for `toy-train-loop-rotation-frontier-cs-algorithmic-156`.
+A public baseline solution for `toy-train-loop-rotation-frontier-cs-algorithmic-156`.

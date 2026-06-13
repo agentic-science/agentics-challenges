@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple public smoke solution for rooted-forest-attractiveness-frontier-cs-algorithmic-168.",
+  "note": "All-roots feasible baseline for rooted forest attractiveness.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

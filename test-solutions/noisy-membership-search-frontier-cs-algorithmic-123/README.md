@@ -1,5 +1,3 @@
-# Smoke solution for noisy-membership-search-frontier-cs-algorithmic-123
+# Noisy Membership Search Baseline Solution
 
-Runs a small interactive baseline for the noisy membership protocol. It asks
-each binary-search membership question three times and uses the majority reply,
-which is valid under the no-two-consecutive-lies guarantee.
+This baseline asks each membership question multiple times and uses majority voting to reduce noisy replies.

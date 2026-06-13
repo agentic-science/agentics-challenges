@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for kangaroo-tree-map-frontier-cs-algorithmic-137.",
+  "note": "Serpentine connected-tree grid construction for kangaroo-tree-map-frontier-cs-algorithmic-137.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

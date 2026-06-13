@@ -1,3 +1,3 @@
-# Ward Map Compression Smoke Solution
+# Ward Map Compression Baseline Solution
 
-A public smoke solution for `ward-map-compression-frontier-cs-algorithmic-163`.
+A public baseline solution for `ward-map-compression-frontier-cs-algorithmic-163`.

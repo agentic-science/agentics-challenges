@@ -1,3 +1,3 @@
-# Smoke solution for distinct-bakery-types-frontier-cs-algorithmic-141
+# Distinct Bakery Types Baseline Solution
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+This baseline uses the documented interactive protocol to query representatives, merge discovered groups, and estimate the number of distinct bakery types. It is intentionally simple, but it is not a token-flood fixture.

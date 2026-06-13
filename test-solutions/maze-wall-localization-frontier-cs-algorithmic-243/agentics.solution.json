@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Belief-set localization baseline for maze-wall-localization-frontier-cs-algorithmic-243.",
+  "note": "Belief-set maze localization baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

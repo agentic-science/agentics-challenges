@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for number-loop-uniqueness-frontier-cs-algorithmic-145.",
+  "note": "Fixed puzzle-grid construction baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

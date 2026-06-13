@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple cheapest-tier baseline for llm-router-frontier-cs-llm-router.",
+  "note": "Cheapest-tier routing baseline for llm-router-frontier-cs-llm-router.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

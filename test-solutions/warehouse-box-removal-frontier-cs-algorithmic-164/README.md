@@ -1,3 +1,3 @@
-# Warehouse Box Removal Smoke Solution
+# Warehouse Box Removal Baseline Solution
 
-A public smoke solution for `warehouse-box-removal-frontier-cs-algorithmic-164`.
+A public baseline solution for `warehouse-box-removal-frontier-cs-algorithmic-164`.

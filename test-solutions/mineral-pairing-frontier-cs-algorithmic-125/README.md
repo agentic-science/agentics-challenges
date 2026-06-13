@@ -1,5 +1,3 @@
-# Smoke solution for mineral-pairing-frontier-cs-algorithmic-125
+# Mineral Pairing Baseline Solution
 
-Uses ordering-code passes to build a public candidate graph, peels forced
-degree-one matches, and verifies the remaining candidate pairs through the
-interactive device count. It does not read or encode hidden pairings.
+This baseline uses ordering-code passes to build candidate pairs, peels forced matches, and verifies the remaining pairs through the documented protocol.

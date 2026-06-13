@@ -1,3 +1,3 @@
-# Terrain Leveling Truck Smoke Solution
+# Terrain Leveling Truck Baseline Solution
 
-A public smoke solution for `terrain-leveling-truck-frontier-cs-algorithmic-166`.
+A public baseline solution for `terrain-leveling-truck-frontier-cs-algorithmic-166`.

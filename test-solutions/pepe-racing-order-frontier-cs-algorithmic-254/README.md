@@ -1,5 +1,3 @@
-# Smoke solution for pepe-racing-order-frontier-cs-algorithmic-254
+# Pepe Racing Order Baseline Solution
 
-Runs a comparison-sort baseline for the public n=2 protocol, where each race is
-a direct two-label comparison. Larger n falls back to a simple winner-count
-heuristic.
+This baseline uses direct comparison races and winner counts to construct an ordering through the documented protocol.

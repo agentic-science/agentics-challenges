@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap public smoke solution for poker-action-seeds-frontier-cs-algorithmic-143; intentionally finishes or fails fast.",
+  "note": "Rate-query poker action baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

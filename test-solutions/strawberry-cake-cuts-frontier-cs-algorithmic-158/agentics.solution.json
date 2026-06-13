@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for strawberry-cake-cuts-frontier-cs-algorithmic-158.",
+  "note": "Grid-family line placement heuristic for strawberry cake cuts.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

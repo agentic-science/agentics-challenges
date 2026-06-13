@@ -1,3 +1,3 @@
-# Forest Mycelium Delay Tour Smoke Solution
+# Forest Mycelium Delay Tour Baseline Solution
 
-A simple public smoke solution for `mycelium-delay-tour-frontier-cs-algorithmic-304`. It reads stdin and writes stdout.
+A simple public baseline solution for `mycelium-delay-tour-frontier-cs-algorithmic-304`. It reads stdin and writes stdout.

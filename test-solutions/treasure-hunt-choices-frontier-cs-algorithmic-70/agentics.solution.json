@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Public smoke solution for the interactive Frontier-CS migration.",
+  "note": "Protocol-following traversal baseline that prefers zero-marked choices.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

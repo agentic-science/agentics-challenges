@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for terrain-leveling-truck-frontier-cs-algorithmic-166.",
+  "note": "Snake-route terrain leveling baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

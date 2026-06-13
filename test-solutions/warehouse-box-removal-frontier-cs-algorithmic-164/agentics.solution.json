@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for warehouse-box-removal-frontier-cs-algorithmic-164.",
+  "note": "Greedy stack-relocation baseline for warehouse box removal.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

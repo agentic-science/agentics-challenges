@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for lucky-string-keyboard-frontier-cs-algorithmic-165.",
+  "note": "First-occurrence keyboard path baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

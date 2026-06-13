@@ -1,3 +1,3 @@
-# Moving Mole One-Probe Baseline
+# Moving Mole Tree Baseline Solution
 
-Reads the tree, probes node `2`, and answers either `2` or root based on that response. This is a minimal honest protocol smoke for the public generated case, not an official solver.
+This baseline maintains a simple belief state over the tree, asks a subtree query, and returns a protocol-valid candidate.

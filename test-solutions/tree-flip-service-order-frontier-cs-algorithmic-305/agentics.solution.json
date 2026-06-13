@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple stdin/stdout smoke solution for tree-flip-service-order-frontier-cs-algorithmic-305.",
+  "note": "BFS service-order baseline for the tree flip schedule task.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Full-height chord and diameter reconstruction baseline for disk-probing-frontier-cs-algorithmic-60.",
+  "note": "Full-height chord and diameter reconstruction baseline for disk probing.",
   "commands": {
     "run": "run.sh"
   }

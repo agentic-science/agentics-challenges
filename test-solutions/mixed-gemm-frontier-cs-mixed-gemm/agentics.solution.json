@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Cheap smoke solution for mixed-gemm-frontier-cs-mixed-gemm.",
+  "note": "Plain PyTorch linear-GELU baseline.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

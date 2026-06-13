@@ -1,3 +1,3 @@
-# Smoke solution for repaired-road-set-frontier-cs-algorithmic-253
+# Repaired Road Set Baseline Solution
 
-Drains the public interactive prompt and emits a bounded final-answer token flood so the evaluator completes quickly.
+This baseline uses the documented road repair interaction protocol, toggles each road, and queries witnesses to produce a repaired-road vector.

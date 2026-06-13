@@ -1,3 +1,3 @@
-# Number Loop Uniqueness Smoke Solution
+# Number Loop Uniqueness Baseline Solution
 
-A public smoke solution for `number-loop-uniqueness-frontier-cs-algorithmic-145`.
+A public baseline solution for `number-loop-uniqueness-frontier-cs-algorithmic-145`.

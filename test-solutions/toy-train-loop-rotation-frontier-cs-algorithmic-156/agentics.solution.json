@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple smoke solution for toy-train-loop-rotation-frontier-cs-algorithmic-156.",
+  "note": "Greedy and annealing rotation heuristic for toy train loops.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",

@@ -1,3 +1,3 @@
-# Manhattan Compass Prospecting Smoke Solution
+# Manhattan Compass Prospecting Baseline Solution
 
-A simple public smoke solution for `manhattan-compass-prospecting-frontier-cs-algorithmic-303`. It reads stdin and writes stdout.
+A simple public baseline solution for `manhattan-compass-prospecting-frontier-cs-algorithmic-303`. It reads stdin and writes stdout.

@@ -1,3 +1,3 @@
-# Lucky String Keyboard Smoke Solution
+# Lucky String Keyboard Baseline Solution
 
-A public smoke solution for `lucky-string-keyboard-frontier-cs-algorithmic-165`.
+A public baseline solution for `lucky-string-keyboard-frontier-cs-algorithmic-165`.

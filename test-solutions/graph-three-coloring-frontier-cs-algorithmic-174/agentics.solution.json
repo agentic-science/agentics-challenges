@@ -1,7 +1,7 @@
 {
   "protocol": "zip_project",
   "protocol_version": 1,
-  "note": "Simple public smoke solution for graph-three-coloring-frontier-cs-algorithmic-174.",
+  "note": "Cyclic three-color assignment baseline for graph-three-coloring-frontier-cs-algorithmic-174.",
   "commands": {
     "setup": "scripts/setup.sh",
     "build": "scripts/build.sh",
