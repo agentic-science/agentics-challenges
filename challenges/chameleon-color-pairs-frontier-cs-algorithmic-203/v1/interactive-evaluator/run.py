@@ -236,7 +236,7 @@ def main() -> int:
                     "exit_code": completed.returncode,
                 }
             )
-            if protocol_error or score <= 0.0:
+            if protocol_error:
                 break
 
     write_result(output_path, args.mode, session_name, case_results, logs)
